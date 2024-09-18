@@ -1,6 +1,6 @@
 package team18.team18_be.dto;
 
-public record ResumesResponse(
+public record ResumeResponse(
         String resumeId,
         String applicantName,
         String address,
