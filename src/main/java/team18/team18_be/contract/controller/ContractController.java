@@ -1,12 +1,11 @@
-package team18.team18_be.controller;
+package team18.team18_be.contract.controller;
 
 import jakarta.validation.Valid;
-import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import team18.team18_be.dto.ContractRequest;
-import team18.team18_be.dto.ContractResponse;
+import team18.team18_be.contract.dto.request.ContractRequest;
+import team18.team18_be.contract.dto.response.ContractResponse;
 
 @RestController
 @RequestMapping("/api/contract")
