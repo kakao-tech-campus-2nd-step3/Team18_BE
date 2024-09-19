@@ -22,4 +22,12 @@ public class ResumeController {
     ){
         return null;
     }
+
+    @GetMapping("/resumeId")
+    public ResponseEntity<ResumeResponse> getResumeById(
+            @RequestHeader("Authorization") String token
+    ){
+        return null;
+    }
+
 }
