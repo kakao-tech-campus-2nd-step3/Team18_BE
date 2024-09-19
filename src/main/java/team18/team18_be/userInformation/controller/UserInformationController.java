@@ -1,7 +1,7 @@
 package team18.team18_be.userInformation.controller;
 
-import team18.team18_be.userInformation.dto.request.RequestCompany;
-import team18.team18_be.userInformation.dto.request.RequestVisa;
+import team18.team18_be.userInformation.dto.request.CompanyRequest;
+import team18.team18_be.userInformation.dto.request.VisaRequest;
 import team18.team18_be.userInformation.service.UserInformationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,14 +24,14 @@ public class UserInformationController {
 //  }
 
   @PostMapping("/company")
-  public ResponseEntity<Void> RegisterCompany(@RequestBody RequestCompany requestCompany) {
-    userInformationService.RegisterCompany(requestCompany);
+  public ResponseEntity<Void> RegisterCompany(@RequestBody CompanyRequest companyRequest) {
+    userInformationService.RegisterCompany(companyRequest);
     return ResponseEntity.ok().build();
   }
 
   @PostMapping("/visa")
-  public ResponseEntity<Void> RegisterVisa(@RequestBody RequestVisa requestVisa) {
-    userInformationService.RegisterVisa(requestVisa);
+  public ResponseEntity<Void> RegisterVisa(@RequestBody VisaRequest visaRequest) {
+    userInformationService.RegisterVisa(visaRequest);
     return ResponseEntity.ok().build();
   }
 }

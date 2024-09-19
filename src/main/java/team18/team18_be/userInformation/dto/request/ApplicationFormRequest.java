@@ -1,6 +1,6 @@
 package team18.team18_be.userInformation.dto.request;
 
-public class RequestApplicationForm {
+public class ApplicationFormRequest {
 
   private final String applyDate;
   private final String applyMotivation;
@@ -8,7 +8,7 @@ public class RequestApplicationForm {
   private final String personalHistory;
   private final String etc;
 
-  public RequestApplicationForm(String applyDate, String applyMotivation,
+  public ApplicationFormRequest(String applyDate, String applyMotivation,
     String koreanLanguageSkill,
     String personalHistory, String etc) {
     this.applyDate = applyDate;

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import team18.team18_be.apply.dto.response.ApplyResponse;
 import team18.team18_be.apply.service.ApplyService;
-import team18.team18_be.userInformation.dto.request.RequestApplicationForm;
+import team18.team18_be.userInformation.dto.request.ApplicationFormRequest;
 
 @RestController
 @RequestMapping("/api/application")
@@ -24,8 +24,8 @@ public class ApplyController {
 
   @PostMapping
   public ResponseEntity<Void> registerApplicationForm(
-    @RequestBody RequestApplicationForm requestApplicationForm) {
-    applyService.registerApplicationForm(requestApplicationForm);
+    @RequestBody ApplicationFormRequest applicationFormRequest) {
+    applyService.registerApplicationForm(applicationFormRequest);
 
     //URI경로를 로그인 정보에서 가져와 사용?
     return ResponseEntity.created(URI.create("applicationForm")).build();

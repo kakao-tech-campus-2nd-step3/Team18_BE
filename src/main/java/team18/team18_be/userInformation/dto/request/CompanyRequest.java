@@ -1,6 +1,6 @@
 package team18.team18_be.userInformation.dto.request;
 
-public class RequestCompany {
+public class CompanyRequest {
 
   private String company;
   private String industryOccupation;
@@ -8,10 +8,10 @@ public class RequestCompany {
   private String revenuePerYear;
 
 
-  public RequestCompany() {
+  public CompanyRequest() {
   }
 
-  public RequestCompany(String company, String industryOccupation, String brand,
+  public CompanyRequest(String company, String industryOccupation, String brand,
     String revenuePerYear) {
     this.company = company;
     this.industryOccupation = industryOccupation;
