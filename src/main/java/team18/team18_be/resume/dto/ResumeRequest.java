@@ -4,10 +4,9 @@ public record ResumeRequest(
         String resumeId,
         String applicantName,
         String address,
-        String tel,
-        String preferredWorkLocation,
-        String preferredIndustry,
-        String preferredWorkingHours,
+        String phoneNumber,
+        String career,
+        String korean,
         String selfIntroduction
 ) {
 }
