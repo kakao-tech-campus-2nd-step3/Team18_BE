@@ -1,10 +1,10 @@
 package team18.team18_be.auth.service;
 
 
-import team18.team18_be.auth.dto.JwtResponse;
-import team18.team18_be.auth.dto.MemberIdRequest;
-import team18.team18_be.auth.dto.OAuthJwtResponse;
-import team18.team18_be.auth.dto.UserTypeRequest;
+import team18.team18_be.auth.dto.response.JwtResponse;
+import team18.team18_be.auth.dto.request.MemberIdRequest;
+import team18.team18_be.auth.dto.response.OAuthJwtResponse;
+import team18.team18_be.auth.dto.request.UserTypeRequest;
 import team18.team18_be.auth.repository.AuthRepository;
 
 public class AuthService {

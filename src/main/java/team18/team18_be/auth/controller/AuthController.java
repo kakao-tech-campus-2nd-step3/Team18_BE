@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import team18.team18_be.auth.dto.ClientIdRequest;
-import team18.team18_be.auth.dto.JwtResponse;
-import team18.team18_be.auth.dto.MemberIdRequest;
-import team18.team18_be.auth.dto.OAuthJwtResponse;
-import team18.team18_be.auth.dto.UserTypeRequest;
+import team18.team18_be.auth.dto.request.ClientIdRequest;
+import team18.team18_be.auth.dto.response.JwtResponse;
+import team18.team18_be.auth.dto.request.MemberIdRequest;
+import team18.team18_be.auth.dto.response.OAuthJwtResponse;
+import team18.team18_be.auth.dto.request.UserTypeRequest;
 import team18.team18_be.auth.service.AuthService;
 
 @RestController
