@@ -1,4 +1,4 @@
-package DTO.RequestDTO;
+package team18.team18_be.userInformation.dto.request;
 
 public class RequestVisa {
 

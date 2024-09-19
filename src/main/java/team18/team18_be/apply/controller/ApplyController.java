@@ -1,7 +1,7 @@
-package Controller;
+package team18.team18_be.apply.controller;
 
-import DTO.RequestDTO.RequestApplicationForm;
-import Service.ApplyService;
+import team18.team18_be.userInformation.dto.request.RequestApplicationForm;
+import team18.team18_be.apply.service.ApplyService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

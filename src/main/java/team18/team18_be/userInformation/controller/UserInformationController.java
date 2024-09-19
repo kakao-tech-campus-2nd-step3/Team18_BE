@@ -1,8 +1,8 @@
-package Controller;
+package team18.team18_be.userInformation.controller;
 
-import DTO.RequestDTO.RequestCompany;
-import DTO.RequestDTO.RequestVisa;
-import Service.UserInformationService;
+import team18.team18_be.userInformation.dto.request.RequestCompany;
+import team18.team18_be.userInformation.dto.request.RequestVisa;
+import team18.team18_be.userInformation.service.UserInformationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

@@ -1,8 +1,8 @@
-package Service;
+package team18.team18_be.userInformation.service;
 
-import DTO.RequestDTO.RequestCompany;
-import DTO.RequestDTO.RequestVisa;
-import Repository.UserInformationRepository;
+import team18.team18_be.userInformation.dto.request.RequestCompany;
+import team18.team18_be.userInformation.dto.request.RequestVisa;
+import team18.team18_be.userInformation.repository.UserInformationRepository;
 import org.springframework.stereotype.Service;
 
 @Service
