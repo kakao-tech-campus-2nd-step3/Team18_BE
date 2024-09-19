@@ -14,23 +14,23 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserInformationController {
 
   private final UserInformationService userInformationService;
-  public UserInformationController(UserInformationService userInformationService){
-    this.userInformationService=userInformationService;
+
+  public UserInformationController(UserInformationService userInformationService) {
+    this.userInformationService = userInformationService;
   }
 
-  @PostMapping("/sign")
-  public ResponseEntity<Void> RegisterSign(){
-
-  }
+//  @PostMapping("/sign")
+//  public ResponseEntity<Void> RegisterSign(){
+//  }
 
   @PostMapping("/company")
-  public ResponseEntity<Void> RegisterCompany(@RequestBody RequestCompany requestCompany){
+  public ResponseEntity<Void> RegisterCompany(@RequestBody RequestCompany requestCompany) {
     userInformationService.RegisterCompany(requestCompany);
     return ResponseEntity.ok().build();
   }
 
   @PostMapping("/visa")
-  public ResponseEntity<Void> RegisterVisa(@RequestBody RequestVisa requestVisa){
+  public ResponseEntity<Void> RegisterVisa(@RequestBody RequestVisa requestVisa) {
     userInformationService.RegisterVisa(requestVisa);
     return ResponseEntity.ok().build();
   }

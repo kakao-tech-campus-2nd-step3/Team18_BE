@@ -7,10 +7,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserInformationService {
+
   private final UserInformationRepository userInformationRepository;
 
-  public UserInformationService(UserInformationRepository userInformationRepository){
-    this.userInformationRepository=userInformationRepository;
+  public UserInformationService(UserInformationRepository userInformationRepository) {
+    this.userInformationRepository = userInformationRepository;
   }
 
   public void RegisterCompany(RequestCompany requestCompany) {

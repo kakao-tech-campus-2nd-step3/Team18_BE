@@ -8,8 +8,6 @@ public class RequestVisa {
   public RequestVisa() {
   }
 
-  ;
-
   public RequestVisa(String foreginerNumber, String visaGenereteDate) {
     this.foreginerNumber = foreginerNumber;
     this.visaGenereteDate = visaGenereteDate;

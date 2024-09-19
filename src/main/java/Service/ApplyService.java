@@ -6,8 +6,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ApplyService {
+
   private final ApplicationFormRepository applicationFormRepository;
-  public ApplyService(ApplicationFormRepository applicationFormRepository){
+
+  public ApplyService(ApplicationFormRepository applicationFormRepository) {
     this.applicationFormRepository = applicationFormRepository;
   }
 

@@ -1,11 +1,12 @@
 package DTO.RequestDTO;
 
 public class RequestApplicationForm {
-  private String applyDate;
-  private String applyMotivation;
-  private String koreanLanguageSkill;
-  private String personalHistory;
-  private String etc;
+
+  private final String applyDate;
+  private final String applyMotivation;
+  private final String koreanLanguageSkill;
+  private final String personalHistory;
+  private final String etc;
 
   public RequestApplicationForm(String applyDate, String applyMotivation,
     String koreanLanguageSkill,
