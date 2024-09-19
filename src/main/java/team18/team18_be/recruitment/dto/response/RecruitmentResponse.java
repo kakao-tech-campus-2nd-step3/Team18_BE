@@ -1,6 +1,6 @@
-package team18.team18_be.dto;
+package team18.team18_be.recruitment.dto.response;
 
-public record RecruitmentRequest(
+public record RecruitmentResponse(
         String title,
         String companySize,
         String area,

@@ -1,11 +1,11 @@
-package team18.team18_be.controller;
+package team18.team18_be.recruitment.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import team18.team18_be.dto.RecruitmentRequest;
-import team18.team18_be.dto.RecruitmentResponse;
-import team18.team18_be.dto.RecruitmentSummationResponse;
+import team18.team18_be.recruitment.dto.request.RecruitmentRequest;
+import team18.team18_be.recruitment.dto.response.RecruitmentResponse;
+import team18.team18_be.recruitment.dto.response.RecruitmentSummationResponse;
 
 import java.util.List;
 

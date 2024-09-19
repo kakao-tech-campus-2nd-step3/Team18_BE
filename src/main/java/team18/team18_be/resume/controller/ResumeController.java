@@ -1,9 +1,9 @@
-package team18.team18_be.controller;
+package team18.team18_be.resume.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import team18.team18_be.dto.ResumeRequest;
-import team18.team18_be.dto.ResumeResponse;
+import team18.team18_be.resume.dto.ResumeRequest;
+import team18.team18_be.resume.dto.ResumeResponse;
 
 @RestController
 @RequestMapping("/api/resumes")

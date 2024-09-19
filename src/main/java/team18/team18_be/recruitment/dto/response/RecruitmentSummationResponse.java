@@ -1,4 +1,4 @@
-package team18.team18_be.dto;
+package team18.team18_be.recruitment.dto.response;
 
 public record RecruitmentSummationResponse(
         String title,
