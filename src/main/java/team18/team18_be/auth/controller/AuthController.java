@@ -25,7 +25,7 @@ public class AuthController {
 
     private static final String GOOGLE_AUTH_TOKEN_URL = "https://oauth2.googleapis.com/token";
 
-    private static final String GOOGLE_USER_INFO_URL = " https://www.googleapis.com/userinfo/v2/me";
+    private static final String GOOGLE_USER_INFO_URL = "https://www.googleapis.com/userinfo/v2/me";
 
     private final AuthService authService;
 
