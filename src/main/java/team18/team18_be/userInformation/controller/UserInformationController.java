@@ -1,5 +1,6 @@
 package team18.team18_be.userInformation.controller;
 
+import org.springframework.web.bind.annotation.PutMapping;
 import team18.team18_be.userInformation.dto.request.CompanyRequest;
 import team18.team18_be.userInformation.dto.request.VisaRequest;
 import team18.team18_be.userInformation.service.UserInformationService;
@@ -24,14 +25,14 @@ public class UserInformationController {
 //  }
 
   @PostMapping("/company")
-  public ResponseEntity<Void> RegisterCompany(@RequestBody CompanyRequest companyRequest) {
-    userInformationService.RegisterCompany(companyRequest);
+  public ResponseEntity<Void> createCompany(@RequestBody CompanyRequest companyRequest) {
+    userInformationService.createCompany(companyRequest);
     return ResponseEntity.ok().build();
   }
 
-  @PostMapping("/visa")
-  public ResponseEntity<Void> RegisterVisa(@RequestBody VisaRequest visaRequest) {
-    userInformationService.RegisterVisa(visaRequest);
+  @PutMapping("/visa")
+  public ResponseEntity<Void> fillInVisa(@RequestBody VisaRequest visaRequest) {
+    userInformationService.fillInVisa(visaRequest);
     return ResponseEntity.ok().build();
   }
 }
