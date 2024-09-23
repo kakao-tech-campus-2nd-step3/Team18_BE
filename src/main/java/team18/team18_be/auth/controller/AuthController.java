@@ -21,7 +21,7 @@ import team18.team18_be.auth.service.AuthService;
 @RequestMapping("/api")
 public class AuthController {
 
-    private static final String TOKEN_REDIRECT_URL = "?";
+    private static final String TOKEN_REDIRECT_URL = "TBD";
 
     private static final String GOOGLE_AUTH_TOKEN_URL = "https://oauth2.googleapis.com/token";
 
