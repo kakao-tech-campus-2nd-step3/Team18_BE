@@ -15,7 +15,8 @@ public class ApplyService {
     this.applyRepository = applyRepository;
   }
 
-  public void registerApplicationForm(ApplicationFormRequest applicationFormRequest) {
+  public Long createApplicationForm(ApplicationFormRequest applicationFormRequest) {
+    return null;
   }
 
   public List<ApplyResponse> searchApplicacnt() {

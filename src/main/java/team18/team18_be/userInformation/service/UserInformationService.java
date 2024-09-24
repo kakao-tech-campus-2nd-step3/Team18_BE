@@ -14,9 +14,9 @@ public class UserInformationService {
     this.userInformationRepository = userInformationRepository;
   }
 
-  public void RegisterCompany(CompanyRequest companyRequest) {
+  public void createCompany(CompanyRequest companyRequest) {
   }
 
-  public void RegisterVisa(VisaRequest visaRequest) {
+  public void fillInVisa(VisaRequest visaRequest) {
   }
 }
