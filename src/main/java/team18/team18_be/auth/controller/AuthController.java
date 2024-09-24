@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import team18.team18_be.auth.dto.request.ClientIdRequest;
-import team18.team18_be.auth.dto.request.MemberIdRequest;
+import team18.team18_be.auth.dto.request.UserIdRequest;
 import team18.team18_be.auth.dto.request.UserTypeRequest;
 import team18.team18_be.auth.dto.response.LoginResponse;
 import team18.team18_be.auth.dto.response.OAuthJwtResponse;
@@ -59,12 +59,12 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<Void> registerUserType(@RequestBody UserTypeRequest userTypeRequest,
         HttpServletRequest request) {
-        MemberIdRequest memberIdRequest = getLoginMember(request);
-        authService.registerUserType(userTypeRequest, memberIdRequest);
+        UserIdRequest userIdRequest = getLoginUser(request);
+        authService.registerUserType(userTypeRequest, userIdRequest);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    private MemberIdRequest getLoginMember(HttpServletRequest request) {
-        return new MemberIdRequest((Long) request.getAttribute("id"));
+    private UserIdRequest getLoginUser(HttpServletRequest request) {
+        return new UserIdRequest((Long) request.getAttribute("id"));
     }
 }

@@ -2,7 +2,7 @@ package team18.team18_be.auth.service;
 
 
 import org.springframework.stereotype.Service;
-import team18.team18_be.auth.dto.request.MemberIdRequest;
+import team18.team18_be.auth.dto.request.UserIdRequest;
 import team18.team18_be.auth.dto.request.UserTypeRequest;
 import team18.team18_be.auth.dto.response.LoginResponse;
 import team18.team18_be.auth.dto.response.OAuthJwtResponse;
@@ -25,7 +25,7 @@ public class AuthService {
         return null;
     }
 
-    public void registerUserType(UserTypeRequest userTypeRequest, MemberIdRequest memberIdRequest) {
+    public void registerUserType(UserTypeRequest userTypeRequest, UserIdRequest userIdRequest) {
 
     }
 }
