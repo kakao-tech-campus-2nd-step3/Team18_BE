@@ -23,12 +23,12 @@ public class ApplyController {
   }
 
   @PostMapping
-  public ResponseEntity<Void> registerApplicationForm(
+  public ResponseEntity<Void> createApplicationForm(
     @RequestBody ApplicationFormRequest applicationFormRequest) {
-    applyService.registerApplicationForm(applicationFormRequest);
+    Long applicationId = applyService.createApplicationForm(applicationFormRequest);
+    URI location = URI.create("/api/application/" + applicationId);
 
-    //URI경로를 로그인 정보에서 가져와 사용?
-    return ResponseEntity.created(URI.create("applicationForm")).build();
+    return ResponseEntity.created(location).build();
   }
 
   @GetMapping
