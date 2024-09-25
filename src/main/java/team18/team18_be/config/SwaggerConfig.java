@@ -23,6 +23,7 @@ import org.springframework.context.annotation.Configuration;
     version = "1.0.0"
 ))
 public class SwaggerConfig {
+
     @Bean
     public OpenAPI api() {
         SecurityScheme apiKey = new SecurityScheme()

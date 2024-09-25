@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "users")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private final Long id;
@@ -58,7 +59,15 @@ public class User {
     }
 
     public User updateUserType(String type) {
-        return new User(this.id, this.name, this.email, this.phoneNumber, this.foreignerNumber, this.visaGenerateDate, type, signId, resumeId);
+        return new User(this.id,
+            this.name,
+            this.email,
+            this.phoneNumber,
+            this.foreignerNumber,
+            this.visaGenerateDate,
+            type,
+            signId,
+            resumeId);
     }
 
 }

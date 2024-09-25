@@ -33,6 +33,7 @@ public class AuthService {
     }
 
     private User getUser(Long userId) {
-        return authRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("유저 정보가 존재하지 않습니다."));
+        return authRepository.findById(userId)
+            .orElseThrow(() -> new NoSuchElementException("유저 정보가 존재하지 않습니다."));
     }
 }

@@ -3,8 +3,8 @@ package team18.team18_be;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.io.Encoders;
 import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.io.Encoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -68,7 +68,9 @@ public class JwtValidationInterceptor implements HandlerInterceptor {
         return accessToken;
     }
 
-    private boolean setUserIdInRequest(String accessToken, HttpServletRequest request, HttpServletResponse response)
+    private boolean setUserIdInRequest(String accessToken,
+        HttpServletRequest request,
+        HttpServletResponse response)
         throws IOException {
         String encodedSecretKey = Encoders.BASE64.encode(JWT_SECRET_KEY.getBytes(StandardCharsets.UTF_8));
 
