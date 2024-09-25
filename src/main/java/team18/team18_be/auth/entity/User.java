@@ -57,4 +57,8 @@ public class User {
         this.resumeId = resumeId;
     }
 
+    public User updateUserType(String type) {
+        return new User(this.id, this.name, this.email, this.phoneNumber, this.foreignerNumber, this.visaGenerateDate, type, signId, resumeId);
+    }
+
 }
