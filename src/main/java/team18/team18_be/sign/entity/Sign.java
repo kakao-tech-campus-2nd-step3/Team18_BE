@@ -1,4 +1,4 @@
-package team18.team18_be.apply.sign.entity;
+package team18.team18_be.sign.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
