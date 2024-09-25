@@ -49,6 +49,7 @@ public class JwtValidationInterceptor implements HandlerInterceptor {
             return setUserIdInRequest(accessToken, request, response);
         } catch (Exception e) {
             response.sendError(401, "액세스 토큰이 유효하지 않습니다.");
+            return false;
         }
     }
 
