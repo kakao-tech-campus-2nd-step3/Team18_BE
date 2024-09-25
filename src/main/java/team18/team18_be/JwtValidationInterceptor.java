@@ -27,7 +27,7 @@ public class JwtValidationInterceptor implements HandlerInterceptor {
     @Value("${jwt.secret}")
     private String JWT_SECRET_KEY;
 
-    private AuthRepository authRepository;
+    private final AuthRepository authRepository;
 
     public JwtValidationInterceptor(AuthRepository authRepository) {
         this.authRepository = authRepository;
