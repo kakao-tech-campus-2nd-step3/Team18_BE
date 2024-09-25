@@ -1,6 +1,8 @@
 package team18.team18_be.userInformation.controller;
 
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import team18.team18_be.userInformation.dto.request.CompanyRequest;
 import team18.team18_be.userInformation.dto.request.VisaRequest;
 import team18.team18_be.userInformation.service.UserInformationService;
@@ -20,9 +22,11 @@ public class UserInformationController {
     this.userInformationService = userInformationService;
   }
 
-//  @PostMapping("/sign")
-//  public ResponseEntity<Void> RegisterSign(@LoginUser User user){
-//  }
+  @PostMapping(value = "/sign", consumes = "multipart/form-data")
+  public ResponseEntity<Void> fillInSign(@RequestParam("file") MultipartFile file,@LoginUser User user){
+    userInformationService.fillInSign(file);
+    return ResponseEntity.noContent().build();
+  }
 
   @PostMapping("/company")
   public ResponseEntity<Void> createCompany(@RequestBody CompanyRequest companyRequest, @LoginUser User user) {
