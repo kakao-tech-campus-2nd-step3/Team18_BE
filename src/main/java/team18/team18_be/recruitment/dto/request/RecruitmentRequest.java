@@ -13,7 +13,6 @@ public record RecruitmentRequest(
         String eligibilityCriteria,
         String preferredConditions,
         String employerName,
-        String koreanDetailedDescription,
-        String vietnameseDetailedDescription
+        String detailedDescription
 ) {
 }
