@@ -10,13 +10,13 @@ public class Sign {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long signId;
+  private final Long signId;
   @NotBlank
-  private String signName;
+  private final String signName;
   @NotBlank
-  private String createDate;
+  private final String createDate;
   @NotNull
-  private String modifiedDate;
+  private final String modifiedDate;
 
   public Sign(Long signId, String signName, String createDate, String modifiedDate) {
     this.signId = signId;

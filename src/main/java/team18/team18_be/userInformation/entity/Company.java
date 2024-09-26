@@ -9,16 +9,16 @@ public class Company {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long companyId;
+  private final Long companyId;
   @NotBlank
-  private String companyName;
+  private final String companyName;
   @NotBlank
-  private String industryOccupation;
-  private String brand;
+  private final String industryOccupation;
+  private final String brand;
   @NotBlank
-  private Long revenuePerYear;
-  private String logo;
-  private String hompageUrl;
+  private final Long revenuePerYear;
+  private final String logo;
+  private final String hompageUrl;
 
   public Company(Long companyId, String companyName, String industryOccupation, String brand,
                  Long revenuePerYear, String logo, String hompageUrl) {
