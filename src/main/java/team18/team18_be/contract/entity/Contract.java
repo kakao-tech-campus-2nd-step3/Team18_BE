@@ -1,7 +1,6 @@
 package team18.team18_be.contract.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Pattern;
 
 @Entity(name = "contracts")
 public class Contract {
