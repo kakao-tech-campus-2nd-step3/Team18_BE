@@ -16,7 +16,7 @@ public class ResumeController {
     public ResponseEntity<Void> saveResume(
             @RequestHeader("Authorization") String token,
             @RequestBody ResumeRequest resumeRequest
-    ){
+    ) {
         return null;
     }
 
@@ -24,7 +24,7 @@ public class ResumeController {
     @GetMapping
     public ResponseEntity<ResumeResponse> getResume(
             @RequestHeader("Authorization") String token
-    ){
+    ) {
         return null;
     }
 
@@ -32,7 +32,7 @@ public class ResumeController {
     @GetMapping("/resumeId")
     public ResponseEntity<ResumeResponse> getResumeById(
             @RequestHeader("Authorization") String token
-    ){
+    ) {
         return null;
     }
 

@@ -18,7 +18,7 @@ import team18.team18_be.contract.service.ContractService;
 @RequestMapping("/api/contract")
 public class ContractController {
 
-  private final ContractService contractService;
+    private final ContractService contractService;
 
     @ApiOperation(value = "근로계약서 등록 메서드 - 고용주 등록")
     @PostMapping
@@ -40,20 +40,20 @@ public class ContractController {
         return ResponseEntity.ok(contractService.getContract(user));
 
 
-  @GetMapping
-  public ResponseEntity<ContractResponse> getContract(@LoginMember Member member) {
-    return ResponseEntity.ok(contractService.getContract(member));
+        @GetMapping
+        public ResponseEntity<ContractResponse> getContract (@LoginMember Member member){
+            return ResponseEntity.ok(contractService.getContract(member));
 
-    @ApiOperation(value = "근로계약서 id별 pdf url 반환 메서드")
-    @GetMapping("/{contractId}/download")
-    public ResponseEntity<String> downloadContract(@PathVariable("contractId") Long id, @LoginUser User user) {
-        return ResponseEntity.ok(contractService.downloadContract(id, user));
-    }
+            @ApiOperation(value = "근로계약서 id별 pdf url 반환 메서드")
+            @GetMapping("/{contractId}/download")
+            public ResponseEntity<String> downloadContract (@PathVariable("contractId") Long id, @LoginUser User user){
+                return ResponseEntity.ok(contractService.downloadContract(id, user));
+            }
 
-    @ApiOperation(value = "근로계약서 id별 image url 반환 메서드")
-    @GetMapping("/{contractId}/preview")
-    public ResponseEntity<String> previewContract(@PathVariable("contractId") Long id, @LoginUser User user) {
-        return ResponseEntity.ok(contractService.previewContract(id, user));
-    }
+            @ApiOperation(value = "근로계약서 id별 image url 반환 메서드")
+            @GetMapping("/{contractId}/preview")
+            public ResponseEntity<String> previewContract (@PathVariable("contractId") Long id, @LoginUser User user){
+                return ResponseEntity.ok(contractService.previewContract(id, user));
+            }
 
-}
+        }
