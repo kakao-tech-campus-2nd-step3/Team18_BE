@@ -1,4 +1,4 @@
-package team18.team18_be.company.entity;
+package team18.team18_be.userInformation.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
