@@ -1,9 +1,9 @@
 package team18.team18_be.userInformation.service;
 
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import team18.team18_be.userInformation.dto.request.CompanyRequest;
 import team18.team18_be.userInformation.dto.request.VisaRequest;
-import org.springframework.stereotype.Service;
 
 @Service
 public class UserInformationService {

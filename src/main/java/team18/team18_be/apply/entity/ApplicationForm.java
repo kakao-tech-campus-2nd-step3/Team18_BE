@@ -1,7 +1,6 @@
 package team18.team18_be.apply.entity;
 
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -11,6 +10,7 @@ import jakarta.validation.constraints.Size;
 @Entity
 @Table
 public class ApplicationForm {
+
   @Id
   private Long applicationFormId;
   @Size(max = 10, message = "최대 10글자까지 입력 가능합니다.")
