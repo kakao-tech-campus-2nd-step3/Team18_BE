@@ -12,7 +12,7 @@ import jakarta.validation.constraints.Size;
 @Table
 public class ApplicationForm {
   @Id
-  private Long resumeId;
+  private Long applicationFormId;
   @Size(max = 10, message = "최대 10글자까지 입력 가능합니다.")
   private String name;
   private String address;
@@ -20,6 +20,8 @@ public class ApplicationForm {
   private String phoneNumber;
   @Size(max = 500, message = "500글자 내로 입력해주세요.")
   private String applyMotivation;
+  private Long resumeId;
+
 
   public ApplicationForm(Long resumeId, String name, String address, String phoneNumber,
     String applyMotivation) {
