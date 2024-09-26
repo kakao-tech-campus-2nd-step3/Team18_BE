@@ -10,17 +10,17 @@ import java.util.List;
 @Service
 public class ApplyService {
 
-    private final ApplyRepository applyRepository;
+  private final ApplyRepository applyRepository;
 
-    public ApplyService(ApplyRepository applyRepository) {
-        this.applyRepository = applyRepository;
-    }
+  public ApplyService(ApplyRepository applyRepository) {
+    this.applyRepository = applyRepository;
+  }
 
-    public Long createApplicationForm(ApplicationFormRequest applicationFormRequest) {
-        return null;
-    }
+  public Long createApplicationForm(ApplicationFormRequest applicationFormRequest) {
+    return null;
+  }
 
-    public List<ApplyResponse> searchApplicacnt() {
-        return null;
-    }
+  public List<ApplyResponse> searchApplicacnt() {
+    return null;
+  }
 }

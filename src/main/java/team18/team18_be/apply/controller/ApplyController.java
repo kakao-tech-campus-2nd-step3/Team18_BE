@@ -13,23 +13,23 @@ import java.util.List;
 @RequestMapping("/api/application")
 public class ApplyController {
 
-    private final ApplyService applyService;
+  private final ApplyService applyService;
 
-    public ApplyController(ApplyService applyService) {
-        this.applyService = applyService;
-    }
+  public ApplyController(ApplyService applyService) {
+    this.applyService = applyService;
+  }
 
-    @PostMapping
-    public ResponseEntity<Void> createApplicationForm(
-            @RequestBody ApplicationFormRequest applicationFormRequest, @LoginUser User user) {
-        Long applicationId = applyService.createApplicationForm(applicationFormRequest);
-        URI location = URI.create("/api/application/" + applicationId);
+  @PostMapping
+  public ResponseEntity<Void> createApplicationForm(
+          @RequestBody ApplicationFormRequest applicationFormRequest, @LoginUser User user) {
+    Long applicationId = applyService.createApplicationForm(applicationFormRequest);
+    URI location = URI.create("/api/application/" + applicationId);
 
-        return ResponseEntity.created(location).build();
-    }
+    return ResponseEntity.created(location).build();
+  }
 
-    @GetMapping
-    public ResponseEntity<List<ApplyResponse>> SearchApplicant(@LoginUser User user) {
-        return ResponseEntity.ok(applyService.searchApplicacnt());
-    }
+  @GetMapping
+  public ResponseEntity<List<ApplyResponse>> SearchApplicant(@LoginUser User user) {
+    return ResponseEntity.ok(applyService.searchApplicacnt());
+  }
 }

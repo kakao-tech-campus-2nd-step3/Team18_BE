@@ -16,35 +16,35 @@ import java.util.List;
 @RequestMapping("/api/recruitments")
 public class RecruitmentController {
 
-    @ApiOperation(value = "구인글 저장 메서드")
-    @PostMapping
-    public ResponseEntity<Void> saveRecruitment(
-            @RequestHeader("Authorization") String token,
-            @RequestBody RecruitmentRequest recruitmentRequest
-    ) {
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
+  @ApiOperation(value = "구인글 저장 메서드")
+  @PostMapping
+  public ResponseEntity<Void> saveRecruitment(
+          @RequestHeader("Authorization") String token,
+          @RequestBody RecruitmentRequest recruitmentRequest
+  ) {
+    return ResponseEntity.status(HttpStatus.CREATED).build();
+  }
 
-    @ApiOperation(value = "구인글 전체 조회 메서드")
-    @GetMapping
-    public ResponseEntity<List<RecruitmentSummationResponse>> getAllRecruitments() {
-        return null;
-    }
+  @ApiOperation(value = "구인글 전체 조회 메서드")
+  @GetMapping
+  public ResponseEntity<List<RecruitmentSummationResponse>> getAllRecruitments() {
+    return null;
+  }
 
-    @ApiOperation(value = "구인글id로 조회 메서드")
-    @GetMapping("/{postId}")
-    public ResponseEntity<RecruitmentResponse> getRecruitments(
-            @PathVariable Long postId
-    ) {
-        return null;
-    }
+  @ApiOperation(value = "구인글id로 조회 메서드")
+  @GetMapping("/{postId}")
+  public ResponseEntity<RecruitmentResponse> getRecruitments(
+          @PathVariable Long postId
+  ) {
+    return null;
+  }
 
-    @ApiOperation(value = "고용주 별 구인글 조회 메서드")
-    @GetMapping
-    public ResponseEntity<List<RecruitmentResponse>> getAllEmployerName(
-            @RequestHeader("Authorization") String token
-    ) {
-        return null;
-    }
+  @ApiOperation(value = "고용주 별 구인글 조회 메서드")
+  @GetMapping
+  public ResponseEntity<List<RecruitmentResponse>> getAllEmployerName(
+          @RequestHeader("Authorization") String token
+  ) {
+    return null;
+  }
 
 }
