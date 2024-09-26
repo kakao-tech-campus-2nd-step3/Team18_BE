@@ -1,6 +1,7 @@
 package team18.team18_be.contract.service;
 
 import org.springframework.stereotype.Service;
+import team18.team18_be.auth.entity.User;
 import team18.team18_be.contract.dto.request.ContractRequest;
 import team18.team18_be.contract.dto.response.ContractResponse;
 import team18.team18_be.contract.repository.ContractRepository;

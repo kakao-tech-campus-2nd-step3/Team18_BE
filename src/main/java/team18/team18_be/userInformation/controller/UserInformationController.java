@@ -3,6 +3,8 @@ package team18.team18_be.userInformation.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import team18.team18_be.auth.entity.User;
+import team18.team18_be.config.resolver.LoginUser;
 import team18.team18_be.userInformation.dto.request.CompanyRequest;
 import team18.team18_be.userInformation.dto.request.VisaRequest;
 import team18.team18_be.userInformation.service.UserInformationService;

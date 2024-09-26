@@ -4,6 +4,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import team18.team18_be.apply.dto.response.ApplyResponse;
 import team18.team18_be.apply.service.ApplyService;
+import team18.team18_be.auth.entity.User;
+import team18.team18_be.config.resolver.LoginUser;
 import team18.team18_be.userInformation.dto.request.ApplicationFormRequest;
 
 import java.net.URI;

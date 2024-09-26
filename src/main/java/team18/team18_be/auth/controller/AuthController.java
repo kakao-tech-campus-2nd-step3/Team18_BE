@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,12 +13,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import team18.team18_be.auth.dto.request.ClientIdRequest;
-import team18.team18_be.auth.dto.request.MemberIdRequest;
 import team18.team18_be.auth.dto.request.UserTypeRequest;
 import team18.team18_be.auth.dto.response.LoginResponse;
 import team18.team18_be.auth.dto.response.OAuthJwtResponse;
 import team18.team18_be.auth.dto.response.UserTypeResponse;
+import team18.team18_be.auth.entity.User;
 import team18.team18_be.auth.service.AuthService;
+import team18.team18_be.config.resolver.LoginUser;
 
 import java.net.URI;
 
@@ -58,14 +59,9 @@ public class AuthController {
 
   @ApiResponse(responseCode = "200", description = "성공")
   @PostMapping("/register")
-  public ResponseEntity<Void> registerUserType(@RequestBody UserTypeRequest userTypeRequest,
-                                               HttpServletRequest request) {
-    MemberIdRequest memberIdRequest = getLoginMember(request);
-    authService.registerUserType(userTypeRequest, memberIdRequest);
+  public ResponseEntity<Void> registerUserType(@Valid @RequestBody UserTypeRequest userTypeRequest,
+                                               @LoginUser User user) {
+    authService.registerUserType(userTypeRequest, user);
     return ResponseEntity.status(HttpStatus.OK).build();
-  }
-
-  private MemberIdRequest getLoginMember(HttpServletRequest request) {
-    return new MemberIdRequest((Long) request.getAttribute("id"));
   }
 }

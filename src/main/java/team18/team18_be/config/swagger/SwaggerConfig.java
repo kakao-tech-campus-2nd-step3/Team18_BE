@@ -1,4 +1,4 @@
-package team18.team18_be.config;
+package team18.team18_be.config.swagger;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
@@ -72,4 +72,5 @@ public class SwaggerConfig {
             .required(true)
             .schema(new StringSchema()));
   }
+
 }
