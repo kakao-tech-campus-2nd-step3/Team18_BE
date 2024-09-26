@@ -13,8 +13,7 @@ public class UserInformationController {
 
     private final UserInformationService userInformationService;
 
-    public UserInformationController(UserInformationService userInformationService,
-                                     @LoginUser User user) {
+    public UserInformationController(UserInformationService userInformationService) {
         this.userInformationService = userInformationService;
     }
 
