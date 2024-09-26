@@ -5,7 +5,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
-import java.net.URI;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +19,8 @@ import team18.team18_be.auth.dto.response.LoginResponse;
 import team18.team18_be.auth.dto.response.OAuthJwtResponse;
 import team18.team18_be.auth.dto.response.UserTypeResponse;
 import team18.team18_be.auth.service.AuthService;
+
+import java.net.URI;
 
 @Tag(name = "인증/인가", description = "인증/인가 관련 API")
 @RestController
@@ -42,9 +43,9 @@ public class AuthController {
   @PostMapping("/oauth")
   public ResponseEntity<UserTypeResponse> login(@RequestBody ClientIdRequest clientIdRequest) {
     OAuthJwtResponse oAuthJwtResponse = authService.getOAuthToken(clientIdRequest.code(),
-      GOOGLE_AUTH_TOKEN_URL);
+            GOOGLE_AUTH_TOKEN_URL);
     LoginResponse loginResponse = authService.registerOAuth(oAuthJwtResponse,
-      GOOGLE_USER_INFO_URL);
+            GOOGLE_USER_INFO_URL);
 
     HttpHeaders headers = new HttpHeaders();
     headers.setLocation(URI.create(TOKEN_REDIRECT_URL));
@@ -58,7 +59,7 @@ public class AuthController {
   @ApiResponse(responseCode = "200", description = "성공")
   @PostMapping("/register")
   public ResponseEntity<Void> registerUserType(@RequestBody UserTypeRequest userTypeRequest,
-    HttpServletRequest request) {
+                                               HttpServletRequest request) {
     MemberIdRequest memberIdRequest = getLoginMember(request);
     authService.registerUserType(userTypeRequest, memberIdRequest);
     return ResponseEntity.status(HttpStatus.OK).build();

@@ -1,11 +1,7 @@
 package team18.team18_be.auth.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -39,14 +35,14 @@ public class User {
   }
 
   public User(Long id,
-    String name,
-    String email,
-    String phoneNumber,
-    String foreignerNumber,
-    LocalDateTime visaGenerateDate,
-    String type,
-    Long signId,
-    Long resumeId) {
+              String name,
+              String email,
+              String phoneNumber,
+              String foreignerNumber,
+              LocalDateTime visaGenerateDate,
+              String type,
+              Long signId,
+              Long resumeId) {
     this.id = id;
     this.name = name;
     this.email = email;
@@ -60,14 +56,14 @@ public class User {
 
   public User updateUserType(String type) {
     return new User(this.id,
-      this.name,
-      this.email,
-      this.phoneNumber,
-      this.foreignerNumber,
-      this.visaGenerateDate,
-      type,
-      signId,
-      resumeId);
+            this.name,
+            this.email,
+            this.phoneNumber,
+            this.foreignerNumber,
+            this.visaGenerateDate,
+            type,
+            signId,
+            resumeId);
   }
 
 }

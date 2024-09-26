@@ -1,10 +1,6 @@
 package team18.team18_be.userInformation.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -14,13 +10,13 @@ public class Sign {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long signId;
+  private final Long signId;
   @NotBlank
-  private String signName;
+  private final String signName;
   @NotBlank
-  private String createDate;
+  private final String createDate;
   @NotNull
-  private String modifiedDate;
+  private final String modifiedDate;
 
   public Sign(Long signId, String signName, String createDate, String modifiedDate) {
     this.signId = signId;

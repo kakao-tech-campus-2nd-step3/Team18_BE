@@ -1,10 +1,6 @@
 package team18.team18_be.userInformation.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
 @Table
@@ -13,19 +9,19 @@ public class Company {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long companyId;
+  private final Long companyId;
   @NotBlank
-  private String companyName;
+  private final String companyName;
   @NotBlank
-  private String industryOccupation;
-  private String brand;
+  private final String industryOccupation;
+  private final String brand;
   @NotBlank
-  private Long revenuePerYear;
-  private String logo;
-  private String hompageUrl;
+  private final Long revenuePerYear;
+  private final String logo;
+  private final String hompageUrl;
 
   public Company(Long companyId, String companyName, String industryOccupation, String brand,
-    Long revenuePerYear, String logo, String hompageUrl) {
+                 Long revenuePerYear, String logo, String hompageUrl) {
     this.companyId = companyId;
     this.companyName = companyName;
     this.industryOccupation = industryOccupation;

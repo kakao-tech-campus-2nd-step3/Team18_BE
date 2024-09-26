@@ -11,9 +11,9 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(value = MethodArgumentNotValidException.class)
   public ResponseEntity<String> handleValidException(MethodArgumentNotValidException e) {
     String errorMessage = e.getBindingResult().getFieldErrors().stream()
-      .map(error -> error.getDefaultMessage())
-      .findFirst()
-      .orElse("올바르지 않은 입력 방식입니다.");
+            .map(error -> error.getDefaultMessage())
+            .findFirst()
+            .orElse("올바르지 않은 입력 방식입니다.");
     return ResponseEntity.badRequest().body(errorMessage);
   }
 }

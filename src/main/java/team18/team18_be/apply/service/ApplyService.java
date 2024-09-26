@@ -1,10 +1,11 @@
 package team18.team18_be.apply.service;
 
-import java.util.List;
 import org.springframework.stereotype.Service;
 import team18.team18_be.apply.dto.response.ApplyResponse;
 import team18.team18_be.apply.repository.ApplyRepository;
 import team18.team18_be.userInformation.dto.request.ApplicationFormRequest;
+
+import java.util.List;
 
 @Service
 public class ApplyService {
