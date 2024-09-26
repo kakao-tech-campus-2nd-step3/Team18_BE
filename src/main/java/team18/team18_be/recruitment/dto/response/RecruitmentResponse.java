@@ -17,4 +17,5 @@ public record RecruitmentResponse(
         String vietnameseDetailedDescription
 
 ) {
+
 }

@@ -12,24 +12,24 @@ import org.springframework.web.multipart.support.StandardServletMultipartResolve
 @Configuration
 public class MultipartConfig {
 
-    @Value("${file.multipart.maxUploadSize:10485760}")
-    private long maxUploadSize;
+  @Value("${file.multipart.maxUploadSize:10485760}")
+  private long maxUploadSize;
 
-    @Value("${file.multipart.maxUploadSizePerFile:10485760}")
-    private long maxUploadSizePerFile;
+  @Value("${file.multipart.maxUploadSizePerFile:10485760}")
+  private long maxUploadSizePerFile;
 
-    @Bean
-    public MultipartResolver multipartResolver() {
-        StandardServletMultipartResolver multipartResolver = new StandardServletMultipartResolver();
-        return multipartResolver;
-    }
+  @Bean
+  public MultipartResolver multipartResolver() {
+    StandardServletMultipartResolver multipartResolver = new StandardServletMultipartResolver();
+    return multipartResolver;
+  }
 
-    @Bean
-    public MultipartConfigElement multipartConfigElement() {
-        MultipartConfigFactory factory = new MultipartConfigFactory();
-        factory.setMaxRequestSize(DataSize.ofBytes(maxUploadSize));
-        factory.setMaxFileSize(DataSize.ofBytes(maxUploadSizePerFile));
+  @Bean
+  public MultipartConfigElement multipartConfigElement() {
+    MultipartConfigFactory factory = new MultipartConfigFactory();
+    factory.setMaxRequestSize(DataSize.ofBytes(maxUploadSize));
+    factory.setMaxFileSize(DataSize.ofBytes(maxUploadSizePerFile));
 
-        return factory.createMultipartConfig();
-    }
+    return factory.createMultipartConfig();
+  }
 }

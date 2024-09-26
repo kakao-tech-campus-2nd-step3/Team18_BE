@@ -8,4 +8,5 @@ public record ResumeRequest(
         String korean,
         String selfIntroduction
 ) {
+
 }

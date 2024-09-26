@@ -15,4 +15,5 @@ public record RecruitmentRequest(
         String employerName,
         String detailedDescription
 ) {
+
 }

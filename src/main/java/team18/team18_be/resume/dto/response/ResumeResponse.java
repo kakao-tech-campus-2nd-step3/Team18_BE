@@ -9,4 +9,5 @@ public record ResumeResponse(
         String korean,
         String selfIntroduction
 ) {
+
 }
