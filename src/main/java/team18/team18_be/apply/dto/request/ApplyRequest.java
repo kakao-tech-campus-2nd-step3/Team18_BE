@@ -6,4 +6,5 @@ public record ApplyRequest(
   String phoneNumber,
   String applyMotivation
 ) {
+
 }
