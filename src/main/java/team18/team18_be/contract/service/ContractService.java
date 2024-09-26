@@ -12,6 +12,7 @@ public class ContractService {
     public ContractService(ContractRepository contractRepository) {
         this.contractRepository = contractRepository;
     }
+
     public void makeContract(ContractRequest request, User user) {
     }
 
