@@ -21,6 +21,7 @@ import team18.team18_be.auth.dto.response.LoginResponse;
 import team18.team18_be.auth.dto.response.OAuthJwtResponse;
 import team18.team18_be.auth.dto.response.UserTypeResponse;
 import team18.team18_be.auth.service.AuthService;
+import team18.team18_be.config.resolver.LoginUser;
 
 @Tag(name = "인증/인가", description = "인증/인가 관련 API")
 @RestController
@@ -58,14 +59,8 @@ public class AuthController {
 
     @ApiResponse(responseCode = "200", description = "성공")
     @PostMapping("/register")
-    public ResponseEntity<Void> registerUserType(@Valid @RequestBody UserTypeRequest userTypeRequest,
-        HttpServletRequest request) {
-        UserIdRequest userIdRequest = getLoginUser(request);
+    public ResponseEntity<Void> registerUserType(@Valid @RequestBody UserTypeRequest userTypeRequest, @LoginUser UserIdRequest userIdRequest) {
         authService.registerUserType(userTypeRequest, userIdRequest);
         return ResponseEntity.status(HttpStatus.OK).build();
-    }
-
-    private UserIdRequest getLoginUser(HttpServletRequest request) {
-        return new UserIdRequest((Long) request.getAttribute("id"));
     }
 }

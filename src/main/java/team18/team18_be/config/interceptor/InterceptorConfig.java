@@ -1,16 +1,18 @@
-package team18.team18_be.config;
+package team18.team18_be.config.interceptor;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import team18.team18_be.JwtValidationInterceptor;
+import team18.team18_be.config.interceptor.JwtValidationInterceptor;
 import team18.team18_be.auth.repository.AuthRepository;
 
-public class WebConfig implements WebMvcConfigurer {
+@Configuration
+public class InterceptorConfig implements WebMvcConfigurer {
 
     private final AuthRepository authRepository;
 
-    public WebConfig(AuthRepository authRepository) {
+    public InterceptorConfig(AuthRepository authRepository) {
         this.authRepository = authRepository;
     }
 

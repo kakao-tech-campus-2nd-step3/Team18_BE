@@ -1,4 +1,4 @@
-package team18.team18_be;
+package team18.team18_be.config.interceptor;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -18,7 +18,7 @@ import team18.team18_be.auth.repository.AuthRepository;
 
 public class JwtValidationInterceptor implements HandlerInterceptor {
 
-    @Value("${jwt.authorization}")
+    @Value("${jwt.header}")
     private String AUTHORIZATION;
 
     @Value("${jwt.type}")
