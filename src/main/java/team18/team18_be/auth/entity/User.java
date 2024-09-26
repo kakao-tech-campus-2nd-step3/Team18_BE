@@ -54,6 +54,10 @@ public class User {
     this.resumeId = resumeId;
   }
 
+  public Long getId() {
+    return id;
+  }
+
   public User updateUserType(String type) {
     return new User(this.id,
             this.name,

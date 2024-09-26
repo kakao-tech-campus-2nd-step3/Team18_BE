@@ -6,14 +6,23 @@ import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
-import team18.team18_be.auth.dto.request.UserIdRequest;
+import team18.team18_be.auth.entity.User;
+import team18.team18_be.auth.repository.AuthRepository;
+
+import java.util.NoSuchElementException;
 
 public class LoginUserMethodArgumentResolver implements HandlerMethodArgumentResolver {
+
+  private final AuthRepository authRepository;
+
+  public LoginUserMethodArgumentResolver(AuthRepository authRepository) {
+    this.authRepository = authRepository;
+  }
 
   @Override
   public boolean supportsParameter(MethodParameter parameter) {
     boolean hasLoginUserAnnotation = parameter.hasParameterAnnotation(LoginUser.class);
-    boolean isTypeOfUserIdRequest = UserIdRequest.class.isAssignableFrom(parameter.getParameterType());
+    boolean isTypeOfUserIdRequest = User.class.isAssignableFrom(parameter.getParameterType());
 
     return hasLoginUserAnnotation && isTypeOfUserIdRequest;
   }
@@ -28,6 +37,10 @@ public class LoginUserMethodArgumentResolver implements HandlerMethodArgumentRes
             HttpServletRequest.class);
     Long userId = (Long) request.getAttribute("userId");
 
-    return new UserIdRequest(userId);
+    return getUser(userId);
+  }
+
+  private User getUser(Long userId) {
+    return authRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("회원 정보가 존재하지 않습니다."));
   }
 }

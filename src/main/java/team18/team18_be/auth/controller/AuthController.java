@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import team18.team18_be.auth.dto.request.ClientIdRequest;
-import team18.team18_be.auth.dto.request.UserIdRequest;
 import team18.team18_be.auth.dto.request.UserTypeRequest;
 import team18.team18_be.auth.dto.response.LoginResponse;
 import team18.team18_be.auth.dto.response.OAuthJwtResponse;
 import team18.team18_be.auth.dto.response.UserTypeResponse;
+import team18.team18_be.auth.entity.User;
 import team18.team18_be.auth.service.AuthService;
 import team18.team18_be.config.resolver.LoginUser;
 
@@ -60,8 +60,8 @@ public class AuthController {
   @ApiResponse(responseCode = "200", description = "성공")
   @PostMapping("/register")
   public ResponseEntity<Void> registerUserType(@Valid @RequestBody UserTypeRequest userTypeRequest,
-                                               @LoginUser UserIdRequest userIdRequest) {
-    authService.registerUserType(userTypeRequest, userIdRequest);
+                                               @LoginUser User user) {
+    authService.registerUserType(userTypeRequest, user);
     return ResponseEntity.status(HttpStatus.OK).build();
   }
 }
