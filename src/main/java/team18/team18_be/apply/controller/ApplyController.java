@@ -24,7 +24,7 @@ public class ApplyController {
 
   @PostMapping
   public ResponseEntity<Void> createApplicationForm(
-    @RequestBody ApplicationFormRequest applicationFormRequest) {
+    @RequestBody ApplicationFormRequest applicationFormRequest, @LoginUser User user) {
     Long applicationId = applyService.createApplicationForm(applicationFormRequest);
     URI location = URI.create("/api/application/" + applicationId);
 
@@ -32,7 +32,7 @@ public class ApplyController {
   }
 
   @GetMapping
-  public ResponseEntity<List<ApplyResponse>> SearchApplicant() {
+  public ResponseEntity<List<ApplyResponse>> SearchApplicant(@LoginUser User user) {
     return ResponseEntity.ok(applyService.searchApplicacnt());
   }
 }

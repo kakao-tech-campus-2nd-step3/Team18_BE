@@ -18,56 +18,57 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @OpenAPIDefinition(info = @Info(
-    title = "hire higher API",
-    description = "hire higher 서비스 플랫폼 API 제공",
-    version = "1.0.0"
+  title = "hire higher API",
+  description = "hire higher 서비스 플랫폼 API 제공",
+  version = "1.0.0"
 ))
 public class SwaggerConfig {
-    @Bean
-    public OpenAPI api() {
-        SecurityScheme apiKey = new SecurityScheme()
-            .type(Type.APIKEY)
-            .in(In.HEADER)
-            .name("Authorization");
 
-        SecurityRequirement securityRequirement = new SecurityRequirement()
-            .addList("Bearer Token");
+  @Bean
+  public OpenAPI api() {
+    SecurityScheme apiKey = new SecurityScheme()
+      .type(Type.APIKEY)
+      .in(In.HEADER)
+      .name("Authorization");
 
-        return new OpenAPI()
-            .components(new Components().addSecuritySchemes("Bearer Token", apiKey))
-            .addSecurityItem(securityRequirement);
-    }
+    SecurityRequirement securityRequirement = new SecurityRequirement()
+      .addList("Bearer Token");
 
-    @Bean
-    public OpenApiCustomizer customAuthParameter() {
-        Set<String> targetPaths = Set.of(
-            "/api/register"
-        );
+    return new OpenAPI()
+      .components(new Components().addSecuritySchemes("Bearer Token", apiKey))
+      .addSecurityItem(securityRequirement);
+  }
 
-        return openApi -> openApi
-            .getPaths()
-            .forEach((path, pathItem) -> {
-                boolean isTargetPath = false;
-                for (String targetPath : targetPaths) {
-                    if (path.startsWith(targetPath)) {
-                        isTargetPath = true;
-                        break;
-                    }
-                }
+  @Bean
+  public OpenApiCustomizer customAuthParameter() {
+    Set<String> targetPaths = Set.of(
+      "/api/register"
+    );
 
-                if (isTargetPath) {
-                    pathItem.readOperations().forEach(
-                        this::addAuthParam
-                    );
-                }
-            });
-    }
+    return openApi -> openApi
+      .getPaths()
+      .forEach((path, pathItem) -> {
+        boolean isTargetPath = false;
+        for (String targetPath : targetPaths) {
+          if (path.startsWith(targetPath)) {
+            isTargetPath = true;
+            break;
+          }
+        }
 
-    private void addAuthParam(Operation operation) {
-        operation.addParametersItem(new HeaderParameter()
-            .name("Authorization")
-            .description("액세스 토큰")
-            .required(true)
-            .schema(new StringSchema()));
-    }
+        if (isTargetPath) {
+          pathItem.readOperations().forEach(
+            this::addAuthParam
+          );
+        }
+      });
+  }
+
+  private void addAuthParam(Operation operation) {
+    operation.addParametersItem(new HeaderParameter()
+      .name("Authorization")
+      .description("액세스 토큰")
+      .required(true)
+      .schema(new StringSchema()));
+  }
 }

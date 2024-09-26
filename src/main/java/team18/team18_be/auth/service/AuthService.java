@@ -11,21 +11,21 @@ import team18.team18_be.auth.repository.AuthRepository;
 @Service
 public class AuthService {
 
-    private final AuthRepository authRepository;
+  private final AuthRepository authRepository;
 
-    public AuthService(AuthRepository authRepository) {
-        this.authRepository = authRepository;
-    }
+  public AuthService(AuthRepository authRepository) {
+    this.authRepository = authRepository;
+  }
 
-    public OAuthJwtResponse getOAuthToken(String code, String externalApiUrl) {
-        return null;
-    }
+  public OAuthJwtResponse getOAuthToken(String code, String externalApiUrl) {
+    return null;
+  }
 
-    public LoginResponse registerOAuth(OAuthJwtResponse oAuthJwtResponse, String externalApiUrl) {
-        return null;
-    }
+  public LoginResponse registerOAuth(OAuthJwtResponse oAuthJwtResponse, String externalApiUrl) {
+    return null;
+  }
 
-    public void registerUserType(UserTypeRequest userTypeRequest, MemberIdRequest memberIdRequest) {
+  public void registerUserType(UserTypeRequest userTypeRequest, MemberIdRequest memberIdRequest) {
 
-    }
+  }
 }
