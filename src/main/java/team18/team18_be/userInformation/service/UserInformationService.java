@@ -8,12 +8,12 @@ import team18.team18_be.userInformation.dto.request.VisaRequest;
 @Service
 public class UserInformationService {
 
-  public void createCompany(CompanyRequest companyRequest) {
-  }
+    public void createCompany(CompanyRequest companyRequest) {
+    }
 
-  public void fillInVisa(VisaRequest visaRequest) {
-  }
+    public void fillInVisa(VisaRequest visaRequest) {
+    }
 
-  public void fillInSign(MultipartFile file) {
-  }
+    public void fillInSign(MultipartFile file) {
+    }
 }

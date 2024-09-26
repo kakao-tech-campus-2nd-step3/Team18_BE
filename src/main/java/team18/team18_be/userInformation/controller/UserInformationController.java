@@ -11,31 +11,31 @@ import team18.team18_be.userInformation.service.UserInformationService;
 @RequestMapping("/api")
 public class UserInformationController {
 
-  private final UserInformationService userInformationService;
+    private final UserInformationService userInformationService;
 
-  public UserInformationController(UserInformationService userInformationService,
-                                   @LoginUser User user) {
-    this.userInformationService = userInformationService;
-  }
+    public UserInformationController(UserInformationService userInformationService,
+                                     @LoginUser User user) {
+        this.userInformationService = userInformationService;
+    }
 
-  @PostMapping(value = "/sign", consumes = "multipart/form-data")
-  public ResponseEntity<Void> fillInSign(@RequestParam("file") MultipartFile file,
-                                         @LoginUser User user) {
-    userInformationService.fillInSign(file);
-    return ResponseEntity.noContent().build();
-  }
+    @PostMapping(value = "/sign", consumes = "multipart/form-data")
+    public ResponseEntity<Void> fillInSign(@RequestParam("file") MultipartFile file,
+                                           @LoginUser User user) {
+        userInformationService.fillInSign(file);
+        return ResponseEntity.noContent().build();
+    }
 
-  @PostMapping("/company")
-  public ResponseEntity<Void> createCompany(@RequestBody CompanyRequest companyRequest,
-                                            @LoginUser User user) {
-    userInformationService.createCompany(companyRequest);
-    return ResponseEntity.ok().build();
-  }
+    @PostMapping("/company")
+    public ResponseEntity<Void> createCompany(@RequestBody CompanyRequest companyRequest,
+                                              @LoginUser User user) {
+        userInformationService.createCompany(companyRequest);
+        return ResponseEntity.ok().build();
+    }
 
-  @PutMapping("/visa")
-  public ResponseEntity<Void> fillInVisa(@RequestBody VisaRequest visaRequest,
-                                         @LoginUser User user) {
-    userInformationService.fillInVisa(visaRequest);
-    return ResponseEntity.ok().build();
-  }
+    @PutMapping("/visa")
+    public ResponseEntity<Void> fillInVisa(@RequestBody VisaRequest visaRequest,
+                                           @LoginUser User user) {
+        userInformationService.fillInVisa(visaRequest);
+        return ResponseEntity.ok().build();
+    }
 }
