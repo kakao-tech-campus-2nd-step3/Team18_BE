@@ -1,7 +1,7 @@
-package team18.team18_be.resume.dto;
+package team18.team18_be.resume.dto.response;
 
 public record ResumeResponse(
-        String resumeId,
+        Long resumeId,
         String applicantName,
         String address,
         String phoneNumber,
@@ -9,4 +9,5 @@ public record ResumeResponse(
         String korean,
         String selfIntroduction
 ) {
+
 }
