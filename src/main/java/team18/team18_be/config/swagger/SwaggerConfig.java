@@ -72,4 +72,5 @@ public class SwaggerConfig {
             .required(true)
             .schema(new StringSchema()));
   }
+
 }

@@ -40,7 +40,7 @@ public class RecruitmentController {
   }
 
   @ApiOperation(value = "고용주 별 구인글 조회 메서드")
-  @GetMapping
+  @GetMapping("/user")
   public ResponseEntity<List<RecruitmentResponse>> getAllEmployerName(
           @RequestHeader("Authorization") String token
   ) {
