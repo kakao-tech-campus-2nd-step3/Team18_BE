@@ -4,6 +4,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import team18.team18_be.apply.dto.response.ApplyResponse;
 import team18.team18_be.apply.service.ApplyService;
+import team18.team18_be.auth.entity.User;
+import team18.team18_be.config.resolver.LoginUser;
 import team18.team18_be.userInformation.dto.request.ApplicationFormRequest;
 
 import java.net.URI;
@@ -21,7 +23,7 @@ public class ApplyController {
 
   @PostMapping
   public ResponseEntity<Void> createApplicationForm(
-          @RequestBody ApplicationFormRequest applicationFormRequest) {
+          @RequestBody ApplicationFormRequest applicationFormRequest, @LoginUser User user) {
     Long applicationId = applyService.createApplicationForm(applicationFormRequest);
     URI location = URI.create("/api/application/" + applicationId);
 
@@ -29,7 +31,7 @@ public class ApplyController {
   }
 
   @GetMapping
-  public ResponseEntity<List<ApplyResponse>> SearchApplicant() {
+  public ResponseEntity<List<ApplyResponse>> SearchApplicant(@LoginUser User user) {
     return ResponseEntity.ok(applyService.searchApplicacnt());
   }
 }

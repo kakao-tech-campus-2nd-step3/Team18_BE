@@ -4,8 +4,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import team18.team18_be.resume.dto.ResumeRequest;
-import team18.team18_be.resume.dto.ResumeResponse;
+import team18.team18_be.resume.dto.request.ResumeRequest;
+import team18.team18_be.resume.dto.response.ResumeResponse;
 
 @Api(tags = {"이력서 관련 Controller"})
 @RestController
