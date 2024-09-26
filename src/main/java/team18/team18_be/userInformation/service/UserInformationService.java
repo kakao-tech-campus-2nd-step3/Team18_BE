@@ -8,15 +8,15 @@ import team18.team18_be.userInformation.repository.UserInformationRepository;
 @Service
 public class UserInformationService {
 
-    private final UserInformationRepository userInformationRepository;
+  private final UserInformationRepository userInformationRepository;
 
-    public UserInformationService(UserInformationRepository userInformationRepository) {
-        this.userInformationRepository = userInformationRepository;
-    }
+  public UserInformationService(UserInformationRepository userInformationRepository) {
+    this.userInformationRepository = userInformationRepository;
+  }
 
-    public void createCompany(CompanyRequest companyRequest) {
-    }
+  public void createCompany(CompanyRequest companyRequest) {
+  }
 
-    public void fillInVisa(VisaRequest visaRequest) {
-    }
+  public void fillInVisa(VisaRequest visaRequest) {
+  }
 }

@@ -10,24 +10,24 @@ import team18.team18_be.auth.dto.request.UserIdRequest;
 
 public class LoginUserMethodArgumentResolver implements HandlerMethodArgumentResolver {
 
-    @Override
-    public boolean supportsParameter(MethodParameter parameter) {
-        boolean hasLoginUserAnnotation = parameter.hasParameterAnnotation(LoginUser.class);
-        boolean isTypeOfUserIdRequest = UserIdRequest.class.isAssignableFrom(parameter.getParameterType());
+  @Override
+  public boolean supportsParameter(MethodParameter parameter) {
+    boolean hasLoginUserAnnotation = parameter.hasParameterAnnotation(LoginUser.class);
+    boolean isTypeOfUserIdRequest = UserIdRequest.class.isAssignableFrom(parameter.getParameterType());
 
-        return hasLoginUserAnnotation && isTypeOfUserIdRequest;
-    }
+    return hasLoginUserAnnotation && isTypeOfUserIdRequest;
+  }
 
-    @Override
-    public Object resolveArgument(MethodParameter parameter,
-        ModelAndViewContainer mavContainer,
-        NativeWebRequest webRequest,
-        WebDataBinderFactory binderFactory) throws Exception {
+  @Override
+  public Object resolveArgument(MethodParameter parameter,
+                                ModelAndViewContainer mavContainer,
+                                NativeWebRequest webRequest,
+                                WebDataBinderFactory binderFactory) throws Exception {
 
-        HttpServletRequest request = webRequest.getNativeRequest(
+    HttpServletRequest request = webRequest.getNativeRequest(
             HttpServletRequest.class);
-        Long userId = (Long) request.getAttribute("userId");
+    Long userId = (Long) request.getAttribute("userId");
 
-        return new UserIdRequest(userId);
-    }
+    return new UserIdRequest(userId);
+  }
 }
