@@ -18,16 +18,13 @@ import team18.team18_be.auth.repository.AuthRepository;
 
 public class JwtValidationInterceptor implements HandlerInterceptor {
 
+    private final AuthRepository authRepository;
     @Value("${jwt.header}")
     private String AUTHORIZATION;
-
     @Value("${jwt.type}")
     private String JWT_TYPE;
-
     @Value("${jwt.secret}")
     private String JWT_SECRET_KEY;
-
-    private final AuthRepository authRepository;
 
     public JwtValidationInterceptor(AuthRepository authRepository) {
         this.authRepository = authRepository;

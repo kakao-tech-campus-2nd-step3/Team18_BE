@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import java.net.URI;
 import org.springframework.http.HttpHeaders;
@@ -59,7 +58,8 @@ public class AuthController {
 
     @ApiResponse(responseCode = "200", description = "성공")
     @PostMapping("/register")
-    public ResponseEntity<Void> registerUserType(@Valid @RequestBody UserTypeRequest userTypeRequest, @LoginUser UserIdRequest userIdRequest) {
+    public ResponseEntity<Void> registerUserType(@Valid @RequestBody UserTypeRequest userTypeRequest,
+        @LoginUser UserIdRequest userIdRequest) {
         authService.registerUserType(userTypeRequest, userIdRequest);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
