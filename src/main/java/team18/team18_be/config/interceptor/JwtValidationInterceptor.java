@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Enumeration;
+import java.util.Set;
 import javax.crypto.SecretKey;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -18,6 +19,7 @@ import team18.team18_be.auth.repository.AuthRepository;
 
 public class JwtValidationInterceptor implements HandlerInterceptor {
 
+    private final Set<String> allowedMethods;
     private final AuthRepository authRepository;
     @Value("${jwt.header}")
     private String AUTHORIZATION;
@@ -28,12 +30,30 @@ public class JwtValidationInterceptor implements HandlerInterceptor {
 
     public JwtValidationInterceptor(AuthRepository authRepository) {
         this.authRepository = authRepository;
+        this.allowedMethods = Set.of("POST",
+            "GET",
+            "PUT",
+            "DELETE",
+            "PATCH",
+            "HEAD",
+            "OPTIONS",
+            "CONNECT",
+            "TRACE");
+    }
+
+    public JwtValidationInterceptor(AuthRepository authRepository, Set<String> allowedMethods) {
+        this.authRepository = authRepository;
+        this.allowedMethods = allowedMethods;
     }
 
     @Override
     public boolean preHandle(HttpServletRequest request,
         HttpServletResponse response,
         Object handler) throws Exception {
+
+        if (!allowedMethods.contains(request.getMethod().toUpperCase())) {
+            return true;
+        }
 
         String accessToken = getAccessToken(request.getHeaders(AUTHORIZATION));
 

@@ -1,5 +1,6 @@
 package team18.team18_be.config.interceptor;
 
+import java.util.Set;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -20,9 +21,25 @@ public class InterceptorConfig implements WebMvcConfigurer {
         return new JwtValidationInterceptor(authRepository);
     }
 
+    @Bean
+    public JwtValidationInterceptor postOnlyJwtValidationInterceptor() {
+        return new JwtValidationInterceptor(authRepository, Set.of("POST"));
+    }
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(jwtValidationInterceptor())
-            .addPathPatterns("/api/register");
+            .addPathPatterns("/api/register")
+            .addPathPatterns("/api/recruitments/user")
+            .addPathPatterns("/api/application/**")
+            .addPathPatterns("/api/resumes/**")
+            .addPathPatterns("/api/sign/**")
+            .addPathPatterns("/api/company/**")
+            .addPathPatterns("/api/visa")
+            .addPathPatterns("/api/contract/**")
+            .excludePathPatterns("/api/contract/*/preview");
+
+        registry.addInterceptor(postOnlyJwtValidationInterceptor())
+            .addPathPatterns("/api/recruitments");
     }
 }
