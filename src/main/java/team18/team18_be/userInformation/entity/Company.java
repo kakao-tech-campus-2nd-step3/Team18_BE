@@ -1,6 +1,10 @@
 package team18.team18_be.userInformation.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 
 @Table
@@ -21,7 +25,7 @@ public class Company {
   private final String hompageUrl;
 
   public Company(Long companyId, String companyName, String industryOccupation, String brand,
-                 Long revenuePerYear, String logo, String hompageUrl) {
+      Long revenuePerYear, String logo, String hompageUrl) {
     this.companyId = companyId;
     this.companyName = companyName;
     this.industryOccupation = industryOccupation;

@@ -8,15 +8,14 @@ import io.jsonwebtoken.io.Encoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.servlet.HandlerInterceptor;
-import team18.team18_be.auth.repository.AuthRepository;
-
-import javax.crypto.SecretKey;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Enumeration;
 import java.util.Set;
+import javax.crypto.SecretKey;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.servlet.HandlerInterceptor;
+import team18.team18_be.auth.repository.AuthRepository;
 
 public class JwtValidationInterceptor implements HandlerInterceptor {
 
@@ -32,14 +31,14 @@ public class JwtValidationInterceptor implements HandlerInterceptor {
   public JwtValidationInterceptor(AuthRepository authRepository) {
     this.authRepository = authRepository;
     this.allowedMethods = Set.of("POST",
-            "GET",
-            "PUT",
-            "DELETE",
-            "PATCH",
-            "HEAD",
-            "OPTIONS",
-            "CONNECT",
-            "TRACE");
+        "GET",
+        "PUT",
+        "DELETE",
+        "PATCH",
+        "HEAD",
+        "OPTIONS",
+        "CONNECT",
+        "TRACE");
   }
 
   public JwtValidationInterceptor(AuthRepository authRepository, Set<String> allowedMethods) {
@@ -49,8 +48,8 @@ public class JwtValidationInterceptor implements HandlerInterceptor {
 
   @Override
   public boolean preHandle(HttpServletRequest request,
-                           HttpServletResponse response,
-                           Object handler) throws Exception {
+      HttpServletResponse response,
+      Object handler) throws Exception {
 
     if (!allowedMethods.contains(request.getMethod().toUpperCase())) {
       return true;
@@ -87,19 +86,20 @@ public class JwtValidationInterceptor implements HandlerInterceptor {
   }
 
   private boolean setUserIdInRequest(String accessToken,
-                                     HttpServletRequest request,
-                                     HttpServletResponse response)
-          throws IOException {
-    String encodedSecretKey = Encoders.BASE64.encode(JWT_SECRET_KEY.getBytes(StandardCharsets.UTF_8));
+      HttpServletRequest request,
+      HttpServletResponse response)
+      throws IOException {
+    String encodedSecretKey = Encoders.BASE64.encode(
+        JWT_SECRET_KEY.getBytes(StandardCharsets.UTF_8));
 
     byte[] keyBytes = Decoders.BASE64URL.decode(encodedSecretKey);
 
     SecretKey secretKey = Keys.hmacShaKeyFor(keyBytes);
 
     Jws<Claims> claims = Jwts.parser()
-            .verifyWith(secretKey)
-            .build()
-            .parseSignedClaims(accessToken);
+        .verifyWith(secretKey)
+        .build()
+        .parseSignedClaims(accessToken);
 
     Long userId = claims.getPayload().get("userId", Long.class);
 
@@ -111,7 +111,7 @@ public class JwtValidationInterceptor implements HandlerInterceptor {
   }
 
   private boolean validateUserExistence(Long userId, HttpServletResponse response)
-          throws IOException {
+      throws IOException {
     boolean isValid = true;
     if (!authRepository.existsById(userId)) {
       response.sendError(401, "유저 정보가 존재하지 않습니다.");
