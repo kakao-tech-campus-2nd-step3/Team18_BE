@@ -1,12 +1,11 @@
 package team18.team18_be.config.resolver;
 
+import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import team18.team18_be.auth.repository.AuthRepository;
-
-import java.util.List;
 
 @Configuration
 public class ResolverConfig implements WebMvcConfigurer {

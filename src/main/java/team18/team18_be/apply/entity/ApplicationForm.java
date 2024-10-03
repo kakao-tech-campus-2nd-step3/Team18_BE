@@ -1,7 +1,11 @@
 package team18.team18_be.apply.entity;
 
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -28,7 +32,7 @@ public class ApplicationForm {
 
 
   public ApplicationForm(Long resumeId, String name, String address, String phoneNumber,
-                         String applyMotivation) {
+      String applyMotivation) {
     this.resumeId = resumeId;
     this.name = name;
     this.address = address;
