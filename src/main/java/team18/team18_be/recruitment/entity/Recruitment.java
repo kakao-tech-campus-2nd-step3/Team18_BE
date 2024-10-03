@@ -1,6 +1,7 @@
 package team18.team18_be.recruitment.entity;
 
 public class Recruitment {
+
   private Long recruitmentId;
   private String title;
   private String companySize;
@@ -16,7 +17,10 @@ public class Recruitment {
   private String employerName;
   private String detailedDescription;
 
-  public Recruitment(Long recruitmentId, String title, String companySize, String area, String salary, String workDuration, String workType, String workHours, String requestedCareer, String majorBusiness, String eligibilityCriteria, String preferredConditions, String employerName, String detailedDescription) {
+  public Recruitment(Long recruitmentId, String title, String companySize, String area,
+      String salary, String workDuration, String workType, String workHours, String requestedCareer,
+      String majorBusiness, String eligibilityCriteria, String preferredConditions,
+      String employerName, String detailedDescription) {
     this.recruitmentId = recruitmentId;
     this.title = title;
     this.companySize = companySize;

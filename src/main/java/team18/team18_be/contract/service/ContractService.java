@@ -8,6 +8,7 @@ import team18.team18_be.contract.repository.ContractRepository;
 
 @Service
 public class ContractService {
+
   private final ContractRepository contractRepository;
 
   public ContractService(ContractRepository contractRepository) {
