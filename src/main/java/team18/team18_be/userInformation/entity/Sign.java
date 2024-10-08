@@ -27,8 +27,9 @@ public class Sign {
   @JoinColumn(name="user_id")
   private User user;
 
-  public Sign(Long id, String imageName) {
+  public Sign(Long id, String imageName, User user) {
     this.id = id;
     this.imageName = imageName;
+    this.user=user;
   }
 }
