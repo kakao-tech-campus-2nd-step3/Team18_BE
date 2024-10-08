@@ -22,7 +22,6 @@ public class Company {
   @NotBlank
   private final Long revenuePerYear;
   private final String logo;
-  private final String hompageUrl;
 
   public Company(Long companyId, String companyName, String industryOccupation, String brand,
       Long revenuePerYear, String logo, String hompageUrl) {
@@ -32,6 +31,5 @@ public class Company {
     this.brand = brand;
     this.revenuePerYear = revenuePerYear;
     this.logo = logo;
-    this.hompageUrl = hompageUrl;
   }
 }
