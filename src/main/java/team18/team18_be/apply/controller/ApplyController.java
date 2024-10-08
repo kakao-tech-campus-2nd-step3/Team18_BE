@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import team18.team18_be.apply.dto.response.ApplyResponse;
 import team18.team18_be.apply.service.ApplyService;
+import team18.team18_be.auth.entity.User;
+import team18.team18_be.config.resolver.LoginUser;
 import team18.team18_be.userInformation.dto.request.ApplicationFormRequest;
 
 @RestController
@@ -23,16 +25,16 @@ public class ApplyController {
   }
 
   @PostMapping
-  public ResponseEntity<Void> registerApplicationForm(
-    @RequestBody ApplicationFormRequest applicationFormRequest) {
-    applyService.registerApplicationForm(applicationFormRequest);
+  public ResponseEntity<Void> createApplicationForm(
+      @RequestBody ApplicationFormRequest applicationFormRequest, @LoginUser User user) {
+    Long applicationId = applyService.createApplicationForm(applicationFormRequest);
+    URI location = URI.create("/api/application/" + applicationId);
 
-    //URI경로를 로그인 정보에서 가져와 사용?
-    return ResponseEntity.created(URI.create("applicationForm")).build();
+    return ResponseEntity.created(location).build();
   }
 
   @GetMapping
-  public ResponseEntity<List<ApplyResponse>> SearchApplicant() {
+  public ResponseEntity<List<ApplyResponse>> SearchApplicant(@LoginUser User user) {
     return ResponseEntity.ok(applyService.searchApplicacnt());
   }
 }
