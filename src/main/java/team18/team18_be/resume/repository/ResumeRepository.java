@@ -1,5 +1,8 @@
 package team18.team18_be.resume.repository;
 
-public interface ResumeRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import team18.team18_be.resume.entity.Resume;
+
+public interface ResumeRepository extends JpaRepository<Resume, Long> {
 
 }
