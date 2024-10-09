@@ -1,5 +1,7 @@
 package team18.team18_be.userInformation.dto.request;
 
-public record VisaRequest(String foreginerNumber, String visaGenereteDate) {
+import java.time.LocalDateTime;
+
+public record VisaRequest(String foreginerNumber, LocalDateTime visaGenereteDate) {
 
 }
