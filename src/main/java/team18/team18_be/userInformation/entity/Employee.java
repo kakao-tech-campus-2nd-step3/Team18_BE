@@ -26,4 +26,20 @@ public class Employee {
     this.visaGenerateDate = visaGenerateDate;
     this.user = user;
   }
+
+  public Long getId() {
+    return id;
+  }
+
+  public String getForeginerNumber() {
+    return foreginerNumber;
+  }
+
+  public LocalDateTime getVisaGenerateDate() {
+    return visaGenerateDate;
+  }
+
+  public User getUser() {
+    return user;
+  }
 }
