@@ -38,3 +38,6 @@ out/
 
 ### Properties ###
 **/application-test.properties
+
+### txt ###
+/awsSetting.txt
