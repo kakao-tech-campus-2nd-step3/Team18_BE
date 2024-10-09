@@ -40,4 +40,4 @@ out/
 **/application-test.properties
 
 ### txt ###
-/awsSetting.txt
+awsSetting.txt
