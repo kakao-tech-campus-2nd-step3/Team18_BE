@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import team18.team18_be.auth.entity.User;
 import team18.team18_be.config.resolver.LoginUser;
@@ -40,17 +41,18 @@ public class ResumeController {
   @ApiOperation(value = "구직자 별 이력서 조회 메서드")
   @GetMapping
   public ResponseEntity<ResumeResponse> getResume(
-      @RequestHeader("Authorization") String token
+      @LoginUser User user
   ) {
-    return null;
+    return ResponseEntity.ok().body(resumeService.findResumeByEmployeeId(user.getId()));
   }
 
   @ApiOperation(value = "이력서 id로 이력서 조회 메서드")
   @GetMapping("/resumeId")
   public ResponseEntity<ResumeResponse> getResumeById(
-      @RequestHeader("Authorization") String token
+      @RequestParam Long resumeId,
+      @LoginUser User user
   ) {
-    return null;
+    return ResponseEntity.ok().body(resumeService.findResumeById(resumeId,user.getId()));
   }
 
 }

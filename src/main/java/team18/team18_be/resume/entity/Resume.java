@@ -29,7 +29,33 @@ public class Resume {
   }
 
   public Resume() {
-
   }
 
+  public Long getResumeId() {
+    return resumeId;
+  }
+
+  public String getApplicantName() {
+    return applicantName;
+  }
+
+  public String getAddress() {
+    return address;
+  }
+
+  public String getPhoneNumber() {
+    return phoneNumber;
+  }
+
+  public String getCareer() {
+    return career;
+  }
+
+  public String getKorean() {
+    return korean;
+  }
+
+  public String getSelfIntroduction() {
+    return selfIntroduction;
+  }
 }
