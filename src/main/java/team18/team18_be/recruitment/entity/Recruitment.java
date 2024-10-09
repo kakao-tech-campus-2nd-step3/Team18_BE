@@ -2,20 +2,20 @@ package team18.team18_be.recruitment.entity;
 
 public class Recruitment {
 
-  private Long recruitmentId;
-  private String title;
-  private String companySize;
-  private String area;
-  private String salary;
-  private String workDuration;
-  private String workType;
-  private String workHours;
-  private String requestedCareer;
-  private String majorBusiness;
-  private String eligibilityCriteria;
-  private String preferredConditions;
-  private String employerName;
-  private String detailedDescription;
+  private final Long recruitmentId;
+  private final String title;
+  private final String companySize;
+  private final String area;
+  private final String salary;
+  private final String workDuration;
+  private final String workType;
+  private final String workHours;
+  private final String requestedCareer;
+  private final String majorBusiness;
+  private final String eligibilityCriteria;
+  private final String preferredConditions;
+  private final String employerName;
+  private final String detailedDescription;
 
   public Recruitment(Long recruitmentId, String title, String companySize, String area,
       String salary, String workDuration, String workType, String workHours, String requestedCareer,

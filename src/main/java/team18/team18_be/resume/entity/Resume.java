@@ -2,13 +2,13 @@ package team18.team18_be.resume.entity;
 
 public class Resume {
 
-  private Long resumeId;
-  private String applicantName;
-  private String address;
-  private String phoneNumber;
-  private String career;
-  private String korean;
-  private String selfIntroduction;
+  private final Long resumeId;
+  private final String applicantName;
+  private final String address;
+  private final String phoneNumber;
+  private final String career;
+  private final String korean;
+  private final String selfIntroduction;
 
   public Resume(Long resumeId, String applicantName, String address, String phoneNumber,
       String career, String korean, String selfIntroduction) {
