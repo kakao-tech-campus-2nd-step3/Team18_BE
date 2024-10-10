@@ -71,11 +71,7 @@ public class JwtValidationInterceptor implements HandlerInterceptor {
 
   private boolean setUserIdInRequest(String accessToken,
       HttpServletRequest request) {
-    String encodedSecretKey = Encoders.BASE64.encode(
-        JWT_SECRET_KEY.getBytes(StandardCharsets.UTF_8));
-
-    byte[] keyBytes = Decoders.BASE64URL.decode(encodedSecretKey);
-
+    byte[] keyBytes = JWT_SECRET_KEY.getBytes(StandardCharsets.UTF_8);
     SecretKey secretKey = Keys.hmacShaKeyFor(keyBytes);
 
     Jws<Claims> claims = Jwts.parser()
