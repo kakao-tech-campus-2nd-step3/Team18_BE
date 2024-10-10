@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import java.net.URI;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import team18.team18_be.auth.dto.request.ClientIdRequest;
+import team18.team18_be.auth.dto.request.CodeRequest;
 import team18.team18_be.auth.dto.request.UserTypeRequest;
 import team18.team18_be.auth.dto.response.LoginResponse;
 import team18.team18_be.auth.dto.response.OAuthJwtResponse;
@@ -27,33 +27,31 @@ import team18.team18_be.config.resolver.LoginUser;
 @RequestMapping("/api")
 public class AuthController {
 
-  private static final String TOKEN_REDIRECT_URL = "?";
-
-  private static final String GOOGLE_AUTH_TOKEN_URL = "https://oauth2.googleapis.com/token";
-
-  private static final String GOOGLE_USER_INFO_URL = "https://www.googleapis.com/userinfo/v2/me";
-
   private final AuthService authService;
+  @Value("${oauth.google.token-uri}")
+  private String GOOGLE_TOKEN_URI;
+  @Value("${oauth.google.user-info-uri}")
+  private String GOOGLE_USER_INFO_URI;
 
   public AuthController(AuthService authService) {
     this.authService = authService;
   }
 
-  @ApiResponse(responseCode = "301", description = "성공 (리다이렉트)", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserTypeResponse.class)))
+  @ApiResponse(responseCode = "200", description = "성공", content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserTypeResponse.class)))
   @PostMapping("/oauth")
-  public ResponseEntity<UserTypeResponse> login(@RequestBody ClientIdRequest clientIdRequest) {
-    OAuthJwtResponse oAuthJwtResponse = authService.getOAuthToken(clientIdRequest.code(),
-        GOOGLE_AUTH_TOKEN_URL);
+  public ResponseEntity<UserTypeResponse> login(@RequestBody CodeRequest codeRequest) {
+    OAuthJwtResponse oAuthJwtResponse = authService.getOAuthToken(codeRequest,
+        GOOGLE_TOKEN_URI);
     LoginResponse loginResponse = authService.registerOAuth(oAuthJwtResponse,
-        GOOGLE_USER_INFO_URL);
+        GOOGLE_USER_INFO_URI);
 
     HttpHeaders headers = new HttpHeaders();
-    headers.setLocation(URI.create(TOKEN_REDIRECT_URL));
     headers.setBearerAuth(loginResponse.accessToken());
 
-    UserTypeResponse userTypeResponse = new UserTypeResponse(loginResponse.type());
+    UserTypeResponse userTypeResponse = new UserTypeResponse(loginResponse.type(),
+        loginResponse.profileImage());
 
-    return new ResponseEntity<>(userTypeResponse, headers, HttpStatus.MOVED_PERMANENTLY);
+    return new ResponseEntity<>(userTypeResponse, headers, HttpStatus.OK);
   }
 
   @ApiResponse(responseCode = "200", description = "성공")
