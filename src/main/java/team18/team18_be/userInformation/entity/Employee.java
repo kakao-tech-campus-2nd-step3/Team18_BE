@@ -7,7 +7,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import java.time.LocalDateTime;
 import team18.team18_be.auth.entity.User;
 
 @Table
@@ -33,10 +32,6 @@ public class Employee {
     this.user = user;
   }
 
-  public Employee(String foreginerNumber, String visaGenerateDate) {
-    this.foreginerNumber = foreginerNumber;
-    this.visaGenerateDate = visaGenerateDate;
-  }
   public Long getId() {
     return id;
   }

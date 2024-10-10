@@ -27,10 +27,12 @@ public class Company {
   private String logo;
 
   @ManyToOne
-  @JoinColumn(name="user_id")
+  @JoinColumn(name = "user_id")
   private User user;
+
   public Company() {
   }
+
   public Company(String companyName, String industryOccupation, String brand,
       String revenuePerYear, String logo, User user) {
     this.companyName = companyName;
@@ -38,16 +40,7 @@ public class Company {
     this.brand = brand;
     this.revenuePerYear = revenuePerYear;
     this.logo = logo;
-    this.user=user;
-  }
-
-  public Company(String companyName, String industryOccupation, String brand,
-      String revenuePerYear, String logo) {
-    this.companyName = companyName;
-    this.industryOccupation = industryOccupation;
-    this.brand = brand;
-    this.revenuePerYear = revenuePerYear;
-    this.logo = logo;
+    this.user = user;
   }
 
   public String getCompanyName() {

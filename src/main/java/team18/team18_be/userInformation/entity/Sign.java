@@ -7,7 +7,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
 import team18.team18_be.auth.entity.User;
 
 @Table
@@ -21,18 +20,15 @@ public class Sign {
   private String imageUrl;
 
   @OneToOne
-  @JoinColumn(name="user_id")
+  @JoinColumn(name = "user_id")
   private User user;
 
   public Sign() {
   }
 
-    public Sign(String imageUrl, User user) {
-  this.imageUrl = imageUrl;
-    this.user=user;
-  }
-  public Sign(String imageUrl) {
+  public Sign(String imageUrl, User user) {
     this.imageUrl = imageUrl;
+    this.user = user;
   }
 
   public Long getId() {
