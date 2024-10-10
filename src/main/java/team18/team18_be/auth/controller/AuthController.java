@@ -47,7 +47,8 @@ public class AuthController {
     HttpHeaders headers = new HttpHeaders();
     headers.setBearerAuth(loginResponse.accessToken());
 
-    UserTypeResponse userTypeResponse = new UserTypeResponse(loginResponse.type());
+    UserTypeResponse userTypeResponse = new UserTypeResponse(loginResponse.type(),
+        loginResponse.profileImage());
 
     return new ResponseEntity<>(userTypeResponse, headers, HttpStatus.OK);
   }

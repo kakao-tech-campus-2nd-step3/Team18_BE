@@ -4,6 +4,7 @@ package team18.team18_be.auth.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.URI;
+import java.util.NoSuchElementException;
 import org.apache.logging.log4j.util.InternalException;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
@@ -16,6 +17,7 @@ import team18.team18_be.auth.dto.request.UserTypeRequest;
 import team18.team18_be.auth.dto.response.LoginResponse;
 import team18.team18_be.auth.dto.response.OAuthJwtResponse;
 import team18.team18_be.auth.entity.User;
+import team18.team18_be.auth.entity.UserType;
 import team18.team18_be.auth.repository.AuthRepository;
 import team18.team18_be.config.property.GoogleProperty;
 import team18.team18_be.exception.OAuthLoginFailedException;
@@ -55,6 +57,38 @@ public class AuthService {
     }
   }
 
+  public LoginResponse registerOAuth(OAuthJwtResponse oAuthJwtResponse, String externalApiUri) {
+    ResponseEntity<String> response = restClient.post()
+        .uri(URI.create(externalApiUri))
+        .contentType(MediaType.APPLICATION_JSON)
+        .header("Authorization", "Bearer " + oAuthJwtResponse.accessToken())
+        .retrieve()
+        .onStatus(HttpStatusCode::is4xxClientError, ((req, res) -> {
+          throw new OAuthLoginFailedException("구글 유저 정보 조회 중 에러가 발생하였습니다.");
+        }))
+        .toEntity(String.class);
+
+    try {
+      ObjectMapper objectMapper = new ObjectMapper();
+      JsonNode rootNode = objectMapper.readTree(response.getBody());
+      String userEmail = rootNode.path("email").asText();
+
+      if (!authRepository.existsByEmail(userEmail)) {
+        String userName = rootNode.path("name").asText();
+        authRepository.save(new User(userName, userEmail, UserType.FIRST.getUserType()));
+      }
+
+      String profileImage = rootNode.path("picture").asText();
+      return getLoginResponse(oAuthJwtResponse, userEmail, profileImage);
+    } catch (Exception e) {
+      throw new InternalException("OAuth 로그인 진행 중 예기치 못한 오류가 발생하였습니다.");
+    }
+  }
+
+  public void registerUserType(UserTypeRequest userTypeRequest, User user) {
+    authRepository.save(user.updateUserType(userTypeRequest.type()));
+  }
+
   private LinkedMultiValueMap<String, String> getRequestBody(CodeRequest codeRequest) {
     LinkedMultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
     requestBody.add("code", codeRequest.code());
@@ -65,12 +99,11 @@ public class AuthService {
     return requestBody;
   }
 
-  public LoginResponse registerOAuth(OAuthJwtResponse oAuthJwtResponse, String externalApiUri) {
-    return null;
+  private LoginResponse getLoginResponse(OAuthJwtResponse oAuthJwtResponse, String userEmail,
+      String profileImage) {
+    User user = authRepository.findByEmail(userEmail)
+        .orElseThrow(() -> new NoSuchElementException("회원 정보가 존재하지 않습니다."));
+    String userType = user.getType();
+    return new LoginResponse(oAuthJwtResponse.accessToken(), userType, profileImage);
   }
-
-  public void registerUserType(UserTypeRequest userTypeRequest, User user) {
-    authRepository.save(user.updateUserType(userTypeRequest.type()));
-  }
-
 }
