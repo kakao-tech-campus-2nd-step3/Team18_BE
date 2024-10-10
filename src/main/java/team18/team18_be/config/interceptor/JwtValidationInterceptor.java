@@ -8,14 +8,15 @@ import io.jsonwebtoken.io.Encoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Enumeration;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import javax.crypto.SecretKey;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.servlet.HandlerInterceptor;
 import team18.team18_be.auth.repository.AuthRepository;
+import team18.team18_be.exception.JwtInvalidException;
 
 public class JwtValidationInterceptor implements HandlerInterceptor {
 
@@ -49,7 +50,7 @@ public class JwtValidationInterceptor implements HandlerInterceptor {
   @Override
   public boolean preHandle(HttpServletRequest request,
       HttpServletResponse response,
-      Object handler) throws Exception {
+      Object handler) {
 
     if (!allowedMethods.contains(request.getMethod().toUpperCase())) {
       return true;
@@ -58,15 +59,13 @@ public class JwtValidationInterceptor implements HandlerInterceptor {
     String accessToken = getAccessToken(request.getHeaders(AUTHORIZATION));
 
     if (accessToken.isEmpty()) {
-      response.sendError(401, "요청에 액세스 토큰이 존재하지 않습니다.");
-      return false;
+      throw new JwtInvalidException("요청에 액세스 토큰이 존재하지 않습니다.");
     }
 
     try {
-      return setUserIdInRequest(accessToken, request, response);
+      return setUserIdInRequest(accessToken, request);
     } catch (Exception e) {
-      response.sendError(401, "액세스 토큰이 유효하지 않습니다.");
-      return false;
+      throw new JwtInvalidException("액세스 토큰이 유효하지 않습니다.");
     }
   }
 
@@ -86,9 +85,7 @@ public class JwtValidationInterceptor implements HandlerInterceptor {
   }
 
   private boolean setUserIdInRequest(String accessToken,
-      HttpServletRequest request,
-      HttpServletResponse response)
-      throws IOException {
+      HttpServletRequest request) {
     String encodedSecretKey = Encoders.BASE64.encode(
         JWT_SECRET_KEY.getBytes(StandardCharsets.UTF_8));
 
@@ -103,20 +100,15 @@ public class JwtValidationInterceptor implements HandlerInterceptor {
 
     Long userId = claims.getPayload().get("userId", Long.class);
 
-    boolean isValid = validateUserExistence(userId, response);
-    if (isValid) {
-      request.setAttribute("userId", userId);
-    }
-    return isValid;
+    validateUserExistence(userId);
+    request.setAttribute("userId", userId);
+
+    return true;
   }
 
-  private boolean validateUserExistence(Long userId, HttpServletResponse response)
-      throws IOException {
-    boolean isValid = true;
+  private void validateUserExistence(Long userId) {
     if (!authRepository.existsById(userId)) {
-      response.sendError(401, "유저 정보가 존재하지 않습니다.");
-      isValid = false;
+      throw new NoSuchElementException("회원 정보가 존재하지 않습니다.");
     }
-    return isValid;
   }
 }

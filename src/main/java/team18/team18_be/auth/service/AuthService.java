@@ -3,9 +3,15 @@ package team18.team18_be.auth.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
+import java.util.Date;
 import java.util.NoSuchElementException;
+import javax.crypto.SecretKey;
 import org.apache.logging.log4j.util.InternalException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +34,9 @@ public class AuthService {
   private final AuthRepository authRepository;
   private final GoogleProperty googleProperty;
   private final RestClient restClient = RestClient.builder().build();
+
+  @Value("${jwt.secret}")
+  private String SECRET_KEY;
 
   public AuthService(AuthRepository authRepository, GoogleProperty googleProperty) {
     this.authRepository = authRepository;
@@ -58,9 +67,8 @@ public class AuthService {
   }
 
   public LoginResponse registerOAuth(OAuthJwtResponse oAuthJwtResponse, String externalApiUri) {
-    ResponseEntity<String> response = restClient.post()
+    ResponseEntity<String> response = restClient.get()
         .uri(URI.create(externalApiUri))
-        .contentType(MediaType.APPLICATION_JSON)
         .header("Authorization", "Bearer " + oAuthJwtResponse.accessToken())
         .retrieve()
         .onStatus(HttpStatusCode::is4xxClientError, ((req, res) -> {
@@ -79,7 +87,7 @@ public class AuthService {
       }
 
       String profileImage = rootNode.path("picture").asText();
-      return getLoginResponse(oAuthJwtResponse, userEmail, profileImage);
+      return getLoginResponse(userEmail, profileImage);
     } catch (Exception e) {
       throw new InternalException("OAuth 로그인 진행 중 예기치 못한 오류가 발생하였습니다.");
     }
@@ -95,15 +103,26 @@ public class AuthService {
     requestBody.add("client_id", googleProperty.clientId());
     requestBody.add("client_secret", googleProperty.clientSecret());
     requestBody.add("redirect_uri", googleProperty.redirectUri());
-    requestBody.add("grant-type", googleProperty.grantType());
+    requestBody.add("grant_type", googleProperty.grantType());
     return requestBody;
   }
 
-  private LoginResponse getLoginResponse(OAuthJwtResponse oAuthJwtResponse, String userEmail,
+  private LoginResponse getLoginResponse(String userEmail,
       String profileImage) {
     User user = authRepository.findByEmail(userEmail)
         .orElseThrow(() -> new NoSuchElementException("회원 정보가 존재하지 않습니다."));
     String userType = user.getType();
-    return new LoginResponse(oAuthJwtResponse.accessToken(), userType, profileImage);
+    String accessToken = getAccessToken(user);
+    return new LoginResponse(accessToken, userType, profileImage);
+  }
+
+  private String getAccessToken(User user) {
+    byte[] keyBytes = SECRET_KEY.getBytes(StandardCharsets.UTF_8);
+    SecretKey key = Keys.hmacShaKeyFor(keyBytes);
+    return Jwts.builder()
+        .claim("userId", user.getId())
+        .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60L))
+        .signWith(key)
+        .compact();
   }
 }
