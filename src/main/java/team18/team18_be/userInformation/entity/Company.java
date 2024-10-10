@@ -16,28 +16,57 @@ public class Company {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private final Long companyId;
+  private Long id;
   @NotBlank
   private String companyName;
   @NotBlank
   private String industryOccupation;
   private String brand;
   @NotBlank
-  private Long revenuePerYear;
+  private String revenuePerYear;
   private String logo;
 
   @ManyToOne
   @JoinColumn(name="user_id")
   private User user;
-
-  public Company(Long companyId, String companyName, String industryOccupation, String brand,
-      Long revenuePerYear, String logo, User user) {
-    this.companyId = companyId;
+  public Company() {
+  }
+  public Company(String companyName, String industryOccupation, String brand,
+      String revenuePerYear, String logo, User user) {
     this.companyName = companyName;
     this.industryOccupation = industryOccupation;
     this.brand = brand;
     this.revenuePerYear = revenuePerYear;
     this.logo = logo;
     this.user=user;
+  }
+
+  public Company(String companyName, String industryOccupation, String brand,
+      String revenuePerYear, String logo) {
+    this.companyName = companyName;
+    this.industryOccupation = industryOccupation;
+    this.brand = brand;
+    this.revenuePerYear = revenuePerYear;
+    this.logo = logo;
+  }
+
+  public String getCompanyName() {
+    return companyName;
+  }
+
+  public String getIndustryOccupation() {
+    return industryOccupation;
+  }
+
+  public String getBrand() {
+    return brand;
+  }
+
+  public String getRevenuePerYear() {
+    return revenuePerYear;
+  }
+
+  public String getLogo() {
+    return logo;
   }
 }

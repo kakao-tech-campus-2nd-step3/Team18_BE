@@ -8,7 +8,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import team18.team18_be.auth.entity.User;
 
 @Table
@@ -17,9 +16,7 @@ public class Sign {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private final Long id;
-  @NotBlank
-  private String imageName;
+  private Long id;
 
   private String imageUrl;
 
@@ -27,9 +24,22 @@ public class Sign {
   @JoinColumn(name="user_id")
   private User user;
 
-  public Sign(Long id, String imageName, User user) {
-    this.id = id;
-    this.imageName = imageName;
+  public Sign() {
+  }
+
+    public Sign(String imageUrl, User user) {
+  this.imageUrl = imageUrl;
     this.user=user;
+  }
+  public Sign(String imageUrl) {
+    this.imageUrl = imageUrl;
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public String getImageUrl() {
+    return imageUrl;
   }
 }
