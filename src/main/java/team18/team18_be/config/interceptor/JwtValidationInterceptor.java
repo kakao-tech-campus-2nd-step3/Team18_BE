@@ -35,11 +35,7 @@ public class JwtValidationInterceptor implements HandlerInterceptor {
         "GET",
         "PUT",
         "DELETE",
-        "PATCH",
-        "HEAD",
-        "OPTIONS",
-        "CONNECT",
-        "TRACE");
+        "PATCH");
   }
 
   public JwtValidationInterceptor(AuthRepository authRepository, Set<String> allowedMethods) {
