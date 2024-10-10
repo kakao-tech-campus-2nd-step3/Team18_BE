@@ -40,5 +40,5 @@ out/
 **/application-test.properties
 
 ### txt ###
-aws_setting.txt
 application-aws.properties
+application-gcs.properties
