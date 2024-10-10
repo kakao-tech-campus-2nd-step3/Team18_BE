@@ -6,6 +6,7 @@ public record RecruitmentRequest(
     String area,
     String salary,
     String workDuration,
+    String workDays,
     String workType,
     String workHours,
     String requestedCareer,

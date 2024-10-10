@@ -1,32 +1,38 @@
 package team18.team18_be.recruitment.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
 public class Recruitment {
+  @Id
+  private Long recruitmentId;
+  private String koreanTitle;
+  private String vietnameseTitle;
+  private String companySize;
+  private String area;
+  private String salary;
+  private String workDuration;
+  private String workDays;
+  private String workType;
+  private String workHours;
+  private String requestedCareer;
+  private String majorBusiness;
+  private String eligibilityCriteria;
+  private String preferredConditions;
+  private String employerName;
 
-  private final Long recruitmentId;
-  private final String title;
-  private final String companySize;
-  private final String area;
-  private final String salary;
-  private final String workDuration;
-  private final String workType;
-  private final String workHours;
-  private final String requestedCareer;
-  private final String majorBusiness;
-  private final String eligibilityCriteria;
-  private final String preferredConditions;
-  private final String employerName;
-  private final String detailedDescription;
-
-  public Recruitment(Long recruitmentId, String title, String companySize, String area,
-      String salary, String workDuration, String workType, String workHours, String requestedCareer,
+  public Recruitment( String koreanTitle, String vietnameseTitle, String companySize, String area,
+      String salary, String workDuration,String workDays, String workType, String workHours, String requestedCareer,
       String majorBusiness, String eligibilityCriteria, String preferredConditions,
-      String employerName, String detailedDescription) {
-    this.recruitmentId = recruitmentId;
-    this.title = title;
+      String employerName) {
+    this.koreanTitle = koreanTitle;
+    this.vietnameseTitle = vietnameseTitle;
     this.companySize = companySize;
     this.area = area;
     this.salary = salary;
     this.workDuration = workDuration;
+    this.workDays = workDays;
     this.workType = workType;
     this.workHours = workHours;
     this.requestedCareer = requestedCareer;
@@ -34,6 +40,9 @@ public class Recruitment {
     this.eligibilityCriteria = eligibilityCriteria;
     this.preferredConditions = preferredConditions;
     this.employerName = employerName;
-    this.detailedDescription = detailedDescription;
+  }
+
+  public Recruitment() {
+    
   }
 }
