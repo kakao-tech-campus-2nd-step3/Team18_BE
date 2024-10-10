@@ -42,6 +42,10 @@ public class Recruitment {
     this.employerName = employerName;
   }
 
+  public Long getRecruitmentId() {
+    return recruitmentId;
+  }
+
   public Recruitment() {
     
   }

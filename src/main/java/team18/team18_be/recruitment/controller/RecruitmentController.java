@@ -1,5 +1,6 @@
 package team18.team18_be.recruitment.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
@@ -35,8 +36,8 @@ public class RecruitmentController {
   public ResponseEntity<Void> saveRecruitment(
       @RequestBody RecruitmentRequest recruitmentRequest,
       @LoginUser User user
-  ) {
-
+  ) throws JsonProcessingException {
+    recruitmentService.saveRecruitment(recruitmentRequest);
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 
