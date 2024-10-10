@@ -35,7 +35,7 @@ public class RecruitmentService {
   }
 
   private Recruitment mapRecruitmentRequestToRecruitment(String koreanTitle,String vietnameseTitle,RecruitmentRequest recruitmentRequest){
-    return new Recruitment(koreanTitle,vietnameseTitle,recruitmentRequest.companySize(),recruitmentRequest.area(),recruitmentRequest.salary(),recruitmentRequest.workDuration(),recruitmentRequest.workDays(), recruitmentRequest.workType(),recruitmentRequest.workHours(),recruitmentRequest.requestedCareer(),recruitmentRequest.majorBusiness(),recruitmentRequest.eligibilityCriteria(),recruitmentRequest.preferredConditions(),recruitmentRequest.employerName());
+    return new Recruitment(koreanTitle,vietnameseTitle,recruitmentRequest.companySize(),recruitmentRequest.area(),recruitmentRequest.salary(),recruitmentRequest.workDuration(),recruitmentRequest.workDays(), recruitmentRequest.workType(),recruitmentRequest.workHours(),recruitmentRequest.requestedCareer(),recruitmentRequest.majorBusiness(),recruitmentRequest.eligibilityCriteria(),recruitmentRequest.preferredConditions(),recruitmentRequest.employerName(),recruitmentRequest.companyName());
   }
 
 }

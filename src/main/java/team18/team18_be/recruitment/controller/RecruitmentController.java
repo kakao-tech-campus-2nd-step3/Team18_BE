@@ -52,13 +52,14 @@ public class RecruitmentController {
   public ResponseEntity<RecruitmentResponse> getRecruitments(
       @PathVariable Long postId
   ) {
+
     return null;
   }
 
   @ApiOperation(value = "고용주 별 구인글 조회 메서드")
   @GetMapping("/user")
   public ResponseEntity<List<RecruitmentResponse>> getAllEmployerName(
-      @RequestHeader("Authorization") String token
+      @LoginUser User user
   ) {
     return null;
   }

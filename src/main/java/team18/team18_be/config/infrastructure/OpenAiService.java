@@ -18,14 +18,14 @@ import org.springframework.web.client.RestTemplate;
 import team18.team18_be.config.infrastructure.dto.Message;
 import team18.team18_be.config.infrastructure.dto.RequestToAi;
 import team18.team18_be.recruitment.dto.request.RecruitmentRequest;
-import team18.team18_be.resume.dto.request.ResumeRequest;
 
 @Component
 public class OpenAiService {
-  private final String chatGptUrl = "https://api.openai.com/v1/chat/completions";
 
   @Value("${chatgpt.api-key}")
   private String gptKey;
+
+  private final String chatGptUrl = "https://api.openai.com/v1/chat/completions";
 
   private final RestTemplate restTemplate;
   private final ObjectMapper objectMapper;
@@ -36,7 +36,7 @@ public class OpenAiService {
   }
 
   public String summation(RecruitmentRequest recruitmentRequest) throws JsonProcessingException {
-    return getResponseFromAi(recruitmentRequest.toString() + " 를 한국말로 자연스럽게 요약해줘");
+    return getResponseFromAi(recruitmentRequest.toString() + " 를 한국말로만 자연스럽게 요약해줘");
   }
 
   public String translateKoreanToVietnamese(String message) throws JsonProcessingException {
@@ -65,7 +65,6 @@ public class OpenAiService {
 
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(APPLICATION_JSON);
-    System.out.println(gptKey);
     headers.add("Authorization","Bearer " + gptKey);
 
     HttpEntity<String> requestEntity = new HttpEntity<>(jsonBody, headers);

@@ -21,11 +21,12 @@ public class Recruitment {
   private String eligibilityCriteria;
   private String preferredConditions;
   private String employerName;
+  private String companyName;
 
   public Recruitment( String koreanTitle, String vietnameseTitle, String companySize, String area,
       String salary, String workDuration,String workDays, String workType, String workHours, String requestedCareer,
       String majorBusiness, String eligibilityCriteria, String preferredConditions,
-      String employerName) {
+      String employerName,String companyName) {
     this.koreanTitle = koreanTitle;
     this.vietnameseTitle = vietnameseTitle;
     this.companySize = companySize;
@@ -40,6 +41,7 @@ public class Recruitment {
     this.eligibilityCriteria = eligibilityCriteria;
     this.preferredConditions = preferredConditions;
     this.employerName = employerName;
+    this.companyName = companyName;
   }
 
   public Long getRecruitmentId() {

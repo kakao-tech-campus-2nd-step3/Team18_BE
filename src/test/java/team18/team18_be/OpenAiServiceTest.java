@@ -1,16 +1,16 @@
 package team18.team18_be;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import team18.team18_be.config.infrastructure.OpenAiService;
 import team18.team18_be.recruitment.dto.request.RecruitmentRequest;
 
+@SpringBootTest
 public class OpenAiServiceTest {
 
+  @Autowired
   private OpenAiService openAiService;
 
   private RecruitmentRequest recruitmentRequest = new RecruitmentRequest(
@@ -26,19 +26,9 @@ public class OpenAiServiceTest {
       "한식, 양식 조리",              // 주요 업무
       "관련 전공 또는 자격증 소지",   // 자격 요건
       "경력 우대, 성실한 분",          // 우대 조건
-      "김철수"                        // 고용주 이름
+      "김철수", //고용주 이름
+      "학사마을 식당"// 회사 이름
   );
-
-
-  @BeforeEach
-  public void setUp() {
-    // RestTemplate과 ObjectMapper 생성
-    RestTemplate restTemplate = new RestTemplateBuilder().build();
-    ObjectMapper objectMapper = new ObjectMapper();
-
-    // OpenAiService 생성자에 직접 주입
-    openAiService = new OpenAiService(new RestTemplateBuilder(), objectMapper);
-  }
 
   @Test
   void test1() throws JsonProcessingException {
@@ -50,5 +40,6 @@ public class OpenAiServiceTest {
   void test2() throws JsonProcessingException {
     String result = openAiService.summation(recruitmentRequest);
     System.out.println(result);
+    System.out.println(openAiService.translateKoreanToVietnamese(result));
   }
 }

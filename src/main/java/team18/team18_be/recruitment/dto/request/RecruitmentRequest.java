@@ -13,7 +13,8 @@ public record RecruitmentRequest(
     String majorBusiness,
     String eligibilityCriteria,
     String preferredConditions,
-    String employerName
+    String employerName,
+    String companyName
 ) {
 
 }
