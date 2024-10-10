@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,9 +27,11 @@ import team18.team18_be.config.resolver.LoginUser;
 @RequestMapping("/api")
 public class AuthController {
 
-  private static final String GOOGLE_TOKEN_URI = "https://oauth2.googleapis.com/token";
+  @Value("${oauth.google.token-uri}")
+  private static String GOOGLE_TOKEN_URI;
 
-  private static final String GOOGLE_USER_INFO_URI = "https://www.googleapis.com/userinfo/v2/me";
+  @Value("${oauth.google.user-info-uri}")
+  private static String GOOGLE_USER_INFO_URI;
 
   private final AuthService authService;
 
