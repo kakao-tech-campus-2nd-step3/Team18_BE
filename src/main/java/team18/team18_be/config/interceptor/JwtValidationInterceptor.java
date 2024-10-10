@@ -56,9 +56,9 @@ public class JwtValidationInterceptor implements HandlerInterceptor {
       return true;
     }
 
-    String accessToken = getAccessToken(request.getHeaders(AUTHORIZATION));
+    String accessToken = request.getHeader(AUTHORIZATION);
 
-    if (accessToken.isEmpty()) {
+    if (accessToken == null) {
       throw new JwtInvalidException("요청에 액세스 토큰이 존재하지 않습니다.");
     }
 
@@ -67,21 +67,6 @@ public class JwtValidationInterceptor implements HandlerInterceptor {
     } catch (Exception e) {
       throw new JwtInvalidException("액세스 토큰이 유효하지 않습니다.");
     }
-  }
-
-  private String getAccessToken(Enumeration<String> headers) {
-    String accessToken = "";
-
-    while (headers.hasMoreElements()) {
-      String value = headers.nextElement();
-
-      if (value.toLowerCase().startsWith(JWT_TYPE.toLowerCase())) {
-        accessToken = value.substring(JWT_TYPE.length()).trim();
-        break;
-      }
-    }
-
-    return accessToken;
   }
 
   private boolean setUserIdInRequest(String accessToken,
