@@ -21,8 +21,6 @@ public class JwtValidationInterceptor implements HandlerInterceptor {
   private final AuthRepository authRepository;
   @Value("${jwt.header}")
   private String AUTHORIZATION;
-  @Value("${jwt.type}")
-  private String JWT_TYPE;
   @Value("${jwt.secret}")
   private String JWT_SECRET_KEY;
 
@@ -49,7 +47,7 @@ public class JwtValidationInterceptor implements HandlerInterceptor {
       return true;
     }
 
-    String accessToken = request.getHeader(AUTHORIZATION);
+    String accessToken = request.getHeader(AUTHORIZATION).replaceFirst("Bearer ", "");
 
     if (accessToken == null) {
       throw new JwtInvalidException("요청에 액세스 토큰이 존재하지 않습니다.");

@@ -27,13 +27,11 @@ import team18.team18_be.config.resolver.LoginUser;
 @RequestMapping("/api")
 public class AuthController {
 
-  @Value("${oauth.google.token-uri}")
-  private static String GOOGLE_TOKEN_URI;
-
-  @Value("${oauth.google.user-info-uri}")
-  private static String GOOGLE_USER_INFO_URI;
-
   private final AuthService authService;
+  @Value("${oauth.google.token-uri}")
+  private String GOOGLE_TOKEN_URI;
+  @Value("${oauth.google.user-info-uri}")
+  private String GOOGLE_USER_INFO_URI;
 
   public AuthController(AuthService authService) {
     this.authService = authService;
