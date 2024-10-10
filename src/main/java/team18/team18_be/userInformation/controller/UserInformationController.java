@@ -31,65 +31,41 @@ public class UserInformationController {
     this.userInformationService = userInformationService;
   }
 
-  //  @PostMapping(value = "/sign", consumes = "multipart/form-data")
-//  public ResponseEntity<Void> fillInSign(@RequestParam("file") MultipartFile file,
-//      @LoginUser User user) {
-//    userInformationService.fillInSign(file);
-//    return ResponseEntity.noContent().build();
-//  }
-  @PostMapping("/sign")
-  public ResponseEntity<Void> fillInSign(@RequestParam MultipartFile signImg) {
-    userInformationService.fillInSign(signImg);
+  @PostMapping(value = "/sign")
+  public ResponseEntity<Void> fillInSign(@RequestParam MultipartFile signImg,
+      @LoginUser User user) {
+    userInformationService.fillInSign(signImg, user);
     return ResponseEntity.noContent().build();
   }
 
-//  @GetMapping(value="/sign")
-//  public ResponseEntity<SignResponse> findSign(@LoginUser User user){
-//    return ResponseEntity.ok(userInformationService.findSign(user));
-//  }
-  @GetMapping(value="/sign")
-  public ResponseEntity<SignResponse> findSign(){
-    return ResponseEntity.ok(userInformationService.findSign());
+  @GetMapping(value = "/sign")
+  public ResponseEntity<SignResponse> findSign(@LoginUser User user) {
+    return ResponseEntity.ok(userInformationService.findSign(user));
   }
 
-  //  @PostMapping("/company")
-//  public ResponseEntity<Void> createCompany(@RequestPart CompanyRequest companyRequest,
-//      @RequestPart MultipartFile multipartFile, @LoginUser User user) {
-//    userInformationService.createCompany(companyRequest,multipartFile);
-//    return ResponseEntity.ok().build();
-//  }
   @PostMapping("/company")
   public ResponseEntity<Void> createCompany(@RequestPart CompanyRequest companyRequest,
-      @RequestPart MultipartFile logo) {
-    userInformationService.createCompany(companyRequest, logo);
+      @RequestPart MultipartFile logo, @LoginUser User user) {
+    userInformationService.createCompany(companyRequest, logo, user);
     return ResponseEntity.ok().build();
   }
 
   @GetMapping("/company")
-  public ResponseEntity<CompanyResponse> findCompany(){
-    return ResponseEntity.ok(userInformationService.findCompany());
+  public ResponseEntity<CompanyResponse> findCompany(@LoginUser User user) {
+    return ResponseEntity.ok(userInformationService.findCompany(user));
   }
 
-//  @PutMapping("/visa")
-//  public ResponseEntity<Void> fillInVisa(@RequestBody VisaRequest visaRequest,
-//      @LoginUser User user) {
-//    userInformationService.fillInVisa(visaRequest, user);
-//    return ResponseEntity.ok().build();
-//  }
+
   @PutMapping("/visa")
-  public ResponseEntity<Void> fillInVisa(@RequestBody VisaRequest visaRequest) {
-    userInformationService.fillInVisa(visaRequest);
+  public ResponseEntity<Void> fillInVisa(@RequestBody VisaRequest visaRequest,
+      @LoginUser User user) {
+    userInformationService.fillInVisa(visaRequest, user);
     return ResponseEntity.ok().build();
   }
 
-//  @GetMapping("/visa")
-//  public ResponseEntity<VisaResponse> findVisa(@LoginUser User user) {
-//    VisaResponse visaResponse = userInformationService.findVisa(user);
-//    return ResponseEntity.ok(visaResponse);
-//  }
   @GetMapping("/visa")
-  public ResponseEntity<VisaResponse> findVisa() {
-    VisaResponse visaResponse = userInformationService.findVisa();
+  public ResponseEntity<VisaResponse> findVisa(@LoginUser User user) {
+    VisaResponse visaResponse = userInformationService.findVisa(user);
     return ResponseEntity.ok(visaResponse);
   }
 }
