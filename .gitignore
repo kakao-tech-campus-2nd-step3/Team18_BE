@@ -38,3 +38,7 @@ out/
 
 ### Properties ###
 **/application-test.properties
+
+### txt ###
+application-aws.properties
+application-gcs.properties
