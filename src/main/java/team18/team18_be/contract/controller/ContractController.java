@@ -1,5 +1,6 @@
 package team18.team18_be.contract.controller;
 
+import com.itextpdf.text.DocumentException;
 import io.swagger.annotations.ApiOperation;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,8 @@ import team18.team18_be.contract.dto.request.ContractRequest;
 import team18.team18_be.contract.dto.response.ContractResponse;
 import team18.team18_be.contract.service.ContractService;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("/api/contract")
 public class ContractController {
@@ -29,7 +32,7 @@ public class ContractController {
     @ApiOperation(value = "근로계약서 등록 메서드 - 고용주 등록")
     @PostMapping
     public ResponseEntity<Void> makeContract(@Valid @RequestBody ContractRequest request,
-                                             @LoginUser User user) {
+                                             @LoginUser User user) throws DocumentException, IOException {
         contractService.makeContract(request, user);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

@@ -7,6 +7,7 @@ public record ContractRequest(
         String annualPaidLeave,
         String workingPlace,
         String responsibilities,
+        String rule,
         Long employeeId
 ) {
 
