@@ -4,8 +4,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import team18.team18_be.auth.entity.User;
 
 @Table
 @Entity
@@ -13,25 +16,50 @@ public class Company {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private final Long companyId;
+  private Long id;
   @NotBlank
-  private final String companyName;
+  private String companyName;
   @NotBlank
-  private final String industryOccupation;
-  private final String brand;
+  private String industryOccupation;
+  private String brand;
   @NotBlank
-  private final Long revenuePerYear;
-  private final String logo;
-  private final String hompageUrl;
+  private String revenuePerYear;
+  private String logo;
 
-  public Company(Long companyId, String companyName, String industryOccupation, String brand,
-      Long revenuePerYear, String logo, String hompageUrl) {
-    this.companyId = companyId;
+  @ManyToOne
+  @JoinColumn(name = "user_id")
+  private User user;
+
+  public Company() {
+  }
+
+  public Company(String companyName, String industryOccupation, String brand,
+      String revenuePerYear, String logo, User user) {
     this.companyName = companyName;
     this.industryOccupation = industryOccupation;
     this.brand = brand;
     this.revenuePerYear = revenuePerYear;
     this.logo = logo;
-    this.hompageUrl = hompageUrl;
+    this.user = user;
+  }
+
+  public String getCompanyName() {
+    return companyName;
+  }
+
+  public String getIndustryOccupation() {
+    return industryOccupation;
+  }
+
+  public String getBrand() {
+    return brand;
+  }
+
+  public String getRevenuePerYear() {
+    return revenuePerYear;
+  }
+
+  public String getLogo() {
+    return logo;
   }
 }
