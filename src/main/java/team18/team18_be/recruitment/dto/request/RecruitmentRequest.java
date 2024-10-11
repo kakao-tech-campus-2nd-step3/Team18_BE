@@ -14,7 +14,8 @@ public record RecruitmentRequest(
     String eligibilityCriteria,
     String preferredConditions,
     String employerName,
-    String companyName
+    String companyName,
+    Long companyId
 ) {
 
 }

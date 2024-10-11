@@ -9,15 +9,31 @@ public class RecruitmentContent {
   private Long resumeContentId;
   private String koreanDetailedDescription;
   private String vietnameseDetailedDescription;
-  private Long resumeId;
+  private Long recruitmentId;
 
   public RecruitmentContent(String koreanDetailedDescription,
-      String vietnameseDetailedDescription, Long resumeId) {
+      String vietnameseDetailedDescription, Long recruitmentId) {
     this.koreanDetailedDescription = koreanDetailedDescription;
     this.vietnameseDetailedDescription = vietnameseDetailedDescription;
-    this.resumeId = resumeId;
+    this.recruitmentId = recruitmentId;
   }
 
   public RecruitmentContent() {
+  }
+
+  public Long getResumeContentId() {
+    return resumeContentId;
+  }
+
+  public String getKoreanDetailedDescription() {
+    return koreanDetailedDescription;
+  }
+
+  public String getVietnameseDetailedDescription() {
+    return vietnameseDetailedDescription;
+  }
+
+  public Long getRecruitmentId() {
+    return recruitmentId;
   }
 }

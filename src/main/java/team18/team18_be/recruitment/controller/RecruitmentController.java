@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import team18.team18_be.auth.entity.User;
@@ -44,7 +43,7 @@ public class RecruitmentController {
   @ApiOperation(value = "구인글 전체 조회 메서드")
   @GetMapping
   public ResponseEntity<List<RecruitmentSummationResponse>> getAllRecruitments() {
-    return null;
+    return ResponseEntity.ok().body(recruitmentService.getAllRecruitment());
   }
 
   @ApiOperation(value = "구인글id로 조회 메서드")
@@ -52,8 +51,7 @@ public class RecruitmentController {
   public ResponseEntity<RecruitmentResponse> getRecruitments(
       @PathVariable Long postId
   ) {
-
-    return null;
+    return ResponseEntity.ok().body(recruitmentService.getRecruitmentResponseByRecruitmentId(postId));
   }
 
   @ApiOperation(value = "고용주 별 구인글 조회 메서드")
@@ -61,6 +59,7 @@ public class RecruitmentController {
   public ResponseEntity<List<RecruitmentResponse>> getAllEmployerName(
       @LoginUser User user
   ) {
+    //return ResponseEntity.ok().body(recruitmentService.getRecruitmentResponseByRecruitmentId(user.getId()));
     return null;
   }
 

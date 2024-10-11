@@ -1,6 +1,5 @@
 package team18.team18_be.config.infrastructure;
 
-
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -70,6 +69,5 @@ public class OpenAiService {
     HttpEntity<String> requestEntity = new HttpEntity<>(jsonBody, headers);
     return restTemplate.exchange(chatGptUrl, HttpMethod.POST, requestEntity, Object.class);
   }
-
 
 }
