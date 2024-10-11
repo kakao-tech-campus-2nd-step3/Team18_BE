@@ -1,6 +1,6 @@
 package team18.team18_be.auth.dto.request;
 
-public record ClientIdRequest(
+public record CodeRequest(
     String code
 ) {
 
