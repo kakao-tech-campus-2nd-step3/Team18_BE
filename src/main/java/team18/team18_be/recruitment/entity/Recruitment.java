@@ -5,6 +5,7 @@ import jakarta.persistence.Id;
 
 @Entity
 public class Recruitment {
+
   @Id
   private Long recruitmentId;
   private String koreanTitle;
@@ -24,10 +25,11 @@ public class Recruitment {
   private String companyName;
   private Long companyId;
 
-  public Recruitment( String koreanTitle, String vietnameseTitle, String companySize, String area,
-      String salary, String workDuration,String workDays, String workType, String workHours, String requestedCareer,
+  public Recruitment(String koreanTitle, String vietnameseTitle, String companySize, String area,
+      String salary, String workDuration, String workDays, String workType, String workHours,
+      String requestedCareer,
       String majorBusiness, String eligibilityCriteria, String preferredConditions,
-      String employerName,String companyName,Long companyId) {
+      String employerName, String companyName, Long companyId) {
     this.koreanTitle = koreanTitle;
     this.vietnameseTitle = vietnameseTitle;
     this.companySize = companySize;
@@ -46,12 +48,12 @@ public class Recruitment {
     this.companyId = companyId;
   }
 
-  public Long getRecruitmentId() {
-    return recruitmentId;
+  public Recruitment() {
+
   }
 
-  public Recruitment() {
-    
+  public Long getRecruitmentId() {
+    return recruitmentId;
   }
 
   public String getKoreanTitle() {

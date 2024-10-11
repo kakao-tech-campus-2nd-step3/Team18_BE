@@ -16,13 +16,14 @@ import team18.team18_be.recruitment.repository.RecruitmentRepository;
 
 @Service
 public class RecruitmentService {
+
   private RecruitmentRepository recruitmentRepository;
   private RecruitmentContentRepository recruitmentContentRepository;
 
   private OpenAiService openAiService;
 
   public RecruitmentService(RecruitmentRepository recruitmentRepository,
-      RecruitmentContentRepository recruitmentContentRepository,OpenAiService openAiService) {
+      RecruitmentContentRepository recruitmentContentRepository, OpenAiService openAiService) {
     this.recruitmentRepository = recruitmentRepository;
     this.recruitmentContentRepository = recruitmentContentRepository;
     this.openAiService = openAiService;
@@ -32,19 +33,23 @@ public class RecruitmentService {
       throws JsonProcessingException {
     String koreanTitle = recruitmentRequest.title();
     String vietnameseTitle = openAiService.translateKoreanToVietnamese(koreanTitle);
-    Recruitment recruitment = recruitmentRepository.save(mapRecruitmentRequestToRecruitment(koreanTitle,vietnameseTitle,recruitmentRequest));
+    Recruitment recruitment = recruitmentRepository.save(
+        mapRecruitmentRequestToRecruitment(koreanTitle, vietnameseTitle, recruitmentRequest));
 
     String koreanDetailedDescription = openAiService.summation(recruitmentRequest);
-    String vietnameseDetailedDescription = openAiService.translateKoreanToVietnamese(koreanDetailedDescription);
-    recruitmentContentRepository.save(new RecruitmentContent(koreanDetailedDescription,vietnameseDetailedDescription,recruitment.getRecruitmentId()));
+    String vietnameseDetailedDescription = openAiService.translateKoreanToVietnamese(
+        koreanDetailedDescription);
+    recruitmentContentRepository.save(
+        new RecruitmentContent(koreanDetailedDescription, vietnameseDetailedDescription,
+            recruitment.getRecruitmentId()));
   }
 
-  public List<RecruitmentSummationResponse> getAllRecruitment(){
+  public List<RecruitmentSummationResponse> getAllRecruitment() {
     List<Recruitment> recruitments = recruitmentRepository.findAll();
     return recruitments.stream()
         .map(recruitment -> new RecruitmentSummationResponse(
             recruitment.getRecruitmentId(),
-             "image ",
+            "image ",
             recruitment.getKoreanTitle(),
             recruitment.getVietnameseTitle(),
             recruitment.getCompanyName(),
@@ -54,24 +59,41 @@ public class RecruitmentService {
         .collect(Collectors.toList());
   }
 
-  public RecruitmentResponse getRecruitmentResponseByRecruitmentId(Long userId){
+  public RecruitmentResponse getRecruitmentResponseByRecruitmentId(Long userId) {
     Recruitment recruitment = recruitmentRepository.findById(userId)
         .orElseThrow(() -> new NoSuchElementException("해당하는 이력서가 존재하지 않습니다."));
 
-    RecruitmentContent recruitmentContent = recruitmentContentRepository.findByRecruitmentId(userId);
-    return mapRecruitmentAndRecruitmentContentToRecruitmentResponse(recruitment,recruitmentContent);
+    RecruitmentContent recruitmentContent = recruitmentContentRepository.findByRecruitmentId(
+        userId);
+    return mapRecruitmentAndRecruitmentContentToRecruitmentResponse(recruitment,
+        recruitmentContent);
   }
 
-  public RecruitmentResponse getRecruitmentResponseByCompanyId(Long recruitmentId){
+  public RecruitmentResponse getRecruitmentResponseByCompanyId(Long recruitmentId) {
     return null;
   }
 
-  private Recruitment mapRecruitmentRequestToRecruitment(String koreanTitle,String vietnameseTitle,RecruitmentRequest recruitmentRequest){
-    return new Recruitment(koreanTitle,vietnameseTitle,recruitmentRequest.companySize(),recruitmentRequest.area(),recruitmentRequest.salary(),recruitmentRequest.workDuration(),recruitmentRequest.workDays(), recruitmentRequest.workType(),recruitmentRequest.workHours(),recruitmentRequest.requestedCareer(),recruitmentRequest.majorBusiness(),recruitmentRequest.eligibilityCriteria(),recruitmentRequest.preferredConditions(),recruitmentRequest.employerName(),recruitmentRequest.companyName(),recruitmentRequest.companyId());
+  private Recruitment mapRecruitmentRequestToRecruitment(String koreanTitle, String vietnameseTitle,
+      RecruitmentRequest recruitmentRequest) {
+    return new Recruitment(koreanTitle, vietnameseTitle, recruitmentRequest.companySize(),
+        recruitmentRequest.area(), recruitmentRequest.salary(), recruitmentRequest.workDuration(),
+        recruitmentRequest.workDays(), recruitmentRequest.workType(),
+        recruitmentRequest.workHours(), recruitmentRequest.requestedCareer(),
+        recruitmentRequest.majorBusiness(), recruitmentRequest.eligibilityCriteria(),
+        recruitmentRequest.preferredConditions(), recruitmentRequest.employerName(),
+        recruitmentRequest.companyName(), recruitmentRequest.companyId());
   }
 
-  private RecruitmentResponse mapRecruitmentAndRecruitmentContentToRecruitmentResponse(Recruitment recruitment,RecruitmentContent recruitmentContent){
-    return new RecruitmentResponse(recruitment.getKoreanTitle(),recruitment.getVietnameseTitle(),recruitment.getCompanySize(),recruitment.getArea(),recruitment.getSalary(),recruitment.getWorkDuration(),recruitment.getWorkDays(),recruitment.getWorkType(),recruitment.getWorkHours(),recruitment.getRequestedCareer(), recruitment.getMajorBusiness(),recruitment.getEligibilityCriteria(),recruitment.getPreferredConditions(),recruitment.getEmployerName(),recruitmentContent.getKoreanDetailedDescription(),recruitmentContent.getVietnameseDetailedDescription());
+  private RecruitmentResponse mapRecruitmentAndRecruitmentContentToRecruitmentResponse(
+      Recruitment recruitment, RecruitmentContent recruitmentContent) {
+    return new RecruitmentResponse(recruitment.getKoreanTitle(), recruitment.getVietnameseTitle(),
+        recruitment.getCompanySize(), recruitment.getArea(), recruitment.getSalary(),
+        recruitment.getWorkDuration(), recruitment.getWorkDays(), recruitment.getWorkType(),
+        recruitment.getWorkHours(), recruitment.getRequestedCareer(),
+        recruitment.getMajorBusiness(), recruitment.getEligibilityCriteria(),
+        recruitment.getPreferredConditions(), recruitment.getEmployerName(),
+        recruitmentContent.getKoreanDetailedDescription(),
+        recruitmentContent.getVietnameseDetailedDescription());
   }
 
 }

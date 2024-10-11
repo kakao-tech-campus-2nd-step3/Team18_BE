@@ -51,7 +51,8 @@ public class RecruitmentController {
   public ResponseEntity<RecruitmentResponse> getRecruitments(
       @PathVariable Long postId
   ) {
-    return ResponseEntity.ok().body(recruitmentService.getRecruitmentResponseByRecruitmentId(postId));
+    return ResponseEntity.ok()
+        .body(recruitmentService.getRecruitmentResponseByRecruitmentId(postId));
   }
 
   @ApiOperation(value = "고용주 별 구인글 조회 메서드")

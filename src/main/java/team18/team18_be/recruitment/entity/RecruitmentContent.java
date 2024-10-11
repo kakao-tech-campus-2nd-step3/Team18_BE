@@ -5,6 +5,7 @@ import jakarta.persistence.Id;
 
 @Entity
 public class RecruitmentContent {
+
   @Id
   private Long resumeContentId;
   private String koreanDetailedDescription;

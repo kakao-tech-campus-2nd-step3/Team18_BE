@@ -18,7 +18,7 @@ public class Resume {
 
 
   public Resume(String applicantName, String address, String phoneNumber, String career,
-      String korean, String selfIntroduction,Long employeeId) {
+      String korean, String selfIntroduction, Long employeeId) {
     this.applicantName = applicantName;
     this.address = address;
     this.phoneNumber = phoneNumber;

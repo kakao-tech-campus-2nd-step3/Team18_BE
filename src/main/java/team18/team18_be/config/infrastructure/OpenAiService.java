@@ -1,6 +1,7 @@
 package team18.team18_be.config.infrastructure;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,13 +22,11 @@ import team18.team18_be.recruitment.dto.request.RecruitmentRequest;
 @Component
 public class OpenAiService {
 
-  @Value("${chatgpt.api-key}")
-  private String gptKey;
-
   private final String chatGptUrl = "https://api.openai.com/v1/chat/completions";
-
   private final RestTemplate restTemplate;
   private final ObjectMapper objectMapper;
+  @Value("${chatgpt.api-key}")
+  private String gptKey;
 
   public OpenAiService(RestTemplateBuilder restTemplateBuilder, ObjectMapper objectMapper) {
     this.restTemplate = restTemplateBuilder.build();
@@ -48,23 +47,25 @@ public class OpenAiService {
     String responseBody = objectMapper.writeValueAsString(feedBack.getBody());
 
     JsonNode rootNode = objectMapper.readTree(responseBody);
-    String extractedContent = rootNode.path("choices").get(0).path("message").path("content").asText();
+    String extractedContent = rootNode.path("choices").get(0).path("message").path("content")
+        .asText();
 
     return extractedContent;
   }
 
-  private ResponseEntity<Object> sandMessageToAi(String receivedMessages) throws JsonProcessingException {
-    Message message = new Message("user",receivedMessages);
+  private ResponseEntity<Object> sandMessageToAi(String receivedMessages)
+      throws JsonProcessingException {
+    Message message = new Message("user", receivedMessages);
     List<Message> messageList = new LinkedList<>();
     messageList.add(message);
 
-    RequestToAi diaryRequestToGpt = new RequestToAi("gpt-4o-mini",messageList);
+    RequestToAi diaryRequestToGpt = new RequestToAi("gpt-4o-mini", messageList);
 
     String jsonBody = objectMapper.writeValueAsString(diaryRequestToGpt);
 
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(APPLICATION_JSON);
-    headers.add("Authorization","Bearer " + gptKey);
+    headers.add("Authorization", "Bearer " + gptKey);
 
     HttpEntity<String> requestEntity = new HttpEntity<>(jsonBody, headers);
     return restTemplate.exchange(chatGptUrl, HttpMethod.POST, requestEntity, Object.class);
