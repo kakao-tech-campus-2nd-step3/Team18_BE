@@ -11,23 +11,24 @@ import team18.team18_be.auth.entity.User;
 
 @Table
 @Entity
-public class Sign {
+public class Employee {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-
-  private String imageUrl;
-
+  private String foreginerNumber;
+  private String visaGenerateDate;
   @OneToOne
   @JoinColumn(name = "user_id")
   private User user;
 
-  public Sign() {
+  public Employee() {
   }
 
-  public Sign(String imageUrl, User user) {
-    this.imageUrl = imageUrl;
+  public Employee(Long id, String foreginerNumber, String visaGenerateDate, User user) {
+    this.id = id;
+    this.foreginerNumber = foreginerNumber;
+    this.visaGenerateDate = visaGenerateDate;
     this.user = user;
   }
 
@@ -35,7 +36,15 @@ public class Sign {
     return id;
   }
 
-  public String getImageUrl() {
-    return imageUrl;
+  public String getForeginerNumber() {
+    return foreginerNumber;
+  }
+
+  public String getVisaGenerateDate() {
+    return visaGenerateDate;
+  }
+
+  public User getUser() {
+    return user;
   }
 }

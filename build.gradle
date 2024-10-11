@@ -34,6 +34,10 @@ dependencies {
 	implementation group: 'com.itextpdf', name: 'itextpdf', version: '5.5.13.2'
 	implementation group: 'org.apache.pdfbox', name: 'pdfbox', version: '2.0.13'
 	implementation group: 'org.apache.pdfbox', name: 'pdfbox-tools', version: '2.0.13'
+	implementation group: 'org.springframework.cloud', name: 'spring-cloud-gcp-starter', version: '1.2.5.RELEASE'
+	implementation group: 'org.springframework.cloud', name: 'spring-cloud-gcp-storage', version: '1.2.5.RELEASE'
+	compileOnly 'org.projectlombok:lombok:1.18.30'
+	annotationProcessor 'org.projectlombok:lombok:1.18.30'
 
 }
 
