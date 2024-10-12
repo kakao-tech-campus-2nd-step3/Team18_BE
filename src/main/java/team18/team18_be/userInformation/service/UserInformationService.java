@@ -35,8 +35,8 @@ public class UserInformationService {
     this.gcsUploader = gcsUploader;
   }
 
-  public void createCompany(CompanyRequest companyRequest, MultipartFile logo, User user) {
-    String storedFileName = gcsUploader.upload(logo, "companyLogo", user.getId().toString())
+  public void createCompany(CompanyRequest companyRequest, MultipartFile logoImage, User user) {
+    String storedFileName = gcsUploader.upload(logoImage, "companyLogo", user.getId().toString())
         .orElseThrow(() -> new NoSuchElementException("파일 업로드에 실패했습니다."));
     Company company = new Company(companyRequest.name(), companyRequest.industryOccupation(),
         companyRequest.brand(), companyRequest.revenuePerYear(), storedFileName, user);
