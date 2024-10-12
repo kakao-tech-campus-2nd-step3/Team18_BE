@@ -2,7 +2,9 @@ package team18.team18_be.recruitment.dto.response;
 
 public record RecruitmentSummationResponse(
     Long recruitmentId,
-    String title,
+    String image,
+    String koreanTitle,
+    String vietnameseTitle,
     String companyName,
     String salary,
     String area
