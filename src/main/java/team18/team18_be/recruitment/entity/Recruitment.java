@@ -1,12 +1,15 @@
 package team18.team18_be.recruitment.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
 public class Recruitment {
 
   @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long recruitmentId;
   private String koreanTitle;
   private String vietnameseTitle;

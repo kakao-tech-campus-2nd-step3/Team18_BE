@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,9 +47,9 @@ public class ResumeController {
   }
 
   @ApiOperation(value = "이력서 id로 이력서 조회 메서드")
-  @GetMapping("/resumeId")
+  @GetMapping("/{resumeId}")
   public ResponseEntity<ResumeResponse> getResumeById(
-      @RequestParam Long resumeId,
+      @PathVariable Long resumeId,
       @LoginUser User user
   ) {
     return ResponseEntity.ok().body(resumeService.findResumeById(resumeId, user.getId()));
