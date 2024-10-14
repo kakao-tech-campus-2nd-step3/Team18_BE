@@ -24,42 +24,27 @@ public class User {
 
   private final String phoneNumber;
 
-  private final String foreignerNumber;
-
-  private final LocalDateTime visaGenerateDate;
-
+  @Column(nullable = false)
   private final String type;
 
-  private final Long signId;
-
-  private final Long resumeId;
-
   protected User() {
-    this(null, null, null, null, null, null, null, null, null);
+    this(null, null, null, null, null);
   }
 
   public User(String name, String email, String type) {
-    this(null, name, email, null, null, null, type, null, null);
+    this(null, name, email, null, type);
   }
 
   public User(Long id,
       String name,
       String email,
       String phoneNumber,
-      String foreignerNumber,
-      LocalDateTime visaGenerateDate,
-      String type,
-      Long signId,
-      Long resumeId) {
+      String type) {
     this.id = id;
     this.name = name;
     this.email = email;
     this.phoneNumber = phoneNumber;
-    this.foreignerNumber = foreignerNumber;
-    this.visaGenerateDate = visaGenerateDate;
     this.type = type;
-    this.signId = signId;
-    this.resumeId = resumeId;
   }
 
   public Long getId() {
@@ -75,11 +60,7 @@ public class User {
         this.name,
         this.email,
         this.phoneNumber,
-        this.foreignerNumber,
-        this.visaGenerateDate,
-        type,
-        signId,
-        resumeId);
+        type);
   }
 
 }
