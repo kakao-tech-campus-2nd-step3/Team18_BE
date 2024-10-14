@@ -30,6 +30,10 @@ public class User {
     this(null, null, null, null, null);
   }
 
+  public User(Long id, String name, String email, String type) {
+    this(id, name, email, null, type);
+  }
+
   public User(String name, String email, String type) {
     this(null, name, email, null, type);
   }
