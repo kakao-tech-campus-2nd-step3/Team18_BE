@@ -19,7 +19,7 @@ public class User {
   @Column(nullable = false)
   private final String name;
 
-  @Column(nullable = false)
+  @Column(nullable = false, unique = true)
   private final String email;
 
   private final String phoneNumber;
@@ -36,6 +36,10 @@ public class User {
 
   protected User() {
     this(null, null, null, null, null, null, null, null, null);
+  }
+
+  public User(String name, String email, String type) {
+    this(null, name, email, null, null, null, type, null, null);
   }
 
   public User(Long id,
@@ -60,6 +64,10 @@ public class User {
 
   public Long getId() {
     return id;
+  }
+
+  public String getType() {
+    return type;
   }
 
   public User updateUserType(String type) {

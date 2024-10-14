@@ -29,17 +29,17 @@ public class InterceptorConfig implements WebMvcConfigurer {
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
     registry.addInterceptor(jwtValidationInterceptor())
-        .addPathPatterns("/api/register")
-        .addPathPatterns("/api/recruitments/user")
-        .addPathPatterns("/api/application/**")
-        .addPathPatterns("/api/resumes/**")
-        .addPathPatterns("/api/sign/**")
-        .addPathPatterns("/api/company/**")
-        .addPathPatterns("/api/visa")
-        .addPathPatterns("/api/contract/**")
-        .excludePathPatterns("/api/contract/*/preview");
+        .addPathPatterns(InterceptorPath.REGISTER.getPath())
+        .addPathPatterns(InterceptorPath.RECRUITMENT_USER.getPath())
+        .addPathPatterns(InterceptorPath.APPLICATION_ALL.getPath())
+        .addPathPatterns(InterceptorPath.RESUME_ALL.getPath())
+        .addPathPatterns(InterceptorPath.SIGN_ALL.getPath())
+        .addPathPatterns(InterceptorPath.COMPANY_ALL.getPath())
+        .addPathPatterns(InterceptorPath.VISA.getPath())
+        .addPathPatterns(InterceptorPath.CONTRACT_ALL.getPath())
+        .excludePathPatterns(InterceptorPath.CONTRACT_PREVIEW.getPath());
 
     registry.addInterceptor(postOnlyJwtValidationInterceptor())
-        .addPathPatterns("/api/recruitments");
+        .addPathPatterns(InterceptorPath.RECRUITMENT.getPath());
   }
 }
