@@ -23,45 +23,45 @@ import java.io.IOException;
 @RequestMapping("/api/contract")
 public class ContractController {
 
-    private final ContractService contractService;
+  private final ContractService contractService;
 
-    public ContractController(ContractService contractService) {
-        this.contractService = contractService;
-    }
+  public ContractController(ContractService contractService) {
+    this.contractService = contractService;
+  }
 
-    @ApiOperation(value = "근로계약서 등록 메서드 - 고용주 등록")
-    @PostMapping
-    public ResponseEntity<Void> makeContract(@Valid @RequestBody ContractRequest request,
-                                             @LoginUser User user) throws DocumentException, IOException {
-        contractService.makeContract(request, user);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
+  @ApiOperation(value = "근로계약서 등록 메서드 - 고용주 등록")
+  @PostMapping
+  public ResponseEntity<Void> makeContract(@Valid @RequestBody ContractRequest request,
+      @LoginUser User user) throws DocumentException, IOException {
+    contractService.createAndUploadContract(request, user);
+    return ResponseEntity.status(HttpStatus.CREATED).build();
+  }
 
-    @ApiOperation(value = "근로계약서 등록 메서드 - 근로자 서명 등록")
-    @PostMapping("/employee")
-    public ResponseEntity<Void> makeContract(@LoginUser User user) {
-        contractService.makeContractEmployee(user);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
+  @ApiOperation(value = "근로계약서 등록 메서드 - 근로자 서명 등록")
+  @PostMapping("/employee")
+  public ResponseEntity<Void> makeContract(@LoginUser User user) {
+    contractService.makeContractEmployee(user);
+    return ResponseEntity.status(HttpStatus.CREATED).build();
+  }
 
-    @ApiOperation(value = "근로계약서 user id 별 조회 메서드")
-    @GetMapping
-    public ResponseEntity<ContractResponse> getContract(@LoginUser User user) {
-        return ResponseEntity.ok(contractService.getContract(user));
+  @ApiOperation(value = "근로계약서 user id 별 조회 메서드")
+  @GetMapping
+  public ResponseEntity<ContractResponse> getContract(@LoginUser User user) {
+    return ResponseEntity.ok(contractService.getContract(user));
 
-    }
+  }
 
-    @ApiOperation(value = "근로계약서 id별 pdf url 반환 메서드")
-    @GetMapping("/{contractId}/download")
-    public ResponseEntity<String> downloadContract(@PathVariable("contractId") Long id,
-                                                   @LoginUser User user) {
-        return ResponseEntity.ok(contractService.downloadContract(id, user));
-    }
+  @ApiOperation(value = "근로계약서 id별 pdf url 반환 메서드")
+  @GetMapping("/{contractId}/download")
+  public ResponseEntity<String> downloadContract(@PathVariable("contractId") Long id,
+      @LoginUser User user) {
+    return ResponseEntity.ok(contractService.downloadContract(id, user));
+  }
 
-    @ApiOperation(value = "근로계약서 id별 image url 반환 메서드")
-    @GetMapping("/{contractId}/preview")
-    public ResponseEntity<String> previewContract(@PathVariable("contractId") Long id,
-                                                  @LoginUser User user) {
-        return ResponseEntity.ok(contractService.previewContract(id, user));
-    }
+  @ApiOperation(value = "근로계약서 id별 image url 반환 메서드")
+  @GetMapping("/{contractId}/preview")
+  public ResponseEntity<String> previewContract(@PathVariable("contractId") Long id,
+      @LoginUser User user) {
+    return ResponseEntity.ok(contractService.previewContract(id, user));
+  }
 }
