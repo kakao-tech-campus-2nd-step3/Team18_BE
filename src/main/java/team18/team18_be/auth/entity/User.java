@@ -58,6 +58,10 @@ public class User {
     return type;
   }
 
+  public String getName() {
+    return name;
+  }
+
   public User updateUserType(String type) {
     return new User(this.id,
         this.name,
