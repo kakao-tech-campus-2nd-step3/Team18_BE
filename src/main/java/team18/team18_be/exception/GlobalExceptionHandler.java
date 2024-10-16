@@ -52,4 +52,11 @@ public class GlobalExceptionHandler {
     ExceptionResponse exceptionResponse = new ExceptionResponse(e.getMessage());
     return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
   }
+
+  @ExceptionHandler(value = JwtExpiredException.class)
+  public ResponseEntity<ExceptionResponse> handleJwtExpiredException(
+      JwtExpiredException e) {
+    ExceptionResponse exceptionResponse = new ExceptionResponse(e.getMessage());
+    return new ResponseEntity<>(exceptionResponse, HttpStatus.UNAUTHORIZED);
+  }
 }

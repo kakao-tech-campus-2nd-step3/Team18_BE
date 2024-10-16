@@ -1,6 +1,7 @@
 package team18.team18_be.config.interceptor;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -13,6 +14,7 @@ import javax.crypto.SecretKey;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.servlet.HandlerInterceptor;
 import team18.team18_be.auth.repository.AuthRepository;
+import team18.team18_be.exception.JwtExpiredException;
 import team18.team18_be.exception.JwtInvalidException;
 
 public class JwtValidationInterceptor implements HandlerInterceptor {
@@ -47,28 +49,30 @@ public class JwtValidationInterceptor implements HandlerInterceptor {
       return true;
     }
 
-    String accessToken = request.getHeader(AUTHORIZATION).replaceFirst("Bearer ", "");
+    String accessToken = request.getHeader(AUTHORIZATION);
 
     if (accessToken == null) {
       throw new JwtInvalidException("요청에 액세스 토큰이 존재하지 않습니다.");
     }
 
-    try {
-      return setUserIdInRequest(accessToken, request);
-    } catch (Exception e) {
-      throw new JwtInvalidException("액세스 토큰이 유효하지 않습니다.");
-    }
+    accessToken = accessToken.replaceFirst("Bearer ", "");
+    return setUserIdInRequest(accessToken, request);
   }
 
   private boolean setUserIdInRequest(String accessToken,
       HttpServletRequest request) {
     byte[] keyBytes = JWT_SECRET_KEY.getBytes(StandardCharsets.UTF_8);
     SecretKey secretKey = Keys.hmacShaKeyFor(keyBytes);
+    Jws<Claims> claims;
 
-    Jws<Claims> claims = Jwts.parser()
-        .verifyWith(secretKey)
-        .build()
-        .parseSignedClaims(accessToken);
+    try {
+      claims = Jwts.parser()
+          .verifyWith(secretKey)
+          .build()
+          .parseSignedClaims(accessToken);
+    } catch (ExpiredJwtException e) {
+      throw new JwtExpiredException("액세스 토큰이 만료되었습니다.");
+    }
 
     Long userId = claims.getPayload().get("userId", Long.class);
 
