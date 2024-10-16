@@ -9,6 +9,7 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 import team18.team18_be.auth.entity.User;
 import team18.team18_be.auth.repository.AuthRepository;
+import team18.team18_be.exception.ErrorMessage;
 
 public class LoginUserMethodArgumentResolver implements HandlerMethodArgumentResolver {
 
@@ -30,14 +31,15 @@ public class LoginUserMethodArgumentResolver implements HandlerMethodArgumentRes
   public Object resolveArgument(MethodParameter parameter,
       ModelAndViewContainer mavContainer,
       NativeWebRequest webRequest,
-      WebDataBinderFactory binderFactory) throws Exception {
+      WebDataBinderFactory binderFactory) {
 
     HttpServletRequest request = webRequest.getNativeRequest(
         HttpServletRequest.class);
     Long userId = (Long) request.getAttribute("userId");
 
     if (userId == null) {
-      throw new IllegalArgumentException("요청에 회원 정보가 존재하지 않습니다.");
+      throw new IllegalArgumentException(
+          ErrorMessage.NOT_FOUND_USER_ID_IN_HEADER.getErrorMessage());
     }
 
     return getUser(userId);
@@ -45,6 +47,7 @@ public class LoginUserMethodArgumentResolver implements HandlerMethodArgumentRes
 
   private User getUser(Long userId) {
     return authRepository.findById(userId)
-        .orElseThrow(() -> new NoSuchElementException("회원 정보가 존재하지 않습니다."));
+        .orElseThrow(
+            () -> new NoSuchElementException(ErrorMessage.NOT_FOUND_USER.getErrorMessage()));
   }
 }
