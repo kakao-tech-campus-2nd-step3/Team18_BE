@@ -5,6 +5,7 @@ import java.util.NoSuchElementException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import team18.team18_be.auth.entity.User;
+import team18.team18_be.config.GCS.FileUtil;
 import team18.team18_be.config.GCS.GcsUploader;
 import team18.team18_be.userInformation.dto.request.CompanyRequest;
 import team18.team18_be.userInformation.dto.request.CompanyResponse;
@@ -25,18 +26,24 @@ public class UserInformationService {
   private final CompanyRepository companyRepository;
   private final SignRepository signRepository;
   private final GcsUploader gcsUploader;
+  private final FileUtil fileUtil;
 
 
   public UserInformationService(EmployeeRepository employeeRepository,
-      CompanyRepository companyRepository, SignRepository signRepository, GcsUploader gcsUploader) {
+      CompanyRepository companyRepository, SignRepository signRepository, GcsUploader gcsUploader,
+      FileUtil fileUtil) {
     this.employeeRepository = employeeRepository;
     this.companyRepository = companyRepository;
     this.signRepository = signRepository;
     this.gcsUploader = gcsUploader;
+    this.fileUtil = fileUtil;
   }
 
-  public void createCompany(CompanyRequest companyRequest, MultipartFile logo, User user) {
-    String storedFileName = gcsUploader.upload(logo, "companyLogo", user.getId().toString())
+  public void createCompany(CompanyRequest companyRequest, MultipartFile logoImage, User user) {
+    byte[] imageFile = fileUtil.safelyGetBytes(logoImage)
+        .orElseThrow(() -> new IllegalArgumentException("multipart 파일을 읽지 못하였습니다."));
+    String storedFileName = gcsUploader.upload(imageFile, "companyLogo",
+            user.getId().toString() + logoImage.getOriginalFilename())
         .orElseThrow(() -> new NoSuchElementException("파일 업로드에 실패했습니다."));
     Company company = new Company(companyRequest.name(), companyRequest.industryOccupation(),
         companyRequest.brand(), companyRequest.revenuePerYear(), storedFileName, user);
@@ -69,7 +76,10 @@ public class UserInformationService {
   }
 
   public void fillInSign(MultipartFile imageUrl, User user) {
-    String storedFileName = gcsUploader.upload(imageUrl, "Sign", user.getId().toString())
+    byte[] imageFile = fileUtil.safelyGetBytes(imageUrl)
+        .orElseThrow(() -> new IllegalArgumentException("multipart 파일을 읽지 못하였습니다."));
+    String storedFileName = gcsUploader.upload(imageFile, "Sign",
+            user.getId().toString() + imageUrl.getOriginalFilename())
         .orElseThrow(() -> new NoSuchElementException("파일 업로드에 실패했습니다."));
     Sign newSign = new Sign(storedFileName, user);
     signRepository.save(newSign);

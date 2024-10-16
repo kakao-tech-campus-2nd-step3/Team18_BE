@@ -1,5 +1,6 @@
 package team18.team18_be.userInformation.controller;
 
+import java.io.IOException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,7 +34,7 @@ public class UserInformationController {
 
   @PostMapping(value = "/sign")
   public ResponseEntity<Void> fillInSign(@RequestParam MultipartFile imageUrl,
-      @LoginUser User user) {
+      @LoginUser User user) throws IOException {
     userInformationService.fillInSign(imageUrl, user);
     return ResponseEntity.noContent().build();
   }
@@ -45,8 +46,8 @@ public class UserInformationController {
 
   @PostMapping("/company")
   public ResponseEntity<Void> createCompany(@RequestPart CompanyRequest companyRequest,
-      @RequestPart MultipartFile logo, @LoginUser User user) {
-    userInformationService.createCompany(companyRequest, logo, user);
+      @RequestPart MultipartFile logoImage, @LoginUser User user) {
+    userInformationService.createCompany(companyRequest, logoImage, user);
     return ResponseEntity.ok().build();
   }
 
