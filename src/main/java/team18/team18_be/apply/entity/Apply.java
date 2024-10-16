@@ -20,4 +20,8 @@ public class Apply {
 
   private Long userId;
   private Long recruitmentId;
+
+  public Long getUserId() {
+    return this.getUserId();
+  }
 }
