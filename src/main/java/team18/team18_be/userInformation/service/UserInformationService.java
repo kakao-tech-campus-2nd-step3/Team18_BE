@@ -1,5 +1,6 @@
 package team18.team18_be.userInformation.service;
 
+import java.time.LocalDate;
 import java.util.NoSuchElementException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,36 +36,40 @@ public class UserInformationService {
   }
 
   public void createCompany(CompanyRequest companyRequest, MultipartFile logo, User user) {
-    String storedFileName = gcsUploader.upload(logo, "companyLogo")
+    String storedFileName = gcsUploader.upload(logo, "companyLogo", user.getId().toString())
         .orElseThrow(() -> new NoSuchElementException("파일 업로드에 실패했습니다."));
-    Company company = new Company(companyRequest.company(), companyRequest.industryOccupation(),
+    Company company = new Company(companyRequest.name(), companyRequest.industryOccupation(),
         companyRequest.brand(), companyRequest.revenuePerYear(), storedFileName, user);
     companyRepository.save(company);
   }
 
   public CompanyResponse findCompany(User user) {
     Company company = companyRepository.findByUser(user);
-    CompanyResponse companyResponse = new CompanyResponse(company.getCompanyName(),
+    CompanyResponse companyResponse = new CompanyResponse(company.getName(),
         company.getIndustryOccupation(), company.getBrand(), company.getRevenuePerYear(),
-        company.getLogo());
+        company.getLogoImage());
     return companyResponse;
   }
 
   public void fillInVisa(VisaRequest visaRequest, User user) {
-    Employee newEmployee = new Employee(user.getId(), visaRequest.foreginerNumber(),
-        visaRequest.visaGenereteDate(), user);
+    LocalDate visaGenerateDate = LocalDate.parse(visaRequest.visaGenerateDate());
+    LocalDate visaExpiryDate = visaGenerateDate.plusYears(10);
+    Employee newEmployee = new Employee(user.getId(), visaRequest.foreignerIdNumber(),
+        visaGenerateDate, visaExpiryDate, user);
     employeeRepository.save(newEmployee);
   }
 
   public VisaResponse findVisa(User user) {
     Employee employee = employeeRepository.findByUser(user);
-    VisaResponse visaResponse = new VisaResponse(employee.getForeginerNumber(),
-        employee.getVisaGenerateDate());
+    String visaGenerateDate = employee.getVisaGenerateDate().toString();
+    String visaExpiryDate = employee.getVisaExpiryDate().toString();
+    VisaResponse visaResponse = new VisaResponse(employee.getForeignerIdNumber(),
+        visaGenerateDate, visaExpiryDate);
     return visaResponse;
   }
 
-  public void fillInSign(MultipartFile signImg, User user) {
-    String storedFileName = gcsUploader.upload(signImg, "Sign")
+  public void fillInSign(MultipartFile imageUrl, User user) {
+    String storedFileName = gcsUploader.upload(imageUrl, "Sign", user.getId().toString())
         .orElseThrow(() -> new NoSuchElementException("파일 업로드에 실패했습니다."));
     Sign newSign = new Sign(storedFileName, user);
     signRepository.save(newSign);

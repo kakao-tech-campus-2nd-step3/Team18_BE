@@ -1,14 +1,14 @@
 package team18.team18_be.config.GCS;
+
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
+import java.io.IOException;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.util.Optional;
 
 @Slf4j
 @Component
@@ -21,9 +21,9 @@ public class GcsUploader {
   private String bucketName;
 
   // MultipartFile을 GCS에 업로드
-  public Optional<String> upload(MultipartFile multipartFile, String dirName) {
+  public Optional<String> upload(MultipartFile multipartFile, String dirName, String userId) {
     try {
-      String fileName = dirName + "/" + multipartFile.getOriginalFilename();
+      String fileName = dirName + "/" + userId +"_"+ multipartFile.getOriginalFilename();
 
       // BlobInfo 설정
       BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, fileName).build();

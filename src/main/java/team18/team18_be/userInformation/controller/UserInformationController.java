@@ -32,9 +32,9 @@ public class UserInformationController {
   }
 
   @PostMapping(value = "/sign")
-  public ResponseEntity<Void> fillInSign(@RequestParam MultipartFile signImg,
+  public ResponseEntity<Void> fillInSign(@RequestParam MultipartFile imageUrl,
       @LoginUser User user) {
-    userInformationService.fillInSign(signImg, user);
+    userInformationService.fillInSign(imageUrl, user);
     return ResponseEntity.noContent().build();
   }
 

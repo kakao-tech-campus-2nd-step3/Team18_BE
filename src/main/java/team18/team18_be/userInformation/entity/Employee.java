@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import java.time.LocalDate;
 import team18.team18_be.auth.entity.User;
 
 @Table
@@ -16,8 +17,9 @@ public class Employee {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  private String foreginerNumber;
-  private String visaGenerateDate;
+  private String foreignerIdNumber;
+  private LocalDate visaGenerateDate;
+  private LocalDate visaExpiryDate;
   @OneToOne
   @JoinColumn(name = "user_id")
   private User user;
@@ -25,10 +27,12 @@ public class Employee {
   public Employee() {
   }
 
-  public Employee(Long id, String foreginerNumber, String visaGenerateDate, User user) {
+  public Employee(Long id, String foreignerIdNumber, LocalDate visaGenerateDate,
+      LocalDate visaExpiryDate, User user) {
     this.id = id;
-    this.foreginerNumber = foreginerNumber;
+    this.foreignerIdNumber = foreignerIdNumber;
     this.visaGenerateDate = visaGenerateDate;
+    this.visaExpiryDate = visaExpiryDate;
     this.user = user;
   }
 
@@ -36,12 +40,16 @@ public class Employee {
     return id;
   }
 
-  public String getForeginerNumber() {
-    return foreginerNumber;
+  public String getForeignerIdNumber() {
+    return foreignerIdNumber;
   }
 
-  public String getVisaGenerateDate() {
+  public LocalDate getVisaGenerateDate() {
     return visaGenerateDate;
+  }
+
+  public LocalDate getVisaExpiryDate() {
+    return visaExpiryDate;
   }
 
   public User getUser() {
