@@ -47,8 +47,7 @@ public class ContractPdfService {
     contentByte.showTextAligned(Paragraph.ALIGN_CENTER, request.rule(), 350, 250, 0);
 
     // 서명 추가
-
-
+    
 
     stamper.close();
     reader.close();
