@@ -10,6 +10,7 @@ import jakarta.validation.constraints.NotBlank;
 @Table
 @Entity
 public class Apply {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;

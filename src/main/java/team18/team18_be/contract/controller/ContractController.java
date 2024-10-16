@@ -3,6 +3,7 @@ package team18.team18_be.contract.controller;
 import com.itextpdf.text.DocumentException;
 import io.swagger.annotations.ApiOperation;
 import jakarta.validation.Valid;
+import java.io.IOException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,25 +16,37 @@ import team18.team18_be.auth.entity.User;
 import team18.team18_be.config.resolver.LoginUser;
 import team18.team18_be.contract.dto.request.ContractRequest;
 import team18.team18_be.contract.dto.response.ContractResponse;
+import team18.team18_be.contract.service.ContractFileUploadService;
+import team18.team18_be.contract.service.ContractPdfService;
 import team18.team18_be.contract.service.ContractService;
-
-import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/contract")
 public class ContractController {
 
   private final ContractService contractService;
+  private final ContractPdfService pdfService;
+  private final ContractFileUploadService fileUploadService;
 
-  public ContractController(ContractService contractService) {
+  public ContractController(ContractService contractService, ContractPdfService pdfService, ContractFileUploadService fileUploadService) {
     this.contractService = contractService;
+    this.pdfService = pdfService;
+    this.fileUploadService = fileUploadService;
   }
 
   @ApiOperation(value = "근로계약서 등록 메서드 - 고용주 등록")
   @PostMapping
   public ResponseEntity<Void> makeContract(@Valid @RequestBody ContractRequest request,
       @LoginUser User user) throws DocumentException, IOException {
-    contractService.createAndUploadContract(request, user);
+    // PDF 생성
+    byte[] pdfData = pdfService.createPdf(request);
+
+    // 파일 이름 생성
+    String dirName = "contracts";
+    String fileName = user.getId() + "_" + request.applyId() + ".pdf";
+
+    // GCS에 업로드
+    fileUploadService.uploadContractPdf(pdfData, dirName, fileName);
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 

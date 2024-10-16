@@ -10,7 +10,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
-import team18.team18_be.auth.entity.User;
 import team18.team18_be.contract.dto.request.ContractRequest;
 
 @Service
@@ -47,7 +46,7 @@ public class ContractPdfService {
     contentByte.showTextAligned(Paragraph.ALIGN_CENTER, request.rule(), 350, 250, 0);
 
     // 서명 추가
-    
+
 
     stamper.close();
     reader.close();
