@@ -11,7 +11,7 @@ import team18.team18_be.resume.repository.ResumeRepository;
 @Service
 public class ResumeService {
 
-  private ResumeRepository resumeRepository;
+  private final ResumeRepository resumeRepository;
 
   public ResumeService(ResumeRepository resumeRepository) {
     this.resumeRepository = resumeRepository;

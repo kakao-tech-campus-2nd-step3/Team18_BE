@@ -13,7 +13,7 @@ import team18.team18_be.recruitment.entity.Recruitment;
 
 @Table
 @Entity
-public class  Apply {
+public class Apply {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

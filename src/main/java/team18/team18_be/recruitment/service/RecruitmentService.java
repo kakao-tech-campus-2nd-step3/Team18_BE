@@ -17,10 +17,10 @@ import team18.team18_be.recruitment.repository.RecruitmentRepository;
 @Service
 public class RecruitmentService {
 
-  private RecruitmentRepository recruitmentRepository;
-  private RecruitmentContentRepository recruitmentContentRepository;
+  private final RecruitmentRepository recruitmentRepository;
+  private final RecruitmentContentRepository recruitmentContentRepository;
 
-  private OpenAiService openAiService;
+  private final OpenAiService openAiService;
 
   public RecruitmentService(RecruitmentRepository recruitmentRepository,
       RecruitmentContentRepository recruitmentContentRepository, OpenAiService openAiService) {

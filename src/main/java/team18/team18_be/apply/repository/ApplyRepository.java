@@ -6,5 +6,6 @@ import team18.team18_be.apply.entity.Apply;
 import team18.team18_be.recruitment.entity.Recruitment;
 
 public interface ApplyRepository extends JpaRepository<Apply, Long> {
+
   List<Apply> findByRecruitment(Recruitment recruitment);
 }

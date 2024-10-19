@@ -6,5 +6,6 @@ import team18.team18_be.apply.entity.ApplicationForm;
 import team18.team18_be.apply.entity.Apply;
 
 public interface ApplicationFormRepository extends JpaRepository<ApplicationForm, Long> {
+
   ApplicationForm findByApply(Apply apply);
 }
