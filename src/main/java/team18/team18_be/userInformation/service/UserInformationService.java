@@ -13,26 +13,26 @@ import team18.team18_be.userInformation.dto.request.SignResponse;
 import team18.team18_be.userInformation.dto.request.VisaRequest;
 import team18.team18_be.userInformation.dto.request.VisaResponse;
 import team18.team18_be.userInformation.entity.Company;
-import team18.team18_be.userInformation.entity.Employee;
+import team18.team18_be.userInformation.entity.ForeignerInformation;
 import team18.team18_be.userInformation.entity.Sign;
 import team18.team18_be.userInformation.repository.CompanyRepository;
-import team18.team18_be.userInformation.repository.EmployeeRepository;
+import team18.team18_be.userInformation.repository.ForeignerInformationRepository;
 import team18.team18_be.userInformation.repository.SignRepository;
 
 @Service
 public class UserInformationService {
 
-  private final EmployeeRepository employeeRepository;
+  private final ForeignerInformationRepository foreignerInformationRepository;
   private final CompanyRepository companyRepository;
   private final SignRepository signRepository;
   private final GcsUploader gcsUploader;
   private final FileUtil fileUtil;
 
 
-  public UserInformationService(EmployeeRepository employeeRepository,
+  public UserInformationService(ForeignerInformationRepository foreignerInformationRepository,
       CompanyRepository companyRepository, SignRepository signRepository, GcsUploader gcsUploader,
       FileUtil fileUtil) {
-    this.employeeRepository = employeeRepository;
+    this.foreignerInformationRepository = foreignerInformationRepository;
     this.companyRepository = companyRepository;
     this.signRepository = signRepository;
     this.gcsUploader = gcsUploader;
@@ -61,16 +61,16 @@ public class UserInformationService {
   public void fillInVisa(VisaRequest visaRequest, User user) {
     LocalDate visaGenerateDate = LocalDate.parse(visaRequest.visaGenerateDate());
     LocalDate visaExpiryDate = visaGenerateDate.plusYears(10);
-    Employee newEmployee = new Employee(user.getId(), visaRequest.foreignerIdNumber(),
+    ForeignerInformation newForeignerInformation = new ForeignerInformation(user.getId(), visaRequest.foreignerIdNumber(),
         visaGenerateDate, visaExpiryDate, user);
-    employeeRepository.save(newEmployee);
+    foreignerInformationRepository.save(newForeignerInformation);
   }
 
   public VisaResponse findVisa(User user) {
-    Employee employee = employeeRepository.findByUser(user);
-    String visaGenerateDate = employee.getVisaGenerateDate().toString();
-    String visaExpiryDate = employee.getVisaExpiryDate().toString();
-    VisaResponse visaResponse = new VisaResponse(employee.getForeignerIdNumber(),
+    ForeignerInformation foreignerInformation = foreignerInformationRepository.findByUser(user);
+    String visaGenerateDate = foreignerInformation.getVisaGenerateDate().toString();
+    String visaExpiryDate = foreignerInformation.getVisaExpiryDate().toString();
+    VisaResponse visaResponse = new VisaResponse(foreignerInformation.getForeignerIdNumber(),
         visaGenerateDate, visaExpiryDate);
     return visaResponse;
   }
