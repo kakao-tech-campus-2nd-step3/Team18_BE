@@ -4,7 +4,7 @@ public record ApplyRequest(
     String name,
     String address,
     String phoneNumber,
-    String applyMotivation
+    String motivation
 ) {
 
 }

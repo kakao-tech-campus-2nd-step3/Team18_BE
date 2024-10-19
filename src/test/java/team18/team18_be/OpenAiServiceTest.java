@@ -13,7 +13,7 @@ public class OpenAiServiceTest {
   @Autowired
   private OpenAiService openAiService;
 
-  private RecruitmentRequest recruitmentRequest = new RecruitmentRequest(
+  private final RecruitmentRequest recruitmentRequest = new RecruitmentRequest(
       "주방 보조",                     // 직무 제목
       "중소기업",                     // 회사 규모
       "서울 강남구",                 // 근무 지역
