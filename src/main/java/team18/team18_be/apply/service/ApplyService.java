@@ -44,7 +44,7 @@ public class ApplyService {
     return savedApply.getId();
   }
 
-  public List<ApplyResponse> searchApplicacnt(Long recruitmentId, User user) {
+  public List<ApplyResponse> searchApplicant(Long recruitmentId, User user) {
     Recruitment recruitment = recruitmentRepository.findById(recruitmentId)
         .orElseThrow(() -> new NoSuchElementException("해당되는 구인글이 없습니다."));
     List<Apply> applyList = applyRepository.findByRecruitment(recruitment);

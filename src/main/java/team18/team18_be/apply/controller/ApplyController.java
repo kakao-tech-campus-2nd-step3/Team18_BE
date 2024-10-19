@@ -39,7 +39,7 @@ public class ApplyController {
   @GetMapping("/{recruitmentId}")
   public ResponseEntity<List<ApplyResponse>> SearchApplicant(@PathVariable Long recruitmentId,
       @LoginUser User user) {
-    return ResponseEntity.ok(applyService.searchApplicacnt(recruitmentId, user));
+    return ResponseEntity.ok(applyService.searchApplicant(recruitmentId, user));
   }
 
   //title,area,salary, 회사로고이미지
