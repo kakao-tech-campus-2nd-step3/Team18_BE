@@ -26,11 +26,24 @@ import team18.team18_be.auth.entity.User;
 import team18.team18_be.auth.entity.UserType;
 import team18.team18_be.auth.repository.AuthRepository;
 import team18.team18_be.config.property.GoogleProperty;
+import team18.team18_be.exception.ErrorMessage;
 import team18.team18_be.exception.OAuthLoginFailedException;
 
 @Service
 public class AuthService {
 
+  public static final String USER_ID = "userId";
+  public static final String AUTHORIZATION_CODE = "code";
+  public static final String CLIENT_ID = "client_id";
+  public static final String CLIENT_SECRET = "client_secret";
+  public static final String REDIRECT_URI = "redirect_uri";
+  public static final String GRANT_TYPE = "grant_type";
+  public static final String EMAIL = "email";
+  public static final String NAME = "name";
+  public static final String PICTURE = "picture";
+  public static final String AUTHORIZATION = "Authorization";
+  public static final String BEARER = "Bearer ";
+  public static final String ACCESS_TOKEN = "access_token";
   private final AuthRepository authRepository;
   private final GoogleProperty googleProperty;
   private final RestClient restClient = RestClient.builder().build();
@@ -52,44 +65,46 @@ public class AuthService {
         .body(requestBody)
         .retrieve()
         .onStatus(HttpStatusCode::is4xxClientError, ((req, res) -> {
-          throw new OAuthLoginFailedException("구글 토큰 발급 관련 에러가 발생하였습니다.");
+          throw new OAuthLoginFailedException(
+              ErrorMessage.GOOGLE_OAUTH_TOKEN_ERROR_MESSAGE.getErrorMessage());
         }))
         .toEntity(String.class);
 
     try {
       ObjectMapper objectMapper = new ObjectMapper();
       JsonNode rootNode = objectMapper.readTree(response.getBody());
-      String accessToken = rootNode.path("access_token").asText();
+      String accessToken = rootNode.path(ACCESS_TOKEN).asText();
       return new OAuthJwtResponse(accessToken);
     } catch (Exception e) {
-      throw new InternalException("OAuth 로그인 진행 중 예기치 못한 오류가 발생하였습니다.");
+      throw new InternalException(ErrorMessage.OBJECT_MAPPER_ERROR_MESSAGE.getErrorMessage());
     }
   }
 
   public LoginResponse registerOAuth(OAuthJwtResponse oAuthJwtResponse, String externalApiUri) {
     ResponseEntity<String> response = restClient.get()
         .uri(URI.create(externalApiUri))
-        .header("Authorization", "Bearer " + oAuthJwtResponse.accessToken())
+        .header(AUTHORIZATION, BEARER + oAuthJwtResponse.accessToken())
         .retrieve()
         .onStatus(HttpStatusCode::is4xxClientError, ((req, res) -> {
-          throw new OAuthLoginFailedException("구글 유저 정보 조회 중 에러가 발생하였습니다.");
+          throw new OAuthLoginFailedException(
+              ErrorMessage.GOOGLE_OAUTH_USER_INFO_ERROR_MESSAGE.getErrorMessage());
         }))
         .toEntity(String.class);
 
     try {
       ObjectMapper objectMapper = new ObjectMapper();
       JsonNode rootNode = objectMapper.readTree(response.getBody());
-      String userEmail = rootNode.path("email").asText();
+      String userEmail = rootNode.path(EMAIL).asText();
 
       if (!authRepository.existsByEmail(userEmail)) {
-        String userName = rootNode.path("name").asText();
+        String userName = rootNode.path(NAME).asText();
         authRepository.save(new User(userName, userEmail, UserType.FIRST.getUserType()));
       }
 
-      String profileImage = rootNode.path("picture").asText();
+      String profileImage = rootNode.path(PICTURE).asText();
       return getLoginResponse(userEmail, profileImage);
     } catch (Exception e) {
-      throw new InternalException("OAuth 로그인 진행 중 예기치 못한 오류가 발생하였습니다.");
+      throw new InternalException(ErrorMessage.OBJECT_MAPPER_ERROR_MESSAGE.getErrorMessage());
     }
   }
 
@@ -99,18 +114,19 @@ public class AuthService {
 
   private LinkedMultiValueMap<String, String> getRequestBody(CodeRequest codeRequest) {
     LinkedMultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
-    requestBody.add("code", codeRequest.code());
-    requestBody.add("client_id", googleProperty.clientId());
-    requestBody.add("client_secret", googleProperty.clientSecret());
-    requestBody.add("redirect_uri", googleProperty.redirectUri());
-    requestBody.add("grant_type", googleProperty.grantType());
+    requestBody.add(AUTHORIZATION_CODE, codeRequest.code());
+    requestBody.add(CLIENT_ID, googleProperty.clientId());
+    requestBody.add(CLIENT_SECRET, googleProperty.clientSecret());
+    requestBody.add(REDIRECT_URI, googleProperty.redirectUri());
+    requestBody.add(GRANT_TYPE, googleProperty.grantType());
     return requestBody;
   }
 
   private LoginResponse getLoginResponse(String userEmail,
       String profileImage) {
     User user = authRepository.findByEmail(userEmail)
-        .orElseThrow(() -> new NoSuchElementException("회원 정보가 존재하지 않습니다."));
+        .orElseThrow(
+            () -> new NoSuchElementException(ErrorMessage.NOT_FOUND_USER.getErrorMessage()));
     String userType = user.getType();
     String accessToken = getAccessToken(user);
     return new LoginResponse(accessToken, userType, profileImage);
@@ -120,7 +136,7 @@ public class AuthService {
     byte[] keyBytes = SECRET_KEY.getBytes(StandardCharsets.UTF_8);
     SecretKey key = Keys.hmacShaKeyFor(keyBytes);
     return Jwts.builder()
-        .claim("userId", user.getId())
+        .claim(USER_ID, user.getId())
         .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60L))
         .signWith(key)
         .compact();
