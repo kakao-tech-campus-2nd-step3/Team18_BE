@@ -21,7 +21,7 @@ import team18.team18_be.resume.service.ResumeService;
 @RequestMapping("/api/resumes")
 public class ResumeController {
 
-  private ResumeService resumeService;
+  private final ResumeService resumeService;
 
   public ResumeController(ResumeService resumeService) {
     this.resumeService = resumeService;

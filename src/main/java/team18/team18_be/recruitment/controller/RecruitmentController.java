@@ -24,7 +24,7 @@ import team18.team18_be.recruitment.service.RecruitmentService;
 @RequestMapping("/api/recruitments")
 public class RecruitmentController {
 
-  private RecruitmentService recruitmentService;
+  private final RecruitmentService recruitmentService;
 
   public RecruitmentController(RecruitmentService recruitmentService) {
     this.recruitmentService = recruitmentService;

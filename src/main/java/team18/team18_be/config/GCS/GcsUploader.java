@@ -20,7 +20,7 @@ public class GcsUploader {
 
   // MultipartFile을 GCS에 업로드
   public Optional<String> upload(byte[] imageFile, String dirName, String fileName) {
-    String GCSfileName = dirName +"/"+ fileName;
+    String GCSfileName = dirName + "/" + fileName;
     // BlobInfo 설정
     BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, GCSfileName).build();
 

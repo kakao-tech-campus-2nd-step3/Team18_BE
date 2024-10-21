@@ -12,7 +12,7 @@ import team18.team18_be.auth.entity.User;
 
 @Table
 @Entity
-public class Employee {
+public class ForeignerInformation {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,10 +24,10 @@ public class Employee {
   @JoinColumn(name = "user_id")
   private User user;
 
-  public Employee() {
+  public ForeignerInformation() {
   }
 
-  public Employee(Long id, String foreignerIdNumber, LocalDate visaGenerateDate,
+  public ForeignerInformation(Long id, String foreignerIdNumber, LocalDate visaGenerateDate,
       LocalDate visaExpiryDate, User user) {
     this.id = id;
     this.foreignerIdNumber = foreignerIdNumber;
