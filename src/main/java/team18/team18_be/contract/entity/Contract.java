@@ -6,17 +6,24 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 import team18.team18_be.apply.entity.ApplicationForm;
+import team18.team18_be.apply.entity.Apply;
 import team18.team18_be.auth.entity.User;
 
 @Entity(name = "contracts")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Contract {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private int salary;
-  private String contractPeriod;
+  private String workingHours;
   private String dayOff;
   private String annualPaidLeave;
   private String workingPlace;
@@ -25,6 +32,6 @@ public class Contract {
   private String pdfFileUrl;
   private String rule;
   @ManyToOne
-  @JoinColumn(name = "applicationId")
-  private ApplicationForm applicationForm;
+  @JoinColumn(name = "applyId")
+  private Apply apply;
 }

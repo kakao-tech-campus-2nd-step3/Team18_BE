@@ -16,7 +16,7 @@ import team18.team18_be.auth.entity.User;
 import team18.team18_be.config.resolver.LoginUser;
 import team18.team18_be.contract.dto.request.ContractRequest;
 import team18.team18_be.contract.dto.response.ContractResponse;
-import team18.team18_be.contract.service.ContractFileUploadService;
+import team18.team18_be.contract.service.ContractFileService;
 import team18.team18_be.contract.service.ContractPdfService;
 import team18.team18_be.contract.service.ContractService;
 
@@ -26,9 +26,10 @@ public class ContractController {
 
   private final ContractService contractService;
   private final ContractPdfService pdfService;
-  private final ContractFileUploadService fileUploadService;
+  private final ContractFileService fileUploadService;
 
-  public ContractController(ContractService contractService, ContractPdfService pdfService, ContractFileUploadService fileUploadService) {
+  public ContractController(ContractService contractService, ContractPdfService pdfService,
+      ContractFileService fileUploadService) {
     this.contractService = contractService;
     this.pdfService = pdfService;
     this.fileUploadService = fileUploadService;
@@ -39,14 +40,16 @@ public class ContractController {
   public ResponseEntity<Void> makeContract(@Valid @RequestBody ContractRequest request,
       @LoginUser User user) throws DocumentException, IOException {
     // PDF 생성
-    byte[] pdfData = pdfService.createPdf(request);
+    byte[] pdfData = pdfService.createPdf(request, user);
 
     // 파일 이름 생성
     String dirName = "contracts";
     String fileName = user.getId() + "_" + request.applyId() + ".pdf";
 
     // GCS에 업로드
-    fileUploadService.uploadContractPdf(pdfData, dirName, fileName);
+    String pdfUrl = fileUploadService.uploadContractPdf(pdfData, dirName, fileName);
+    contractService.createContract(request, pdfUrl);
+
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 

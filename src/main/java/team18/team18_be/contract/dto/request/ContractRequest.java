@@ -2,7 +2,7 @@ package team18.team18_be.contract.dto.request;
 
 public record ContractRequest(
     int salary,
-    ContractPeriod contractPeriod,
+    String workingHours,
     String dayOff,
     String annualPaidLeave,
     String workingPlace,
