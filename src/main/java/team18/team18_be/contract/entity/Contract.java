@@ -34,4 +34,12 @@ public class Contract {
   @ManyToOne
   @JoinColumn(name = "applyId")
   private Apply apply;
+
+  public String getPdfFileUrl() {
+    return this.pdfFileUrl;
+  }
+
+  public void updatePdfFileUrl(String pdfFileUrl) {
+    this.pdfFileUrl = pdfFileUrl;
+  }
 }

@@ -28,17 +28,15 @@ public class ContractPdfService {
 
     // 원본 파일 읽기
     ClassPathResource resource = new ClassPathResource("contract.pdf");
-    PdfReader reader = new PdfReader(resource.getInputStream());
-
-    // 메모리 안에 PDF 파일 생성
+    // 메모리 안에 PDF 파일을 담기 위한 스트림
     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-    PdfStamper stamper = new PdfStamper(reader, byteArrayOutputStream);
 
-    // pdf 수정할 페이지 지정
-    PdfContentByte contentByte = stamper.getOverContent(1);
+    // PDF 준비
+    PdfContentByte contentByte = preparePdfContent(resource.getContentAsByteArray(),
+        byteArrayOutputStream);
 
-    // 폰트 지정
-    BaseFont font = BaseFont.createFont("gothic.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+    // 폰트 준비
+    BaseFont font = prepareFont();
     contentByte.setFontAndSize(font, 10);
 
     // 글자 추가
@@ -62,10 +60,50 @@ public class ContractPdfService {
     // 서명 이미지 추가
     addImageToPdf(contentByte, imageBytes, 50, 50, 465, 103);
 
-    stamper.close();
-    reader.close();
+    return byteArrayOutputStream.toByteArray();
+  }
+
+  public byte[] fillInEmployeeSign(byte[] pdfData, User user)
+      throws IOException, DocumentException {
+
+    // 메모리 안에 PDF 파일을 담기 위한 스트림
+    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+    // PDF 준비
+    PdfContentByte contentByte = preparePdfContent(pdfData, byteArrayOutputStream);
+
+    // 폰트 준비
+    BaseFont font = prepareFont();
+    contentByte.setFontAndSize(font, 10);
+
+    // 서명 추가
+    contentByte.showTextAligned(Paragraph.ALIGN_CENTER, user.getName(), 457, 113, 0);
+
+    // 근로자 서명 받기
+    byte[] imageBytes = contractFileService.getSignImage(user);
+
+    // 근로자 서명 이미지 추가
+    addImageToPdf(contentByte, imageBytes, 50, 50, 465, 83);
 
     return byteArrayOutputStream.toByteArray();
+  }
+
+  private PdfContentByte preparePdfContent(byte[] pdfData,
+      ByteArrayOutputStream byteArrayOutputStream) throws IOException, DocumentException {
+
+    PdfReader reader = new PdfReader(pdfData);
+
+    // 메모리 안에 PDF 파일 생성
+    PdfStamper stamper = new PdfStamper(reader, byteArrayOutputStream);
+
+    // pdf 수정할 페이지 지정
+    return stamper.getOverContent(1);
+  }
+
+  private BaseFont prepareFont() throws DocumentException, IOException {
+
+    // 폰트 지정
+    return BaseFont.createFont("gothic.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
   }
 
   private void addImageToPdf(PdfContentByte contentByte, byte[] imageBytes, int width, int height,

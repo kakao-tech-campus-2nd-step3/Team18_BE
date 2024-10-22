@@ -1,6 +1,7 @@
 package team18.team18_be.contract.service;
 
 import com.itextpdf.text.DocumentException;
+import jakarta.transaction.Transactional;
 import java.io.IOException;
 import org.springframework.stereotype.Service;
 import team18.team18_be.apply.entity.Apply;
@@ -46,15 +47,14 @@ public class ContractService {
     );
   }
 
-  public void createAndUploadContract(ContractRequest request, User user)
+  @Transactional
+  public void updatePdfUrl(ContractRequest request, String pdfUrl)
       throws DocumentException, IOException {
+    Contract contract = contractRepository.findByApplyId(request.applyId())
+        .orElseThrow(() -> new NotFoundException("해당 appliyId의 Contract가 존재하지 않습니다."));
 
-    byte[] pdf = pdfService.createPdf(request, user);
+    contract.updatePdfFileUrl(pdfUrl);
 
-    String dirName = "contracts";
-    String fileName = user.getId() + "_" + request.applyId() + ".pdf";
-
-    fileUploadService.uploadContractPdf(pdf, dirName, fileName);
   }
 
   public void makeContractEmployee(User user) {

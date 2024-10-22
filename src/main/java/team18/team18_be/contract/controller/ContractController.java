@@ -26,13 +26,13 @@ public class ContractController {
 
   private final ContractService contractService;
   private final ContractPdfService pdfService;
-  private final ContractFileService fileUploadService;
+  private final ContractFileService fileService;
 
   public ContractController(ContractService contractService, ContractPdfService pdfService,
-      ContractFileService fileUploadService) {
+      ContractFileService fileService) {
     this.contractService = contractService;
     this.pdfService = pdfService;
-    this.fileUploadService = fileUploadService;
+    this.fileService = fileService;
   }
 
   @ApiOperation(value = "근로계약서 등록 메서드 - 고용주 등록")
@@ -47,7 +47,8 @@ public class ContractController {
     String fileName = user.getId() + "_" + request.applyId() + ".pdf";
 
     // GCS에 업로드
-    String pdfUrl = fileUploadService.uploadContractPdf(pdfData, dirName, fileName);
+    String pdfUrl = fileService.uploadContractPdf(pdfData, dirName, fileName);
+    // 파일 정보 저장
     contractService.createContract(request, pdfUrl);
 
     return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -55,8 +56,18 @@ public class ContractController {
 
   @ApiOperation(value = "근로계약서 등록 메서드 - 근로자 서명 등록")
   @PostMapping("/employee")
-  public ResponseEntity<Void> makeContract(@LoginUser User user) {
-    contractService.makeContractEmployee(user);
+  public ResponseEntity<Void> fillInEmployeeSign(@Valid @RequestBody ContractRequest request,
+      @LoginUser User user) throws IOException, DocumentException {
+    byte[] pdfData = fileService.getPdf(request);
+    byte[] updatePdfData = pdfService.fillInEmployeeSign(pdfData, user);
+
+    // 파일 이름 생성
+    String dirName = "contracts";
+    String fileName = user.getId() + "_" + request.applyId() + "update.pdf";
+
+    String pdfUrl = fileService.uploadContractPdf(updatePdfData, dirName, fileName);
+
+    contractService.updatePdfUrl(request, pdfUrl);
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 
