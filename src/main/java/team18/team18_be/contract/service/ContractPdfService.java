@@ -7,8 +7,13 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import javax.imageio.ImageIO;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.rendering.ImageType;
+import org.apache.pdfbox.rendering.PDFRenderer;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import team18.team18_be.auth.entity.User;
@@ -104,6 +109,20 @@ public class ContractPdfService {
 
     // 폰트 지정
     return BaseFont.createFont("gothic.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+  }
+
+  public byte[] convertPdfToImage(byte[] pdfData) throws IOException {
+    try (PDDocument document = PDDocument.load(pdfData)) {
+      PDFRenderer pdfRenderer = new PDFRenderer(document);
+
+      // 첫 번째 페이지를 이미지로 변환
+      BufferedImage image = pdfRenderer.renderImageWithDPI(0, 300, ImageType.RGB);
+
+      // byte[] 로 변환
+      ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+      ImageIO.write(image, "png", byteArrayOutputStream);
+      return byteArrayOutputStream.toByteArray();
+    }
   }
 
   private void addImageToPdf(PdfContentByte contentByte, byte[] imageBytes, int width, int height,

@@ -1,12 +1,9 @@
 package team18.team18_be.contract.service;
 
-import com.itextpdf.text.DocumentException;
 import jakarta.transaction.Transactional;
-import java.io.IOException;
 import org.springframework.stereotype.Service;
 import team18.team18_be.apply.entity.Apply;
 import team18.team18_be.apply.repository.ApplyRepository;
-import team18.team18_be.auth.entity.User;
 import team18.team18_be.contract.dto.request.ContractRequest;
 import team18.team18_be.contract.entity.Contract;
 import team18.team18_be.contract.repository.ContractRepository;
@@ -17,14 +14,9 @@ public class ContractService {
 
   private final ContractRepository contractRepository;
   private final ApplyRepository applyRepository;
-  private final ContractPdfService pdfService;
-  private final ContractFileService fileUploadService;
 
-  public ContractService(ContractRepository contractRepository, ContractPdfService pdfService,
-      ContractFileService fileUploadService, ApplyRepository applyRepository) {
+  public ContractService(ContractRepository contractRepository, ApplyRepository applyRepository) {
     this.contractRepository = contractRepository;
-    this.pdfService = pdfService;
-    this.fileUploadService = fileUploadService;
     this.applyRepository = applyRepository;
   }
 
@@ -47,13 +39,19 @@ public class ContractService {
   }
 
   @Transactional
-  public void updatePdfUrl(ContractRequest request, String pdfUrl)
-      throws DocumentException, IOException {
+  public void updatePdfUrl(ContractRequest request, String pdfUrl) {
     Contract contract = contractRepository.findByApplyId(request.applyId())
         .orElseThrow(() -> new NotFoundException("해당 appliyId의 Contract가 존재하지 않습니다."));
 
     contract.updatePdfFileUrl(pdfUrl);
+  }
 
+  @Transactional
+  public void updateImageUrl(ContractRequest request, String imageUrl) {
+    Contract contract = contractRepository.findByApplyId(request.applyId())
+        .orElseThrow(() -> new NotFoundException("해당 appliyId의 Contract가 존재하지 않습니다."));
+
+    contract.updateImageFileUrl(imageUrl);
   }
 
 }

@@ -46,11 +46,11 @@ public class ContractController {
     String dirName = "contracts";
     String fileName = user.getId() + "_" + request.applyId() + ".pdf";
 
-    // GCS에 업로드
+    // 파일 업로드
     String pdfUrl = fileService.uploadContractPdf(pdfData, dirName, fileName);
+
     // 파일 정보 저장
     contractService.createContract(request, pdfUrl);
-
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 
@@ -60,14 +60,20 @@ public class ContractController {
       @LoginUser User user) throws IOException, DocumentException {
     byte[] pdfData = fileService.getPdf(request);
     byte[] updatePdfData = pdfService.fillInEmployeeSign(pdfData, user);
+    byte[] image = pdfService.convertPdfToImage(updatePdfData);
 
     // 파일 이름 생성
     String dirName = "contracts";
-    String fileName = user.getId() + "_" + request.applyId() + "update.pdf";
+    String pdfFileName = user.getId() + "_" + request.applyId() + "update.pdf";
+    String imageFileName = user.getId() + "_" + request.applyId() + "update.png";
 
-    String pdfUrl = fileService.uploadContractPdf(updatePdfData, dirName, fileName);
+    // 파일 업로드
+    String pdfUrl = fileService.uploadContractPdf(updatePdfData, dirName, pdfFileName);
+    String imageUrl = fileService.uploadContractPdf(image, dirName, imageFileName);
 
+    // 파일 링크 저장
     contractService.updatePdfUrl(request, pdfUrl);
+    contractService.updateImageUrl(request, imageUrl);
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 
@@ -79,8 +85,7 @@ public class ContractController {
 
   @ApiOperation(value = "근로계약서 id별 image url 반환 메서드")
   @GetMapping("/{applyId}/preview")
-  public ResponseEntity<String> previewContract(@PathVariable("applyId") Long id,
-      @LoginUser User user) {
-    return ResponseEntity.ok(contractService.previewContract(id, user));
+  public ResponseEntity<String> previewContract(@PathVariable("applyId") Long id) {
+    return ResponseEntity.ok(fileService.getImageUrl(id));
   }
 }

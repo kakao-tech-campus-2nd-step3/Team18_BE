@@ -39,7 +39,15 @@ public class Contract {
     return this.pdfFileUrl;
   }
 
+  public String getImageFileUrl() {
+    return this.imageFileUrl;
+  }
+
   public void updatePdfFileUrl(String pdfFileUrl) {
     this.pdfFileUrl = pdfFileUrl;
+  }
+
+  public void updateImageFileUrl(String imageFileUrl) {
+    this.imageFileUrl = imageFileUrl;
   }
 }
