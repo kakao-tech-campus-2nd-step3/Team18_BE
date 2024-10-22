@@ -63,4 +63,10 @@ public class ContractFileService {
     }
   }
 
+  public String getPdfUrl(Long applyId) {
+    Contract contract = contractRepository.findByApplyId(applyId)
+        .orElseThrow(() -> new NotFoundException("해당 applyId의 Contract 객체를 찾을 수 없습니다."));
+
+    return contract.getPdfFileUrl();
+  }
 }

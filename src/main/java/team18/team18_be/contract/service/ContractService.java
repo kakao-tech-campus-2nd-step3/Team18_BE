@@ -8,7 +8,6 @@ import team18.team18_be.apply.entity.Apply;
 import team18.team18_be.apply.repository.ApplyRepository;
 import team18.team18_be.auth.entity.User;
 import team18.team18_be.contract.dto.request.ContractRequest;
-import team18.team18_be.contract.dto.response.ContractResponse;
 import team18.team18_be.contract.entity.Contract;
 import team18.team18_be.contract.repository.ContractRepository;
 import team18.team18_be.exception.NotFoundException;
@@ -57,18 +56,4 @@ public class ContractService {
 
   }
 
-  public void makeContractEmployee(User user) {
-  }
-
-  public ContractResponse getContract(User user) {
-    return new ContractResponse(1L, "");
-  }
-
-  public String downloadContract(Long id, User user) {
-    return "";
-  }
-
-  public String previewContract(Long id, User user) {
-    return "";
-  }
 }

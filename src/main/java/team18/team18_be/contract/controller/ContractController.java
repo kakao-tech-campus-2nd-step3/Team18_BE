@@ -71,23 +71,15 @@ public class ContractController {
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 
-  @ApiOperation(value = "근로계약서 user id 별 조회 메서드")
-  @GetMapping
-  public ResponseEntity<ContractResponse> getContract(@LoginUser User user) {
-    return ResponseEntity.ok(contractService.getContract(user));
-
-  }
-
   @ApiOperation(value = "근로계약서 id별 pdf url 반환 메서드")
-  @GetMapping("/{contractId}/download")
-  public ResponseEntity<String> downloadContract(@PathVariable("contractId") Long id,
-      @LoginUser User user) {
-    return ResponseEntity.ok(contractService.downloadContract(id, user));
+  @GetMapping("/{applyId}/download")
+  public ResponseEntity<String> downloadContract(@PathVariable("applyId") Long id) {
+    return ResponseEntity.ok(fileService.getPdfUrl(id));
   }
 
   @ApiOperation(value = "근로계약서 id별 image url 반환 메서드")
-  @GetMapping("/{contractId}/preview")
-  public ResponseEntity<String> previewContract(@PathVariable("contractId") Long id,
+  @GetMapping("/{applyId}/preview")
+  public ResponseEntity<String> previewContract(@PathVariable("applyId") Long id,
       @LoginUser User user) {
     return ResponseEntity.ok(contractService.previewContract(id, user));
   }
