@@ -4,6 +4,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import team18.team18_be.userInformation.entity.Company;
 
 @Entity
 public class Recruitment {
@@ -26,13 +30,17 @@ public class Recruitment {
   private String preferredConditions;
   private String employerName;
   private String companyName;
-  private Long companyId;
+  @OneToOne
+  private RecruitmentContent recruitmentContent;
+  @ManyToOne
+  @JoinColumn(name = "companyId")
+  private Company company;
 
   public Recruitment(String koreanTitle, String vietnameseTitle, String companySize, String area,
       String salary, String workDuration, String workDays, String workType, String workHours,
       String requestedCareer,
       String majorBusiness, String eligibilityCriteria, String preferredConditions,
-      String employerName, String companyName, Long companyId) {
+      String employerName, String companyName, Company company) {
     this.koreanTitle = koreanTitle;
     this.vietnameseTitle = vietnameseTitle;
     this.companySize = companySize;
@@ -48,7 +56,7 @@ public class Recruitment {
     this.preferredConditions = preferredConditions;
     this.employerName = employerName;
     this.companyName = companyName;
-    this.companyId = companyId;
+    this.company = company;
   }
 
   public Recruitment() {

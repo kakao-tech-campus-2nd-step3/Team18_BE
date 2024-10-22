@@ -13,20 +13,23 @@ import team18.team18_be.recruitment.entity.Recruitment;
 import team18.team18_be.recruitment.entity.RecruitmentContent;
 import team18.team18_be.recruitment.repository.RecruitmentContentRepository;
 import team18.team18_be.recruitment.repository.RecruitmentRepository;
+import team18.team18_be.userInformation.repository.CompanyRepository;
 
 @Service
 public class RecruitmentService {
 
   private RecruitmentRepository recruitmentRepository;
   private RecruitmentContentRepository recruitmentContentRepository;
+  private CompanyRepository companyRepository;
 
   private OpenAiService openAiService;
 
   public RecruitmentService(RecruitmentRepository recruitmentRepository,
-      RecruitmentContentRepository recruitmentContentRepository, OpenAiService openAiService) {
+      RecruitmentContentRepository recruitmentContentRepository, OpenAiService openAiService,CompanyRepository companyRepository) {
     this.recruitmentRepository = recruitmentRepository;
     this.recruitmentContentRepository = recruitmentContentRepository;
     this.openAiService = openAiService;
+    this.companyRepository = companyRepository;
   }
 
   public void saveRecruitment(RecruitmentRequest recruitmentRequest)
@@ -40,8 +43,7 @@ public class RecruitmentService {
     String vietnameseDetailedDescription = openAiService.translateKoreanToVietnamese(
         koreanDetailedDescription);
     recruitmentContentRepository.save(
-        new RecruitmentContent(koreanDetailedDescription, vietnameseDetailedDescription,
-            recruitment.getRecruitmentId()));
+        new RecruitmentContent(koreanDetailedDescription, vietnameseDetailedDescription));
   }
 
   public List<RecruitmentSummationResponse> getAllRecruitment() {
@@ -81,7 +83,9 @@ public class RecruitmentService {
         recruitmentRequest.workHours(), recruitmentRequest.requestedCareer(),
         recruitmentRequest.majorBusiness(), recruitmentRequest.eligibilityCriteria(),
         recruitmentRequest.preferredConditions(), recruitmentRequest.employerName(),
-        recruitmentRequest.companyName(), recruitmentRequest.companyId());
+        recruitmentRequest.companyName(),
+        companyRepository.findById(recruitmentRequest.companyId())
+            .orElseThrow(() -> new NoSuchElementException("해당하는 사용자가 존재하지 않습니다.")));
   }
 
   private RecruitmentResponse mapRecruitmentAndRecruitmentContentToRecruitmentResponse(
