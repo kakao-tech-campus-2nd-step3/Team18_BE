@@ -30,17 +30,17 @@ public class Recruitment {
   private String preferredConditions;
   private String employerName;
   private String companyName;
-  @OneToOne
-  private RecruitmentContent recruitmentContent;
   @ManyToOne
   @JoinColumn(name = "companyId")
   private Company company;
+  @OneToOne
+  private RecruitmentContent recruitmentContent;
 
   public Recruitment(String koreanTitle, String vietnameseTitle, String companySize, String area,
       String salary, String workDuration, String workDays, String workType, String workHours,
       String requestedCareer,
       String majorBusiness, String eligibilityCriteria, String preferredConditions,
-      String employerName, String companyName, Company company) {
+      String employerName, String companyName, Company company,RecruitmentContent recruitmentContent) {
     this.koreanTitle = koreanTitle;
     this.vietnameseTitle = vietnameseTitle;
     this.companySize = companySize;
@@ -57,7 +57,9 @@ public class Recruitment {
     this.employerName = employerName;
     this.companyName = companyName;
     this.company = company;
+    this.recruitmentContent = recruitmentContent;
   }
+
 
   public Recruitment() {
 
@@ -125,6 +127,14 @@ public class Recruitment {
 
   public String getCompanyName() {
     return companyName;
+  }
+
+  public Company getCompany() {
+    return company;
+  }
+
+  public RecruitmentContent getRecruitmentContent() {
+    return recruitmentContent;
   }
 
 }

@@ -36,14 +36,15 @@ public class RecruitmentService {
       throws JsonProcessingException {
     String koreanTitle = recruitmentRequest.title();
     String vietnameseTitle = openAiService.translateKoreanToVietnamese(koreanTitle);
-    Recruitment recruitment = recruitmentRepository.save(
-        mapRecruitmentRequestToRecruitment(koreanTitle, vietnameseTitle, recruitmentRequest));
 
     String koreanDetailedDescription = openAiService.summation(recruitmentRequest);
     String vietnameseDetailedDescription = openAiService.translateKoreanToVietnamese(
         koreanDetailedDescription);
-    recruitmentContentRepository.save(
+    RecruitmentContent recruitmentContent = recruitmentContentRepository.save(
         new RecruitmentContent(koreanDetailedDescription, vietnameseDetailedDescription));
+    recruitmentRepository.save(
+        mapRecruitmentRequestToRecruitment(koreanTitle, vietnameseTitle, recruitmentRequest,recruitmentContent));
+
   }
 
   public List<RecruitmentSummationResponse> getAllRecruitment() {
@@ -64,11 +65,7 @@ public class RecruitmentService {
   public RecruitmentResponse getRecruitmentResponseByRecruitmentId(Long userId) {
     Recruitment recruitment = recruitmentRepository.findById(userId)
         .orElseThrow(() -> new NoSuchElementException("해당하는 이력서가 존재하지 않습니다."));
-
-    RecruitmentContent recruitmentContent = recruitmentContentRepository.findByRecruitmentId(
-        userId);
-    return mapRecruitmentAndRecruitmentContentToRecruitmentResponse(recruitment,
-        recruitmentContent);
+    return mapRecruitmentAndRecruitmentContentToRecruitmentResponse(recruitment);
   }
 
   public RecruitmentResponse getRecruitmentResponseByCompanyId(Long recruitmentId) {
@@ -76,7 +73,7 @@ public class RecruitmentService {
   }
 
   private Recruitment mapRecruitmentRequestToRecruitment(String koreanTitle, String vietnameseTitle,
-      RecruitmentRequest recruitmentRequest) {
+      RecruitmentRequest recruitmentRequest,RecruitmentContent recruitmentContent) {
     return new Recruitment(koreanTitle, vietnameseTitle, recruitmentRequest.companySize(),
         recruitmentRequest.area(), recruitmentRequest.salary(), recruitmentRequest.workDuration(),
         recruitmentRequest.workDays(), recruitmentRequest.workType(),
@@ -85,19 +82,20 @@ public class RecruitmentService {
         recruitmentRequest.preferredConditions(), recruitmentRequest.employerName(),
         recruitmentRequest.companyName(),
         companyRepository.findById(recruitmentRequest.companyId())
-            .orElseThrow(() -> new NoSuchElementException("해당하는 사용자가 존재하지 않습니다.")));
+            .orElseThrow(() -> new NoSuchElementException("해당하는 사용자가 존재하지 않습니다.")),
+        recruitmentContent);
   }
 
   private RecruitmentResponse mapRecruitmentAndRecruitmentContentToRecruitmentResponse(
-      Recruitment recruitment, RecruitmentContent recruitmentContent) {
+      Recruitment recruitment) {
     return new RecruitmentResponse(recruitment.getKoreanTitle(), recruitment.getVietnameseTitle(),
         recruitment.getCompanySize(), recruitment.getArea(), recruitment.getSalary(),
         recruitment.getWorkDuration(), recruitment.getWorkDays(), recruitment.getWorkType(),
         recruitment.getWorkHours(), recruitment.getRequestedCareer(),
         recruitment.getMajorBusiness(), recruitment.getEligibilityCriteria(),
         recruitment.getPreferredConditions(), recruitment.getEmployerName(),
-        recruitmentContent.getKoreanDetailedDescription(),
-        recruitmentContent.getVietnameseDetailedDescription());
+        recruitment.getRecruitmentContent().getKoreanDetailedDescription(),
+        recruitment.getRecruitmentContent().getVietnameseDetailedDescription());
   }
 
 }
