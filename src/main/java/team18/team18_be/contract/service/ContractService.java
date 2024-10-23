@@ -1,74 +1,57 @@
 package team18.team18_be.contract.service;
 
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.BaseFont;
-import com.itextpdf.text.pdf.PdfContentByte;
-import com.itextpdf.text.pdf.PdfReader;
-import com.itextpdf.text.pdf.PdfStamper;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import org.springframework.core.io.ClassPathResource;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-import team18.team18_be.auth.entity.User;
+import team18.team18_be.apply.entity.Apply;
+import team18.team18_be.apply.repository.ApplyRepository;
 import team18.team18_be.contract.dto.request.ContractRequest;
-import team18.team18_be.contract.dto.response.ContractResponse;
+import team18.team18_be.contract.entity.Contract;
 import team18.team18_be.contract.repository.ContractRepository;
+import team18.team18_be.exception.NotFoundException;
 
 @Service
 public class ContractService {
 
   private final ContractRepository contractRepository;
+  private final ApplyRepository applyRepository;
 
-  public ContractService(ContractRepository contractRepository) {
+  public ContractService(ContractRepository contractRepository, ApplyRepository applyRepository) {
     this.contractRepository = contractRepository;
+    this.applyRepository = applyRepository;
   }
 
-  public void makeContract(ContractRequest request, User user)
-      throws DocumentException, IOException {
+  public void createContract(ContractRequest request, String pdfUrl) {
 
-    // 원본 파일 읽기
-    ClassPathResource resource = new ClassPathResource("contract.pdf");
-    PdfReader reader = new PdfReader(resource.getInputStream());
+    Apply apply = applyRepository.findById(request.applyId())
+        .orElseThrow(() -> new NotFoundException("해당 applyId가 존재하지 않습니다."));
 
-    // 수정된 파일 이름 : 고용주 id + 근로자 id
-    PdfStamper stamper = new PdfStamper(reader,
-        new FileOutputStream(user.getId() + "_" + request.employeeId() + ".pdf"));
-
-    // pdf 수정할 페이지 지정
-    PdfContentByte contentByte = stamper.getOverContent(1);
-
-    // 폰트 지정
-    BaseFont font = BaseFont.createFont("gothic.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-    contentByte.setFontAndSize(font, 10);
-
-    contentByte.showTextAligned(Paragraph.ALIGN_CENTER, Integer.toString(request.salary()), 350,
-        630, 0);
-    contentByte.showTextAligned(Paragraph.ALIGN_CENTER,
-        request.contractPeriod().startDate() + " ~ " + request.contractPeriod().endDate(), 350, 550,
-        0);
-    contentByte.showTextAligned(Paragraph.ALIGN_CENTER, request.dayOff(), 350, 475, 0);
-    contentByte.showTextAligned(Paragraph.ALIGN_CENTER, request.annualPaidLeave(), 350, 400, 0);
-    contentByte.showTextAligned(Paragraph.ALIGN_CENTER,
-        request.workingPlace() + " / " + request.responsibilities(), 350, 320, 0);
-    contentByte.showTextAligned(Paragraph.ALIGN_CENTER, request.rule(), 350, 250, 0);
-
-    stamper.close();
-    reader.close();
+    contractRepository.save(
+        Contract.builder()
+            .salary(request.salary())
+            .workingHours(request.workingHours())
+            .imageFileUrl(null)
+            .pdfFileUrl(pdfUrl)
+            .annualPaidLeave(request.annualPaidLeave())
+            .dayOff(request.dayOff())
+            .rule(request.rule())
+            .apply(apply).build()
+    );
   }
 
-  public void makeContractEmployee(User user) {
+  @Transactional
+  public void updatePdfUrl(ContractRequest request, String pdfUrl) {
+    Contract contract = contractRepository.findByApplyId(request.applyId())
+        .orElseThrow(() -> new NotFoundException("해당 appliyId의 Contract가 존재하지 않습니다."));
+
+    contract.updatePdfFileUrl(pdfUrl);
   }
 
-  public ContractResponse getContract(User user) {
-    return new ContractResponse(1L, "");
+  @Transactional
+  public void updateImageUrl(ContractRequest request, String imageUrl) {
+    Contract contract = contractRepository.findByApplyId(request.applyId())
+        .orElseThrow(() -> new NotFoundException("해당 appliyId의 Contract가 존재하지 않습니다."));
+
+    contract.updateImageFileUrl(imageUrl);
   }
 
-  public String downloadContract(Long id, User user) {
-    return "";
-  }
-
-  public String previewContract(Long id, User user) {
-    return "";
-  }
 }

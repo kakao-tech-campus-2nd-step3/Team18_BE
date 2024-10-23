@@ -2,6 +2,7 @@ package team18.team18_be.userInformation.service;
 
 import java.time.LocalDate;
 import java.util.NoSuchElementException;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import team18.team18_be.auth.entity.User;
@@ -79,7 +80,7 @@ public class UserInformationService {
     byte[] imageFile = fileUtil.safelyGetBytes(imageUrl)
         .orElseThrow(() -> new IllegalArgumentException("multipart 파일을 읽지 못하였습니다."));
     String storedFileName = gcsUploader.upload(imageFile, "Sign",
-            user.getId().toString() + imageUrl.getOriginalFilename())
+            user.getId().toString()+ RandomStringUtils.random(5) + imageUrl.getOriginalFilename())
         .orElseThrow(() -> new NoSuchElementException("파일 업로드에 실패했습니다."));
     Sign newSign = new Sign(storedFileName, user);
     signRepository.save(newSign);
