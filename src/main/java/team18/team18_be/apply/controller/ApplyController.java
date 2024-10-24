@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import team18.team18_be.apply.dto.response.ApplyResponse;
+import team18.team18_be.apply.dto.response.ApplierPerRecruitmentResponse;
+import team18.team18_be.apply.dto.response.RecruitmentsOfApplierResponse;
 import team18.team18_be.apply.service.ApplyService;
 import team18.team18_be.auth.entity.User;
 import team18.team18_be.config.resolver.LoginUser;
@@ -37,12 +38,15 @@ public class ApplyController {
   }
 
   @GetMapping("/{recruitmentId}")
-  public ResponseEntity<List<ApplyResponse>> SearchApplicant(@PathVariable Long recruitmentId,
+  public ResponseEntity<List<ApplierPerRecruitmentResponse>> SearchApplicant(
+      @PathVariable Long recruitmentId,
       @LoginUser User user) {
     return ResponseEntity.ok(applyService.searchApplicant(recruitmentId, user));
   }
 
   //title,area,salary, 회사로고이미지
-//  @GetMapping("/all")
-//  public ResponseEntity<>
+  @GetMapping("/all")
+  public ResponseEntity<List<RecruitmentsOfApplierResponse>> SearchMyAppliedRecruitments(@LoginUser User user){
+    return ResponseEntity.ok(applyService.SearchMyAppliedRecruitments(user));
+  }
 }
