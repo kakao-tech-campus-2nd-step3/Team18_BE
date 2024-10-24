@@ -52,7 +52,7 @@ public class UserInformationService {
 
   public CompanyResponse findCompany(User user) {
     Company company = companyRepository.findByUser(user);
-    CompanyResponse companyResponse = new CompanyResponse(company.getName(),
+    CompanyResponse companyResponse = new CompanyResponse(company.getId(), company.getName(),
         company.getIndustryOccupation(), company.getBrand(), company.getRevenuePerYear(),
         company.getLogoImage());
     return companyResponse;
