@@ -28,7 +28,6 @@ public class Resume {
   @JoinColumn(name = "userId")
   private User user;
 
-
   public Resume(String applicantName, String address, String phoneNumber, String career,
       String korean, String selfIntroduction, User user) {
     this.applicantName = applicantName;
