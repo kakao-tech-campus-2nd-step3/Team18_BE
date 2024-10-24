@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import team18.team18_be.apply.dto.response.ApplierPerRecruitmentResponse;
+import team18.team18_be.apply.dto.response.MandatoryResponse;
 import team18.team18_be.apply.dto.response.RecruitmentsOfApplierResponse;
 import team18.team18_be.apply.service.ApplyService;
 import team18.team18_be.auth.entity.User;
@@ -38,15 +39,19 @@ public class ApplyController {
   }
 
   @GetMapping("/{recruitmentId}")
-  public ResponseEntity<List<ApplierPerRecruitmentResponse>> SearchApplicant(
+  public ResponseEntity<List<ApplierPerRecruitmentResponse>> searchApplicant(
       @PathVariable Long recruitmentId,
       @LoginUser User user) {
     return ResponseEntity.ok(applyService.searchApplicant(recruitmentId, user));
   }
 
-  //title,area,salary, 회사로고이미지
   @GetMapping("/all")
-  public ResponseEntity<List<RecruitmentsOfApplierResponse>> SearchMyAppliedRecruitments(@LoginUser User user){
+  public ResponseEntity<List<RecruitmentsOfApplierResponse>> searchMyAppliedRecruitments(@LoginUser User user){
     return ResponseEntity.ok(applyService.SearchMyAppliedRecruitments(user));
+  }
+
+  @GetMapping()
+  public ResponseEntity<MandatoryResponse> checkMandatory(@LoginUser User user){
+    return ResponseEntity.ok(applyService.checkMandatory(user));
   }
 }
