@@ -34,7 +34,7 @@ public class UserInformationController {
 
   @PostMapping(value = "/sign")
   public ResponseEntity<Void> fillInSign(@RequestParam MultipartFile imageUrl,
-      @LoginUser User user) throws IOException {
+      @LoginUser User user) {
     userInformationService.fillInSign(imageUrl, user);
     return ResponseEntity.noContent().build();
   }
