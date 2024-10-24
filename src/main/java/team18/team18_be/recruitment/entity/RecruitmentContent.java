@@ -16,13 +16,11 @@ public class RecruitmentContent {
   private String koreanDetailedDescription;
   @Lob
   private String vietnameseDetailedDescription;
-  private Long recruitmentId;
 
   public RecruitmentContent(String koreanDetailedDescription,
-      String vietnameseDetailedDescription, Long recruitmentId) {
+      String vietnameseDetailedDescription) {
     this.koreanDetailedDescription = koreanDetailedDescription;
     this.vietnameseDetailedDescription = vietnameseDetailedDescription;
-    this.recruitmentId = recruitmentId;
   }
 
   public RecruitmentContent() {
@@ -38,9 +36,5 @@ public class RecruitmentContent {
 
   public String getVietnameseDetailedDescription() {
     return vietnameseDetailedDescription;
-  }
-
-  public Long getRecruitmentId() {
-    return recruitmentId;
   }
 }
