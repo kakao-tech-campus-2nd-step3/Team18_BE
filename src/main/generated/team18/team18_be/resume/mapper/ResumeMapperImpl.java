@@ -10,7 +10,7 @@ import team18.team18_be.resume.entity.Resume;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-11-10T20:46:08+0900",
+    date = "2024-11-12T02:16:28+0900",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 21.0.3 (Eclipse Adoptium)"
 )
 @Component
