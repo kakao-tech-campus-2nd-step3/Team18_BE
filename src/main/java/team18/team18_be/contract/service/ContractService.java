@@ -4,6 +4,7 @@ import com.itextpdf.text.DocumentException;
 import jakarta.transaction.Transactional;
 import java.io.IOException;
 import org.springframework.stereotype.Service;
+import team18.team18_be.apply.ApplyStatusEnum.ApplyStatus;
 import team18.team18_be.apply.entity.Apply;
 import team18.team18_be.apply.repository.ApplyRepository;
 import team18.team18_be.auth.entity.User;
@@ -98,8 +99,13 @@ public class ContractService {
   @Transactional
   private void updateContractFiles(ContractRequest request, String pdfUrl, String imageUrl,
       String pdfUrlV, String imageUrlV) {
+    Apply apply = applyRepository.findById(request.applyId())
+        .orElseThrow(() -> new NotFoundException("해당 applyId가 존재하지 않습니다."));
     Contract contract = contractRepository.findByApplyId(request.applyId())
         .orElseThrow(() -> new NotFoundException("해당 applyId의 Contract가 존재하지 않습니다."));
+    ApplyStatus status = ApplyStatus.HIRED;
+    applyRepository.save(
+        new Apply(apply.getId(), status.getKoreanName(), apply.getUser(), apply.getRecruitment()));
     contract.updatePdfFileUrl(pdfUrl);
     contract.updateImageFileUrl(imageUrl);
     contract.updatePdfFileUrlV(pdfUrlV);
